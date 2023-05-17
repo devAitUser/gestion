@@ -75,11 +75,7 @@
                                        <img :src="'images/' + item.photo" style="width: 55px; height: 55px" />
                                     </template>
 
-                                    <template v-slot:item.paiement="{ item }">
-                                        <v-btn color="purple" fab small dark  @click="paiement(item)">
-                                            <i class="nav-icon i-Cash-register-2 font-weight-bold"></i>
-                                         </v-btn>
-                                    </template>
+                                 
 
 
                                 

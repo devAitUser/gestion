@@ -226,6 +226,28 @@ Route::delete('/deleterole/{id}',[App\Http\Controllers\RoleController::class, 'd
 
 
 
+/*** Model RH  * */
+
+Route::resource('rh', App\Http\Controllers\RhController::class);
+Route::get('/getrh',[App\Http\Controllers\RhController::class, 'get_rh']);
+Route::post('/rh/{id}/edit',[App\Http\Controllers\RhController::class, 'edit']);
+Route::post('/rh/store',[App\Http\Controllers\RhController::class, 'store']);
+
+Route::delete('/deleterh/{id}',[App\Http\Controllers\RhController::class, 'destroy']);
+Route::post('/updaterh/{id}',[App\Http\Controllers\RhController::class, 'update']);
+
+Route::post('/store_affectation',[App\Http\Controllers\RhController::class, 'store_affectation']);
+
+
+
+
+
+
+
+
+
+
+
 
 
 

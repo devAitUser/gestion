@@ -140,39 +140,7 @@
 
         },
 
-        get_status(id) {
-
-            var status = "";
-
-            var color = '';
-
-            if(id == 1){
-                status = "En cours"
-                color = '#ff9800'; 
-            }
-
-            if(id == 2){
-                status = "Validé par chef de projet"
-                color = '#4caf50';
-            }
-
-
-            if(id == 3){
-                status = "Refuser"
-                color = '#f44336';
-            }
-
-
-            if(id == 4){
-                status = "livré"
-                color = '#286dd6';
-            }
-
-
-            var role_print = '<a style="background-color: ' + color + ';" class="badge badge-primary  p-2">' + status + '</a>';
-
-            return role_print;
-        },
+       
 
         
         remove_item() {

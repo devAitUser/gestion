@@ -68,12 +68,7 @@ new Vue({
                     text: 'Etat paiement',
                     value: 'etat_paiement'
                 },
-                {
-                    text: "Historique paiement",
-                    value: "paiement",
-                    sortable: false
-                }
-                ,
+               
                 {
                     text: "Paiement",
                     value: "paiement_facture",

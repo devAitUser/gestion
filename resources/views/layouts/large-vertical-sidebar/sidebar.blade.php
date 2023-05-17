@@ -63,6 +63,14 @@
                 </a>
                 <div class="triangle"></div>
              </li>  
+             <li class="nav-item {{ request()->is('rh')  ? 'active' : '' }}  {{ request()->is('rh/index')  ? 'active' : '' }}"  >
+
+                <a class="nav-item-hold" href="{{ url('rh')}}">
+                    <i class="nav-icon i-ID-3"></i>
+                    <span class="nav-text"> RH </span>
+                </a>
+                <div class="triangle"></div>
+             </li>  
      
         
           

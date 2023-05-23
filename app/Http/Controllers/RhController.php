@@ -184,6 +184,14 @@ class RhController extends Controller
          $delete->delete();
      }
 
+     public function delete_affectation($id)
+     {
+         $delete= Affectation::find($id);  
+ 
+         $delete->delete();
+     }
+
+
      public function store_affectation(Request $request){
 
         $add = new Affectation; 
@@ -195,7 +203,17 @@ class RhController extends Controller
 
         $add->save();
 
-        return Response()->json(['etat' => true  , 'id' => $add->id ]);
+        return Response()->json(['etat' => true  , 'id' => $add->id , 'debut' => $add->debut ]);
+
+     }
+     public function update_affectation(Request $request){
+
+        $update= Affectation::find($request->id); 
+        $update->projet = $request->projet;
+        $update->debut = $request->debut;
+        $update->fin = $request->fin;
+        $update->statut = $request->statut;
+        $update->save();
 
      }
 }

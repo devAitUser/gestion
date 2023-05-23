@@ -254,7 +254,6 @@ class Factures_fournisseurController extends Controller
     public function destroy($id)
     {
         $delete= Facture_fournisseur::find($id);  
-
         $delete->delete();
     }
     function pdf($id)

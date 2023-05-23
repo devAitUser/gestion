@@ -239,7 +239,16 @@ Route::post('/updaterh/{id}',[App\Http\Controllers\RhController::class, 'update'
 Route::post('/store_affectation',[App\Http\Controllers\RhController::class, 'store_affectation']);
 
 
+Route::post('/update_affectation',[App\Http\Controllers\RhController::class, 'update_affectation']);
 
+Route::post('/delete_affectation/{id}',[App\Http\Controllers\RhController::class, 'delete_affectation']);
+
+
+/*** Model Pointage  * */
+
+Route::resource('pointage', App\Http\Controllers\PointageController::class);
+Route::get('/getpointage',[App\Http\Controllers\PointageController::class, 'get_rh']);
+Route::post('/pointage/{id}/edit',[App\Http\Controllers\PointageController::class, 'edit']);
 
 
 

@@ -1,26 +1,21 @@
 @extends('layouts.master')
 @section('main-content')
-<style>
-   i.mdi.mdi-file-pdf.size_icon {
-   font-size: 25px;
-   }
-</style>
 <link rel="stylesheet" type="text/css" href={{ asset('css_vuetify/materialdesignicons.min.css') }}>
 <link rel="stylesheet" type="text/css" href={{ asset('css_vuetify/vuetify.min.css') }}>
 <link rel="stylesheet" type="text/css" href={{ asset('assets/styles/css/custom_vuetify.css') }}>
 <div class="breadcrumb">
-   <h1>  Facture de fournisseur :  {{$nom}}</h1>
+   <h1>  La liste des Pointages</h1>
 </div>
 @include('layouts.common.flash_message')
 <div class=" border-top"></div>
-<div id="app_client" data-app>
+<div id="app" data-app>
    <div class="row">
       <div class="col-md-12">
          <div class="card">
             <div class="card-header  gradient-purple-indigo  0-hidden pb-80">
                <div class="pt-4">
                   <div class="row">
-                     <h4 class="col-md-4 text-white">Facture de fournisseur :  {{$nom}} </h4>
+                     <h4 class="col-md-4 text-white">Pointage</h4>
                      <input v-model="search" type="text" class="form-control form-control-rounded col-md-4 ml-3 mr-3"  append-icon="mdi-magnify" placeholder="Rechercher produits ...">
                      <i aria-hidden="true" class="v-icon notranslate btn_search mdi mdi-magnify theme--light"></i>
                   </div>
@@ -33,39 +28,128 @@
                         <div class="card">
                            <v-card>
                               <v-card-title>
-                                 Facture de fournisseur :  {{$nom}}
+                                 la liste des Pointages
                                  <v-spacer></v-spacer>
                               </v-card-title>
                               <v-card-title class="text-right">
                                  <v-spacer></v-spacer>
-                                 <a href="{{url('/factures_fournisseur/create/'.$id)}}"  class="btn btn-primary btn-md m-1 text-white "><i class="nav-icon i-Shopping-Basket"></i>    Nouveau  </a>
+                                
+                                 <!-- Button trigger modal -->
+                                 <button type="button" class="btn btn-primary btn-md m-1 text-white" data-toggle="modal" data-target="#Modal_pointage">
+                                    <i class="nav-icon i-Shopping-Basket"></i>    Nouveau 
+                                 </button>
                                  @if ($user_logged->inRole('admin'))
                                  @if ($user_logged->hasAccess(['product.delete']))
                                  <button   @click="remove_item" type="button" data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-primary btn-md m-1 text-white"><i class="i-Close mr-2"></i>   Supprimer </button>
                                  @endif
                                  @endif
                               </v-card-title>
-                              <v-data-table  @input="item($event)" :headers="headers" :items="all_paiements" :search="search" :value="selectedRows" v-model="selected" :items-per-page="5"  :sort-by.sync="sortBy"
+                              <v-data-table  @input="item($event)" :headers="headers" :items="employe" :search="search" :value="selectedRows" v-model="selected" :items-per-page="5"  :sort-by.sync="sortBy"
                                  :sort-desc.sync="sortDesc" show-select   item-key="id"
                                  :expanded.sync="expanded" @click:row="clicked">
                                  <template v-slot:item.img="{ item }">
                                     <img :src="'images/' + item.photo" style="width: 55px; height: 55px" />
                                  </template>
+                                 <v-dialog
+                                    v-model="dialog2"
+                                    width="auto"
+                                    >
+                                    <v-card>
+                                       <v-card-title>
+                                          Dialog 2
+                                       </v-card-title>
+                                       <v-card-text>
+                                          <v-row>
+                                             <v-col
+                                                cols="12"
+                                                sm="6"
+                                                >
+                                                <v-combobox
+                                                   v-model="editedItem.mode_paiement"
+                                                   label="Mode de paiement"
+                                                   :items="['espèce', 'virement', 'chéque']"
+                                                   required
+                                                   >
+                                                </v-combobox>
+                                             </v-col>
+                                             <v-col
+                                                cols="12"
+                                                sm="6"
+                                                >
+                                                <v-text-field
+                                                   v-model="editedItem.n_cheque"
+                                                   label="n cheque"
+                                                   required
+                                                   ></v-text-field>
+                                             </v-col>
+                                             <v-col
+                                                cols="12"
+                                                sm="6"
+                                                >
+                                                <v-combobox
+                                                   v-model="editedItem.etat_paiement"
+                                                   label="Etat de paiement"
+                                                   required
+                                                   :items="['payé', 'non payé']"
+                                                   >
+                                                </v-combobox>
+                                             </v-col>
+                                             <v-col
+                                                cols="12"
+                                                sm="6"
+                                                >
+                                                <v-text-field
+                                                   v-model="editedItem.montant"
+                                                   required
+                                                   label="Montant"
+                                                   variant="solo"
+                                                   ></v-text-field>
+                                             </v-col>
+                                             <v-col
+                                                cols="12"
+                                                sm="6"
+                                                >
+                                                <v-btn
+                                                   color="success"
+                                                   class="mt-4"
+                                                   block
+                                                   @click="update_item_payment(item)"
+                                                   >
+                                                   Modifier
+                                                </v-btn>
+                                             </v-col>
+                                             <v-col
+                                                cols="12"
+                                                sm="6"
+                                                >
+                                                <v-btn
+                                                   color="success"
+                                                   class="mt-4"
+                                                   block
+                                                   @click="dialog2 = false"
+                                                   >
+                                                   sortir
+                                                </v-btn>
+                                             </v-col>
+                                          </v-row>
+                                       </v-card-text>
+                                    </v-card>
+                                 </v-dialog>
                                  <template v-slot:item.action="{ item }">
                                     <v-btn color="purple" fab small dark  @click="editItem(item)">
-                                       <i class="nav-icon f-15 i-Pen-2 font-weight-bold"></i>
+                                       <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                     </v-btn>
                                  </template>
-                                 <template v-slot:item.paiement_facture ="{ item }" >
-                                    <v-btn align-center  class="mx-0"  small  fab dark color="teal" @click="show_order_product(item)">
+                                 <template v-slot:item.affecatation ="{ item }" >
+                                    <v-btn align-center  class="mx-0"  small  fab dark color="teal" @click="shwo_affectation(item)">
                                        <v-icon dark>mdi-format-list-bulleted-square</v-icon>
                                     </v-btn>
                                     <v-dialog v-model="dialog" max-width="800px" :retain-focus="false">
                                        <v-card>
                                           <v-card-title>
-                                             <span class="headline"> Les historiques de paiements  </span>
+                                             <span class="headline"> Les historiques de affectations  </span>
                                           </v-card-title>
-                                          <v-form @submit.prevent="submitFiles" ref="form" v-model="valid" lazy-validation>
+                                          <v-form @submit.prevent="post_data" ref="form" v-model="valid" lazy-validation>
                                              <v-container>
                                                 <v-menu
                                                    v-model="menu2"
@@ -76,17 +160,7 @@
                                                    min-width="290px"
                                                    >
                                                    <template v-slot:activator="{ on, attrs }">
-                                                      <v-text-field
-                                                         v-model="computedDateFormatted"
-                                                         label="Date"
-                                                         persistent-hint
-                                                         prepend-icon="event"
-                                                         readonly
-                                                         v-bind="attrs"
-                                                         v-on="on"
-                                                         ></v-text-field>
                                                    </template>
-                                                   <v-date-picker v-model="defaultItem.date_cheque" no-title @input="menu2 = false"></v-date-picker>
                                                 </v-menu>
                                                 <v-row>
                                                    <v-col
@@ -94,9 +168,11 @@
                                                       sm="6"
                                                       >
                                                       <v-combobox
-                                                         v-model="defaultItem.mode_paiement"
-                                                         label="Mode de paiement"
-                                                         :items="['espèce', 'virement', 'chéque']"
+                                                         v-model="addItem.projet"
+                                                         label="Projet"
+                                                         :items="projets"
+                                                         item-text="client"
+                                                         item-value="client"
                                                          required
                                                          >
                                                       </v-combobox>
@@ -106,9 +182,23 @@
                                                       sm="6"
                                                       >
                                                       <v-text-field
-                                                         v-model="defaultItem.n_cheque"
-                                                         label="n cheque"
-                                                         required
+                                                         v-model="addItem.debut"
+                                                         label="Debut Date"
+                                                         type="date"
+                                                         ></v-text-field>
+                                                   </v-col>
+                                                   <v-col
+                                                      cols="12"
+                                                      sm="6"
+                                                      >
+                                                      <v-text-field
+                                                         v-model="addItem.fin"
+                                                         label="Date fin"
+                                                         persistent-hint
+                                                         prepend-icon="event"
+                                                         v-bind="attrs"
+                                                         type="date"
+                                                         v-on="on"
                                                          ></v-text-field>
                                                    </v-col>
                                                    <v-col
@@ -116,23 +206,12 @@
                                                       sm="6"
                                                       >
                                                       <v-combobox
-                                                         v-model="defaultItem.etat_paiement"
-                                                         label="Etat de paiement"
+                                                         v-model="addItem.statut"
+                                                         label="Statut"
+                                                         :items="['actif','non actif']"
                                                          required
-                                                         :items="['payé', 'non payé']"
                                                          >
                                                       </v-combobox>
-                                                   </v-col>
-                                                   <v-col
-                                                      cols="12"
-                                                      sm="6"
-                                                      >
-                                                      <v-text-field
-                                                         v-model="defaultItem.montant "
-                                                         required
-                                                         label="Montant"
-                                                         variant="solo"
-                                                         ></v-text-field>
                                                    </v-col>
                                                    <v-col
                                                       cols="12"
@@ -153,7 +232,7 @@
                                                       >
                                                       <v-card>
                                                          <v-card-title>
-                                                            Dialog 2
+                                                            Modifier l'affectation
                                                          </v-card-title>
                                                          <v-card-text>
                                                             <v-row>
@@ -162,9 +241,11 @@
                                                                   sm="6"
                                                                   >
                                                                   <v-combobox
-                                                                     v-model="editedItem.mode_paiement"
-                                                                     label="Mode de paiement"
-                                                                     :items="['espèce', 'virement', 'chéque']"
+                                                                     v-model="editedItem.projet"
+                                                                     label="Projet"
+                                                                     :items="projets"
+                                                                     item-text="client"
+                                                                     item-value="client"
                                                                      required
                                                                      >
                                                                   </v-combobox>
@@ -174,9 +255,20 @@
                                                                   sm="6"
                                                                   >
                                                                   <v-text-field
-                                                                     v-model="editedItem.n_cheque"
-                                                                     label="n cheque"
+                                                                     v-model="editedItem.debut"
+                                                                     label="date debut"
+                                                                     type="date"
+                                                                     ></v-text-field>
+                                                               </v-col>
+                                                               <v-col
+                                                                  cols="12"
+                                                                  sm="6"
+                                                                  >
+                                                                  <v-text-field
+                                                                     v-model="editedItem.fin"
                                                                      required
+                                                                     label="date fin"
+                                                                     variant="solo"
                                                                      ></v-text-field>
                                                                </v-col>
                                                                <v-col
@@ -184,23 +276,12 @@
                                                                   sm="6"
                                                                   >
                                                                   <v-combobox
-                                                                     v-model="editedItem.etat_paiement"
-                                                                     label="Etat de paiement"
+                                                                     v-model="editedItem.statut"
+                                                                     label="Statut"
                                                                      required
-                                                                     :items="['payé', 'non payé']"
+                                                                     :items="['actif', 'non actif']"
                                                                      >
                                                                   </v-combobox>
-                                                               </v-col>
-                                                               <v-col
-                                                                  cols="12"
-                                                                  sm="6"
-                                                                  >
-                                                                  <v-text-field
-                                                                     v-model="editedItem.montant"
-                                                                     required
-                                                                     label="Montant"
-                                                                     variant="solo"
-                                                                     ></v-text-field>
                                                                </v-col>
                                                                <v-col
                                                                   cols="12"
@@ -210,7 +291,7 @@
                                                                      color="success"
                                                                      class="mt-4"
                                                                      block
-                                                                     @click="update_item_payment(item)"
+                                                                     @click="update_item_affectation(item)"
                                                                      >
                                                                      Modifier
                                                                   </v-btn>
@@ -236,7 +317,7 @@
                                              </v-container>
                                           </v-form>
                                           <v-data-table :headers="subHeaders"
-                                             :items="historique_paiement"
+                                             :items="affectation"
                                              item-key="color"
                                              hide-actions
                                              class="elevation-10">
@@ -250,7 +331,7 @@
                                                 </v-icon>
                                                 <v-icon
                                                    size="small"
-                                                   @click="deleteItem_paiement(item.id)"
+                                                   @click="deleteItem_affectation(item.id)"
                                                    >
                                                    mdi-delete
                                                 </v-icon>
@@ -269,6 +350,55 @@
                         </div>
                      </div>
                   </div>
+               </div>
+            </div>
+            <!-- Modal create pointage -->
+            <div class="modal fade" id="Modal_pointage" tabindex="-1" role="dialog" aria-labelledby="Modal_pointage" aria-hidden="true">
+               <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLabel">Ajouter</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+                     <form>
+                        {{-- <div class="form-group">
+                          <label for="exampleFormControlInput1">Email address</label>
+                          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                        </div> --}}
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect1">Mois</label>
+                          <select class="form-control" id="exampleFormControlSelect1">
+                            <option>Janvier</option>
+                            <option>février</option>
+                            <option>mars</option>
+                            <option>avril</option>
+                            <option>mai</option>
+                            <option>juin</option>
+                            <option>juillet</option>
+                            <option>août</option>
+                            <option>septembre</option>
+                            <option>octobre</option>
+                            <option>novembre </option>
+                            <option>décembre  </option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleFormControlSelect2">Les projets</label>
+                          <select multiple class="form-control" id="select_projet">
+                  
+                          </select>
+                        </div>
+                       
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+               </div>
                </div>
             </div>
          </div>
@@ -291,10 +421,44 @@
      'token' => csrf_token(),
      'url'   => url('/'),
      'date'   => date('Y-m-d'),
-     'id_facture_fournisseurs'   => $id,
    
    
    ]) !!}
+
+
+   $(document).ready(function(){
+
+
+
+
+         $.ajaxSetup({
+                  headers: {
+                     'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                  }
+            });
+            $.ajax({
+                  url: window.laravel.url + "/getprojets",
+                  method: "get",
+                  
+                  dataType: "json",
+                  success: function(data) {
+
+
+                     $.each(data.projets, function() {
+                        $("#select_projet").append($("<option   />").val(this.client).text(this.client));
+                     });
+
+
+               
+
+
+
+
+                  }
+         })
+
+   });
+
 </script>
-<script src="{{ asset('js/facture_fournisseurs.js') }}"></script>
+<script src="{{ asset('js/app_pointage.js') }}"></script>
 @endsection

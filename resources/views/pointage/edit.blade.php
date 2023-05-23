@@ -26,7 +26,7 @@ span.spinner.spinner-primary {
 </style>
 @endsection
 @section('main-content')
-<form action=" {{url('rh/store')}}" method="post">
+<form action=" {{url('updaterh/'.$employe['id'])}}" method="post">
   @csrf
 <div class="breadcrumb">
    <h1>  Ajouter un employé </h1>
@@ -50,7 +50,7 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                      <label for="inputtext11" class="ul-form__label">Nom *</label>
-                     <input id="designation" type="text"  name="nom" class="form-control  " required >
+                     <input id="designation" type="text"  name="nom" class="form-control  " value="{{$employe['nom']}}" required >
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -74,7 +74,7 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                      <label for="inputtext11" class="ul-form__label">prenom</label>
-                     <input id="designation" type="text"  name="prenom" class="form-control  "  required>
+                     <input id="designation" type="text"  name="prenom" class="form-control  "  value="{{$employe['prenom']}}" required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -97,7 +97,7 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                      <label for="inputtext11" class="ul-form__label">adresse  *</label>
-                     <input id="designation" type="text"  name="adresse" class="form-control  "  required>
+                     <input id="designation" type="text"  name="adresse" class="form-control  "  value="{{$employe['adresse']}}" required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -120,7 +120,7 @@ span.spinner.spinner-primary {
                      <div class="form-row">
                         <div class="form-group col-md-12">
                            <label for="inputtext11" class="ul-form__label">date_naissance *</label>
-                           <input id="designation" type="date"  name="date_naissance" class="form-control  "  required>
+                           <input id="designation" type="date"  name="date_naissance" class="form-control  " value="{{$employe['date_naissance']}}" required>
                            <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                            
       
@@ -145,7 +145,7 @@ span.spinner.spinner-primary {
                         <div class="form-row">
                            <div class="form-group col-md-12">
                               <label for="inputtext11" class="ul-form__label">ville  *</label>
-                              <input id="designation" type="text"  name="ville" class="form-control  "  required>
+                              <input id="designation" type="text"  name="ville" class="form-control  " value="{{$employe['ville']}}" required>
                               <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                               
          
@@ -172,7 +172,7 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                      <label for="inputtext11" class="ul-form__label"> cnss  *</label>
-                     <input id="designation" type="number"  name="cnss" class="form-control  "  required>
+                     <input id="designation" type="number"  name="cnss" class="form-control  " value="{{$employe['cnss']}}" required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -196,7 +196,7 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                      <label for="inputtext11" class="ul-form__label">cin  *</label>
-                     <input id="designation" type="text"  name="cin" class="form-control  "  required>
+                     <input id="designation" type="text"  name="cin" class="form-control  " value="{{$employe['cin']}}" required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -222,7 +222,7 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                      <label for="inputtext11" class="ul-form__label">telephone  *</label>
-                     <input id="designation" type="tel"  name="telephone" class="form-control  "  required>
+                     <input id="designation" type="tel"  name="telephone" class="form-control  " value="{{$employe['telephone']}}" required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -246,7 +246,7 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                      <label for="inputtext11" class="ul-form__label">email  *</label>
-                     <input id="designation" type="email"  name="email" class="form-control  "  required>
+                     <input id="designation" type="email"  name="email" class="form-control  " value="{{$employe['email']}}"  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -272,13 +272,7 @@ span.spinner.spinner-primary {
                      <div class="form-row">
                         <div class="form-group col-md-12">
                            <label for="inputtext11" class="ul-form__label">genre  *</label>
-                           
-                           <select name="genre" class='form-control'>
-                              <option value="">Selectionner</option>
-                              <option value="Homme">Homme</option>
-                              <option value="femme">femme</option>
-                             
-                           </select>
+                           <input id="designation" type="text"  name="genre" class="form-control  "  value="{{$employe['genre']}}" required>
                            <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                            
       
@@ -302,7 +296,7 @@ span.spinner.spinner-primary {
                      <div class="form-row">
                         <div class="form-group col-md-12">
                            <label for="inputtext11" class="ul-form__label">nationnalite  *</label>
-                           <input id="designation" type="text"  name="nationnalite" class="form-control  "  required>
+                           <input id="designation" type="text"  name="nationnalite" class="form-control  " value="{{$employe['nationnalite']}}" required>
                            <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                            
       
@@ -325,8 +319,8 @@ span.spinner.spinner-primary {
                   <div class="col-md-10">
                      <div class="form-row">
                         <div class="form-group col-md-12">
-                           <label for="inputtext11" class="ul-form__label">fonction  *</label>
-                           <input id="designation" type="text"  name="fonction" class="form-control  "  required>
+                           <label for="inputtext11" class="ul-form__label">nationnalite  *</label>
+                           <input id="designation" type="text"  name="fonction" class="form-control  "  value="{{$employe['fonction']}}" required>
                            <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                            
       
@@ -346,12 +340,12 @@ span.spinner.spinner-primary {
 
             <div class="card-body">
                <div class="row">
-                  <div class="col-md-2"> <label for="name" class="product-label text-dark"> date recrutement  </label></div>
+                  <div class="col-md-2"> <label for="name" class="product-label text-dark"> date_recrutement  </label></div>
                   <div class="col-md-10">
                      <div class="form-row">
                         <div class="form-group col-md-12">
-                           <label for="inputtext11" class="ul-form__label">date recrutement  *</label>
-                           <input id="designation" type="date"  name="date_recrutement" class="form-control  "  required>
+                           <label for="inputtext11" class="ul-form__label">date_recrutement  *</label>
+                           <input id="designation" type="date"  name="date_recrutement" class="form-control  "  value="{{$employe['date_recrutement']}}" required>
                            <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                            
       
@@ -375,7 +369,7 @@ span.spinner.spinner-primary {
                      <div class="form-row">
                         <div class="form-group col-md-12">
                            <label for="inputtext11" class="ul-form__label">banque  *</label>
-                           <input id="designation" type="text"  name="banque" class="form-control  "  required>
+                           <input id="designation" type="text"  name="banque" class="form-control  " value="{{$employe['banque']}}"  required>
                            <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                            
       
@@ -394,12 +388,12 @@ span.spinner.spinner-primary {
 
             <div class="card-body">
                <div class="row">
-                  <div class="col-md-2"> <label for="name" class="product-label text-dark"> debut_contrat  </label></div>
+                  <div class="col-md-2"> <label for="name" class="product-label text-dark"> debut contrat  </label></div>
                   <div class="col-md-10">
                      <div class="form-row">
                         <div class="form-group col-md-12">
                            <label for="inputtext11" class="ul-form__label">debut_contrat  *</label>
-                           <input id="designation" type="date"  name="debut_contrat" class="form-control  "  required>
+                           <input id="designation" type="date"  name="debut_contrat" class="form-control  " value="{{$employe['debut_contrat']}}" required>
                            <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                            
       
@@ -422,7 +416,7 @@ span.spinner.spinner-primary {
                      <div class="form-row">
                         <div class="form-group col-md-12">
                            <label for="inputtext11" class="ul-form__label">fin_contrat  *</label>
-                           <input id="designation" type="date"  name="fin_contrat" class="form-control  "  required>
+                           <input id="designation" type="date"  name="fin_contrat" class="form-control  " value="{{$employe['fin_contrat']}}"  required>
                            <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                            
       
@@ -440,6 +434,11 @@ span.spinner.spinner-primary {
 
       
    </div>
+
+  
+  
+  
+
    <meta name="csrf-token" content="{{ csrf_token() }}">
    <div class="card mt-3">
       <!--begin::form-->

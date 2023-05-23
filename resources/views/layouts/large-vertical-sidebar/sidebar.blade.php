@@ -71,6 +71,15 @@
                 </a>
                 <div class="triangle"></div>
              </li>  
+
+             <li class="nav-item {{ request()->is('pointage')  ? 'active' : '' }}  {{ request()->is('rh/index')  ? 'active' : '' }}"  >
+
+                <a class="nav-item-hold" href="{{ url('pointage')}}">
+                    <i class="nav-icon i-Target"></i>
+                    <span class="nav-text"> Pointage </span>
+                </a>
+                <div class="triangle"></div>
+             </li> 
      
         
           

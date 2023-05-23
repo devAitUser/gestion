@@ -366,6 +366,7 @@ new Vue({
 
         deleteItem_paiement(item_id) {
 
+           
             
             Swal.fire({
                 title: 'Êtes-vous sûr?',

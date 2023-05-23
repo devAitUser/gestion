@@ -67,6 +67,93 @@
                                     <template v-slot:item.img="{ item }">
                                        <img :src="'images/' + item.photo" style="width: 55px; height: 55px" />
                                     </template>
+
+
+                                    <v-dialog
+                                                      v-model="dialog2"
+                                                      width="auto"
+                                                      >
+                                                      <v-card>
+                                                         <v-card-title>
+                                                            Dialog 2
+                                                         </v-card-title>
+                                                         <v-card-text>
+                                                            <v-row>
+                                                               <v-col
+                                                                  cols="12"
+                                                                  sm="6"
+                                                                  >
+                                                                  <v-combobox
+                                                                     v-model="editedItem.mode_paiement"
+                                                                     label="Mode de paiement"
+                                                                     :items="['espèce', 'virement', 'chéque']"
+                                                                     required
+                                                                     >
+                                                                  </v-combobox>
+                                                               </v-col>
+                                                               <v-col
+                                                                  cols="12"
+                                                                  sm="6"
+                                                                  >
+                                                                  <v-text-field
+                                                                     v-model="editedItem.n_cheque"
+                                                                     label="n cheque"
+                                                                     required
+                                                                     ></v-text-field>
+                                                               </v-col>
+                                                               <v-col
+                                                                  cols="12"
+                                                                  sm="6"
+                                                                  >
+                                                                  <v-combobox
+                                                                     v-model="editedItem.etat_paiement"
+                                                                     label="Etat de paiement"
+                                                                     required
+                                                                     :items="['payé', 'non payé']"
+                                                                     >
+                                                                  </v-combobox>
+                                                               </v-col>
+                                                               <v-col
+                                                                  cols="12"
+                                                                  sm="6"
+                                                                  >
+                                                                  <v-text-field
+                                                                     v-model="editedItem.montant"
+                                                                     required
+                                                                     label="Montant"
+                                                                     variant="solo"
+                                                                     ></v-text-field>
+                                                               </v-col>
+                                                               <v-col
+                                                                  cols="12"
+                                                                  sm="6"
+                                                                  >
+                                                                  <v-btn
+                                                                     color="success"
+                                                                     class="mt-4"
+                                                                     block
+                                                                     @click="update_item_payment(item)"
+                                                                     >
+                                                                     Modifier
+                                                                  </v-btn>
+                                                               </v-col>
+                                                               <v-col
+                                                                  cols="12"
+                                                                  sm="6"
+                                                                  >
+                                                                  <v-btn
+                                                                     color="success"
+                                                                     class="mt-4"
+                                                                     block
+                                                                     @click="dialog2 = false"
+                                                                     >
+                                                                     sortir
+                                                                  </v-btn>
+                                                               </v-col>
+                                                            </v-row>
+                                                         </v-card-text>
+                                                      </v-card>
+                                                   </v-dialog>
                                     
                                     <template v-slot:item.action="{ item }">
                                         <v-btn color="purple" fab small dark  @click="editItem(item)">
@@ -80,7 +167,7 @@
                                         <v-dialog v-model="dialog" max-width="800px" :retain-focus="false">
                                            <v-card>
                                               <v-card-title>
-                                                 <span class="headline"> Les historiques de paiements  </span>
+                                                 <span class="headline"> Les historiques de affectations  </span>
                                               </v-card-title>
                                               <v-form @submit.prevent="post_data" ref="form" v-model="valid" lazy-validation>
                                                  <v-container>
@@ -118,14 +205,13 @@
                                                           sm="6"
                                                           >
                                                           <v-text-field
-                                                         v-model="addItem.date_debut"
+                                                         v-model="addItem.debut"
                                                          label="Debut Date"
-                                                         persistent-hint
-                                                         prepend-icon="event"
+                                                      
                                                        
-                                                         v-bind="attrs"
+                                                   
                                                          type="date"
-                                                         v-on="on"
+                                                      
                                                          ></v-text-field>
                                                          
                                                        </v-col>
@@ -135,7 +221,7 @@
                                                           sm="6"
                                                           >
                                                           <v-text-field
-                                                          v-model="addItem.date_fin"
+                                                          v-model="addItem.fin"
                                                           label="Date fin"
                                                           persistent-hint
                                                           prepend-icon="event"
@@ -150,11 +236,9 @@
                                                           sm="6"
                                                           >
                                                           <v-combobox
-                                                          v-model="addItem.status"
-                                                          label="Projet"
+                                                          v-model="addItem.statut"
+                                                          label="Statut"
                                                           :items="['actif','non actif']"
-                                                          item-text="Statut"
-                                                          return-object
                                                           required
                                                           >
                                                        </v-combobox>
@@ -178,7 +262,7 @@
                                                           >
                                                           <v-card>
                                                              <v-card-title>
-                                                                Dialog 2
+                                                                Modifier l'affectation
                                                              </v-card-title>
                                                              <v-card-text>
                                                                 <v-row>
@@ -187,9 +271,11 @@
                                                                       sm="6"
                                                                       >
                                                                       <v-combobox
-                                                                         v-model="editedItem.mode_paiement"
-                                                                         label="Mode de paiement"
-                                                                         :items="['espèce', 'virement', 'chéque']"
+                                                                         v-model="editedItem.projet"
+                                                                         label="Projet"
+                                                                         :items="projets"
+                                                                         item-text="client"
+                                                                         item-value="client"
                                                                          required
                                                                          >
                                                                       </v-combobox>
@@ -199,34 +285,37 @@
                                                                       sm="6"
                                                                       >
                                                                       <v-text-field
-                                                                         v-model="editedItem.n_cheque"
-                                                                         label="n cheque"
-                                                                         required
+                                                                         v-model="editedItem.debut"
+                                                                         label="date debut"
+                                                                         type="date"
+                                                                         
                                                                          ></v-text-field>
                                                                    </v-col>
-                                                                   <v-col
-                                                                      cols="12"
-                                                                      sm="6"
-                                                                      >
-                                                                      <v-combobox
-                                                                         v-model="editedItem.etat_paiement"
-                                                                         label="Etat de paiement"
-                                                                         required
-                                                                         :items="['payé', 'non payé']"
-                                                                         >
-                                                                      </v-combobox>
-                                                                   </v-col>
+                                                                   
+                                                                  
                                                                    <v-col
                                                                       cols="12"
                                                                       sm="6"
                                                                       >
                                                                       <v-text-field
-                                                                         v-model="editedItem.montant"
+                                                                         v-model="editedItem.fin"
                                                                          required
-                                                                         label="Montant"
+                                                                         label="date fin"
                                                                          variant="solo"
                                                                          ></v-text-field>
                                                                    </v-col>
+                                                                   <v-col
+                                                                   cols="12"
+                                                                   sm="6"
+                                                                   >
+                                                                   <v-combobox
+                                                                      v-model="editedItem.statut"
+                                                                      label="Statut"
+                                                                      required
+                                                                      :items="['actif', 'non actif']"
+                                                                      >
+                                                                   </v-combobox>
+                                                                </v-col>
                                                                    <v-col
                                                                       cols="12"
                                                                       sm="6"
@@ -235,7 +324,7 @@
                                                                          color="success"
                                                                          class="mt-4"
                                                                          block
-                                                                         @click="update_item_payment(item)"
+                                                                         @click="update_item_affectation(item)"
                                                                          >
                                                                          Modifier
                                                                       </v-btn>
@@ -275,7 +364,7 @@
                                                     </v-icon>
                                                     <v-icon
                                                        size="small"
-                                                       @click="deleteItem_paiement(item.id)"
+                                                       @click="deleteItem_affectation(item.id)"
                                                        >
                                                        mdi-delete
                                                     </v-icon>

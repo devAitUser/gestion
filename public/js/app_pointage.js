@@ -1,5 +1,5 @@
 new Vue({
-    el: '#app_client',
+    el: '#app',
     vuetify: new Vuetify(),
 
     data() {
@@ -28,91 +28,15 @@ new Vue({
        
 
                 {
-                    text: 'Nom',
-                    value: 'nom'
+                    text: 'Mois',
+                    value: 'mois'
                 },
                 {
-                    text: 'Prenom',
-                    value: 'prenom'
+                    text: 'Projet',
+                    value: 'projet'
                 },
-                {
-                    text: 'Adresse',
-                    value: 'adresse'
-                },
-                {
-                    text: 'Date naissance',
-                 
-                    value: 'date_naissance'
-                },
-                {
-                    text: 'Ville',
-                    value: 'ville'
-                }
-                ,
-                {
-                    text: 'Cnss',
-                    value: 'cnss'
-                }
+              
                 
-                ,
-                {
-                    text: 'Cin',
-                    value: 'cin'
-                }
-                ,
-                {
-                    text: 'telephone',
-                    value: 'telephone'
-                }
-                ,
-                {
-                    text: 'email',
-                    value: 'email'
-                }
-                ,
-                {
-                    text: 'genre',
-                    value: 'genre'
-                }
-                ,
-                {
-                    text: 'nationnalite',
-                    value: 'nationnalite'
-                }
-                ,
-                {
-                    text: 'fonction',
-                    value: 'fonction'
-                }
-                ,
-                
-                {
-                    text: 'date_recrutement',
-                    value: 'date_recrutement'
-                }
-                ,
-                {
-                    text: 'banque',
-                    value: 'banque'
-                }
-                ,
-                {
-                    text: 'debut_contrat',
-                    value: 'debut_contrat'
-                }
-                ,
-                {
-                    text: 'fin_contrat',
-                    value: 'fin_contrat'
-                }
-                ,
-
-                {
-                    text: "Affectation",
-                    value: "affecatation",
-                    sortable: false
-                }
-                ,
                 
                 {
                     text: "Action",
@@ -124,34 +48,7 @@ new Vue({
 
             ],
 
-            subHeaders: [  
-                {
-                    text: "Id",
-                    align: "left",
-                    sortable: false,
-                    value: "id"
-                },
-                {
-                 text: "Projet",
-                 value: "projet"
-                },
-                {
-                   text: "Date debut",
-                   value: "debut",
-                  },
-                  {
-                   text: "Date fin",
-                   value: "fin",
-                  },
-                  ,
-                  {
-                   text: "Statut",
-                   value: "statut",
-                  },
-                 
-                  { title: 'Actions', value: 'actions', sortable: false },
-
-              ],
+            
 
 
               addItem: {
@@ -582,17 +479,7 @@ new Vue({
                     console.log(error);
                 })
 
-                axios.get(window.laravel.url + '/getprojets')
-                .then(response => {
-
-                    this.projets = response.data.projets;
-                    
-
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+                
         }
     },
     mounted: function() {

@@ -33,11 +33,30 @@ class RhController extends Controller
      public function get_rh(Request $request)
      {
          $employes = Employe::all(); 
+         $att_affectation = array();
 
          for($i=0;$i<count($employes);$i++)
          {
 
             $affectation = Affectation::where('employe_id', '=', $employes[$i]->id )->get();
+
+            unset($att_affectation);
+            for($j=0;$j<count($affectation);$j++)
+            {
+
+                $projet = Projet::find($affectation[$j]->projet );
+
+                $att_affectation[] =  [ 
+                    'id'=>  $affectation[$j]->id , 
+                    'projet'=> $projet->client, 
+                    'debut'=> $affectation[$j]->debut , 
+                    'fin'=> $affectation[$j]->fin , 
+                    'statut'=> $affectation[$j]->statut , 
+
+                     ];
+                     
+            }
+
 
 
             $att[] =  [ 
@@ -57,7 +76,7 @@ class RhController extends Controller
                 'banque'=> $employes[$i]->banque ,
                 'debut_contrat'=> $employes[$i]->debut_contrat ,
                 'fin_contrat'=> $employes[$i]->fin_contrat ,
-                'affectation'  => $affectation , 
+                'affectation'  => $att_affectation , 
                  ];
 
          }

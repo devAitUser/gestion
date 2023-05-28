@@ -96,6 +96,38 @@ span.spinner.spinner-primary {
             
          </div>
       </div>
+
+
+      <div class="card-body">
+         <div class="row">
+            <div class="col-md-2"> <label for="name" class="product-label text-dark">status *</label></div>
+            <div class="col-md-10">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                    
+
+                  <select name="status" class="form-control">
+
+                   <option>actif</option>
+                   <option>non actif</option>
+                   
+
+                  </select>
+
+
+                     
+
+                  </div>
+
+           
+             
+
+            
+               </div>
+            </div>
+            
+         </div>
+      </div>
      
       <!-- end::form 3-->
       <div class="card-body">

@@ -60,6 +60,7 @@ class ProjetsController extends Controller
             $projet->client = $request->client;
             $projet->type_prestation = $request->type_prestation;
             $projet->objet = $request->objet;
+            $projet->status = $request->status;
             $projet->n_marche = $request->n_marche;
             $projet->date_debut = $request->date_debut;
             $projet->duree = $request->duree;

@@ -34,17 +34,9 @@
                               <v-card-title class="text-right">
                                  <v-spacer></v-spacer>
                                 
-                                 <!-- Button trigger modal -->
-                                 <button type="button" class="btn btn-primary btn-md m-1 text-white" data-toggle="modal" data-target="#Modal_pointage">
-                                    <i class="nav-icon i-Shopping-Basket"></i>    Nouveau 
-                                 </button>
-                                 @if ($user_logged->inRole('admin'))
-                                 @if ($user_logged->hasAccess(['product.delete']))
-                                 <button   @click="remove_item" type="button" data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-primary btn-md m-1 text-white"><i class="i-Close mr-2"></i>   Supprimer </button>
-                                 @endif
-                                 @endif
+                      
                               </v-card-title>
-                              <v-data-table  @input="item($event)" :headers="headers" :items="employe" :search="search" :value="selectedRows" v-model="selected" :items-per-page="5"  :sort-by.sync="sortBy"
+                              <v-data-table  @input="item($event)" :headers="headers" :items="pointage" :search="search" :value="selectedRows" v-model="selected" :items-per-page="5"  :sort-by.sync="sortBy"
                                  :sort-desc.sync="sortDesc" show-select   item-key="id"
                                  :expanded.sync="expanded" @click:row="clicked">
                                  <template v-slot:item.img="{ item }">
@@ -352,55 +344,7 @@
                   </div>
                </div>
             </div>
-            <!-- Modal create pointage -->
-            <div class="modal fade" id="Modal_pointage" tabindex="-1" role="dialog" aria-labelledby="Modal_pointage" aria-hidden="true">
-               <div class="modal-dialog" role="document">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">Ajouter</h5>
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                     </button>
-                  </div>
-                  <div class="modal-body">
-                     <form>
-                        {{-- <div class="form-group">
-                          <label for="exampleFormControlInput1">Email address</label>
-                          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-                        </div> --}}
-                        <div class="form-group">
-                          <label for="exampleFormControlSelect1">Mois</label>
-                          <select class="form-control" id="exampleFormControlSelect1">
-                            <option>Janvier</option>
-                            <option>février</option>
-                            <option>mars</option>
-                            <option>avril</option>
-                            <option>mai</option>
-                            <option>juin</option>
-                            <option>juillet</option>
-                            <option>août</option>
-                            <option>septembre</option>
-                            <option>octobre</option>
-                            <option>novembre </option>
-                            <option>décembre  </option>
-                          </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="exampleFormControlSelect2">Les projets</label>
-                          <select multiple class="form-control" id="select_projet">
-                  
-                          </select>
-                        </div>
-                       
-                      </form>
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                     <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-               </div>
-               </div>
-            </div>
+           
          </div>
       </div>
    </div>
@@ -445,7 +389,7 @@
 
 
                      $.each(data.projets, function() {
-                        $("#select_projet").append($("<option   />").val(this.client).text(this.client));
+                        $("#select_projet").append($("<option   />").text(this.client));
                      });
 
 

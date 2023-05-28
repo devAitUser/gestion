@@ -31,7 +31,15 @@ new Vue({
                     text: 'Projet',
                     value: 'client'
                 },
-              
+                {
+                    text: 'Mois',
+                    value: 'mois'
+                },
+                
+                {
+                    text: 'année',
+                    value: 'anne'
+                },
                 
                 
                 {
@@ -463,10 +471,10 @@ new Vue({
         },
 
         get_data: function() {
-            axios.get(window.laravel.url + '/getprojets')
+            axios.get(window.laravel.url + '/get_pointage_detail/'+window.laravel.id_projet)
                 .then(response => {
 
-                    this.pointage = response.data.projets;
+                    this.pointage = response.data.pointage_detail;
                    
 
 

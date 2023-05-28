@@ -21,6 +21,7 @@ class CreateProjetsTable extends Migration
             $table->unsignedBigInteger('n_marche');
             $table->dateTime('date_debut');
             $table->string('duree');
+            $table->string('status');
             $table->unsignedBigInteger('montant_min');
             $table->unsignedBigInteger('montant_max');
             $table->timestamps();

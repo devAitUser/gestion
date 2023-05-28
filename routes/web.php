@@ -248,8 +248,12 @@ Route::post('/delete_affectation/{id}',[App\Http\Controllers\RhController::class
 
 Route::resource('pointage', App\Http\Controllers\PointageController::class);
 Route::get('/getpointage',[App\Http\Controllers\PointageController::class, 'get_rh']);
-Route::post('/pointage/{id}/edit',[App\Http\Controllers\PointageController::class, 'edit']);
+Route::get('/pointage/{id}/detail',[App\Http\Controllers\PointageController::class, 'edit']);
 
+
+Route::get('/get_pointage_detail/{id}',[App\Http\Controllers\PointageController::class, 'get_pointage_detail']);
+
+Route::post('/pointage_store',[App\Http\Controllers\PointageController::class, 'store'])->name('pointage_store');
 
 
 

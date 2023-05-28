@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pointage;
+use App\Models\Projet;
+
+use App\Models\Pointage_detail;
+
+
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -20,37 +27,22 @@ class PointageController extends Controller
 
     public function get_rh(Request $request)
     {
-        $employes = Employe::all(); 
+        $pointage = Pointage::all(); 
 
-        for($i=0;$i<count($employes);$i++)
-        {
-
-           $affectation = Affectation::where('employe_id', '=', $employes[$i]->id )->get();
+        $data = array( 'pointage'=> $pointage);
+        return  $data ;
 
 
-           $att[] =  [ 
-               'id'=>  $employes[$i]->id , 
-               'nom'=> $employes[$i]->nom, 
-               'prenom'=> $employes[$i]->prenom , 
-               'adresse'=> $employes[$i]->adresse , 
-               'ville'=> $employes[$i]->ville , 
-               'cnss'=> $employes[$i]->cnss ,
-               'cin'=> $employes[$i]->cin ,
-               'telephone'=> $employes[$i]->telephone ,
-               'email'=> $employes[$i]->email ,
-               'genre'=> $employes[$i]->genre ,
-               'nationnalite'=> $employes[$i]->nationnalite ,
-               'fonction'=> $employes[$i]->fonction ,
-               'date_recrutement'=> $employes[$i]->date_recrutement ,
-               'banque'=> $employes[$i]->banque ,
-               'debut_contrat'=> $employes[$i]->debut_contrat ,
-               'fin_contrat'=> $employes[$i]->fin_contrat ,
-               'affectation'  => $affectation , 
-                ];
 
-        }
-        $data = array( 'employe'=> $att);
-       return  $data ;
+
+    }
+
+    public function edit($id)
+    {
+        
+        $data = array( 'id'=> $id);
+        
+        return view('pointage.edit',$data);
 
     }
     /**
@@ -72,26 +64,13 @@ class PointageController extends Controller
     public function store(Request $request)
     {
         if($request->isMethod('post')){
-            $add = new Employe; 
-            $add->nom = $request->nom;
-            $add->prenom = $request->prenom;
-            $add->adresse = $request->adresse;
-            $add->date_naissance = $request->date_naissance;
-            $add->ville = $request->ville;
-            $add->cnss = $request->cnss ;
-            $add->cin = $request->cin ;
-            $add->telephone = $request->telephone ;
-            $add->email = $request->email ;
-            $add->genre = $request->genre ;
-            $add->nationnalite = $request->nationnalite ;
-            $add->fonction = $request->fonction ;
-            $add->date_recrutement = $request->date_recrutement ;
-            $add->banque = $request->banque ;
-            $add->debut_contrat = $request->debut_contrat ;
-            $add->fin_contrat = $request->fin_contrat ;
+            $add = new Pointage_detail(); 
+            $add->mois = $request->mois;
+            $add->anne = $request->date_year;
+            $add->projet_id = $request->id_projet;
             $add->save();
         
-            return redirect()->to('/rh');
+            return redirect()->to('/pointage/'.$request->id_projet.'/detail');
          } 
        
     }
@@ -106,5 +85,38 @@ class PointageController extends Controller
     {
         //
     }
+    public function get_pointage_detail($id){
+
+
+        $pointage_detail = Pointage_detail::where('projet_id', '=', $id )->get();
+
+        //$data = array( 'pointage_detail'=> $pointage_detail );
+
+
+
+        for($i=0;$i<count($pointage_detail);$i++)
+        {
+ 
+            $projet = Projet::find( $pointage_detail[$i]->projet_id  );
+ 
+            $att[] =  [ 
+            'id' =>  $pointage_detail[$i]->id , 
+            'client'=> $projet->client, 
+            'anne' => $pointage_detail[$i]->anne , 
+            'mois' => $pointage_detail[$i]->mois , 
+
+             ];
+ 
+        }
+
+        $data = array( 'pointage_detail'=> $att );
+
+
+        return  $data ;
+
+
+    }
+
+    
 
 }

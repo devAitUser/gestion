@@ -40,25 +40,35 @@ class RhController extends Controller
 
             $affectation = Affectation::where('employe_id', '=', $employes[$i]->id )->get();
 
-            unset($att_affectation);
-            for($j=0;$j<count($affectation);$j++)
-            {
 
-                $projet = Projet::find($affectation[$j]->projet );
+            if ($affectation === null) {
+                
+             }else {
 
-                $att_affectation[] =  [ 
-                    'id'=>  $affectation[$j]->id , 
-                    'projet'=> $projet->client, 
-                    'debut'=> $affectation[$j]->debut , 
-                    'fin'=> $affectation[$j]->fin , 
-                    'statut'=> $affectation[$j]->statut , 
+                unset($att_affectation);
+                for($j=0;$j<count($affectation);$j++)
+                {
 
-                     ];
-                     
-            }
+                    $projet = Projet::find($affectation[$j]->projet );
+                    if ($projet != null) {
+                            $att_affectation[] =  [ 
+                                'id'=>  $affectation[$j]->id , 
+                                'projet'=> $projet->client, 
+                                'debut'=> $affectation[$j]->debut , 
+                                'fin'=> $affectation[$j]->fin , 
+                                'statut'=> $affectation[$j]->statut , 
+
+                                ];
+                    }
+                        
+                }
+
+             }
+
+            
 
 
-
+            $att_affectation = array();
             $att[] =  [ 
                 'id'=>  $employes[$i]->id , 
                 'nom'=> $employes[$i]->nom, 

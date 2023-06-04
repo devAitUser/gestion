@@ -228,7 +228,8 @@ new Vue({
         },
 
         shwo_affectation (item) {
-         
+           var t =  JSON.stringify(item.affectation);
+                console.log("thsi+"+t)
              this.affectation =  item.affectation;
              this.current_employe = item.id;
 
@@ -242,16 +243,15 @@ new Vue({
 
 
 
-            if(this.addItem.projet != '' && this.addItem.debut != '' && this.addItem.fin != ''
-             && this.addItem.statut != ''  ) {
+            if(this.addItem.projet != '' && this.addItem.debut != ''  ) {
  
                  
                  let jsonData = new FormData()
                  jsonData.append('employe_id'        , this.current_employe )
                  jsonData.append('projet'        , this.addItem.projet.id )
                  jsonData.append('debut'        , this.addItem.debut )
-                 jsonData.append('fin'          , this.addItem.fin )
-                 jsonData.append('statut'        , this.addItem.statut )
+                
+
               
 
               
@@ -286,8 +286,18 @@ new Vue({
                          this.addItem.date_debut = response.data.debut;
 
                          this.affectation.unshift(this.addItem);
+
+
+                       
+
+
+                         for (var i=0; i<this.affectation.length; i++) {
+                            if (this.affectation[i].id==response.data.old_id){
+                                this.affectation[i].fin = response.data.new_fin_date;
+                            }
+                         }
  
-                    
+                         
 
                          this.addItem = {
                             id: 0,
@@ -375,6 +385,7 @@ new Vue({
         },
 
         edit_Item_paiement(item){
+       
 
             this.editedItem = item
             

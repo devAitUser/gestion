@@ -238,6 +238,7 @@ Route::post('/updaterh/{id}',[App\Http\Controllers\RhController::class, 'update'
 
 Route::post('/store_affectation',[App\Http\Controllers\RhController::class, 'store_affectation']);
 
+Route::get('/test',[App\Http\Controllers\RhController::class, 'test']);
 
 Route::post('/update_affectation',[App\Http\Controllers\RhController::class, 'update_affectation']);
 

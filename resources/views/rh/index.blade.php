@@ -216,33 +216,8 @@
                                                          
                                                        </v-col>
                                                        
-                                                       <v-col
-                                                          cols="12"
-                                                          sm="6"
-                                                          >
-                                                          <v-text-field
-                                                          v-model="addItem.fin"
-                                                          label="Date fin"
-                                                          persistent-hint
-                                                          prepend-icon="event"
-                                                        
-                                                          v-bind="attrs"
-                                                          type="date"
-                                                          v-on="on"
-                                                          ></v-text-field>
-                                                       </v-col>
-                                                       <v-col
-                                                          cols="12"
-                                                          sm="6"
-                                                          >
-                                                          <v-combobox
-                                                          v-model="addItem.statut"
-                                                          label="Statut"
-                                                          :items="['actif','non actif']"
-                                                          required
-                                                          >
-                                                       </v-combobox>
-                                                       </v-col>
+                                                     
+                                                    
                                                        <v-col
                                                           cols="12"
                                                           sm="12"

@@ -72,7 +72,7 @@ class PointageController extends Controller
         
             return redirect()->to('/pointage/'.$request->id_projet.'/detail');
          } 
-         $employe = Employe::all()
+         $employe = Employe::all();
        
     }
 

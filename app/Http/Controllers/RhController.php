@@ -34,18 +34,18 @@ class RhController extends Controller
      {
          $employes = Employe::all(); 
          $att_affectation = array();
+         
 
          for($i=0;$i<count($employes);$i++)
          {
 
             $affectation = Affectation::where('employe_id', '=', $employes[$i]->id )->get();
 
+            unset($att_affectation);
+            $att_affectation = array();
+            if ($affectation != null) {
 
-            if ($affectation === null) {
                 
-             }else {
-
-                unset($att_affectation);
                 for($j=0;$j<count($affectation);$j++)
                 {
 
@@ -68,7 +68,7 @@ class RhController extends Controller
             
 
 
-            $att_affectation = array();
+            
             $att[] =  [ 
                 'id'=>  $employes[$i]->id , 
                 'nom'=> $employes[$i]->nom, 
@@ -220,21 +220,77 @@ class RhController extends Controller
          $delete->delete();
      }
 
+     public function test(){
+
+        $edit =  Affectation::where('employe_id', '=' , 9 )->latest()->first();
+        if($edit == null){
+             $tt= "ok";
+        }
+        else {
+            $tt= $edit->projet;  
+        }
+        return $tt;
+
+     }
+
 
      public function store_affectation(Request $request){
 
-        $add = new Affectation; 
-        $add->employe_id = $request->employe_id;
-        $add->projet = $request->projet;
-        $add->debut = $request->debut;
-        $add->fin = $request->fin;
-        $add->statut = $request->statut;
 
-        $add->save();
+        $edit =  Affectation::where('employe_id', '=' , $request->employe_id )->latest()->first();
 
-        return Response()->json(['etat' => true  , 'id' => $add->id , 'debut' => $add->debut ]);
+
+        if ($edit == null) {
+
+            $add = new Affectation; 
+            $add->employe_id = $request->employe_id;
+            $add->projet = $request->projet;
+            $add->debut = $request->debut;
+           
+            $add->statut = 'actif';
+    
+            $add->save();
+    
+            return Response()->json(['etat' => true  , 'id' => $add->id , 'debut' => $add->debut ]);
+           
+         } else {
+
+                if($edit->projet != $request->projet ){
+
+                    $edit->fin= date_create($request->debut)->modify('-1 days')->format('Y-m-d');
+                    $edit->statut = 'no actif';
+                    $edit->save();
+        
+                    $add = new Affectation; 
+                    $add->employe_id = $request->employe_id;
+                    $add->projet = $request->projet;
+                    $add->debut = $request->debut;
+                    $add->fin = $request->fin;
+                    $add->statut = 'actif';
+            
+                    $add->save();
+            
+                    return Response()->json(['etat' => true  , 'id' => $add->id , 'debut' => $add->debut , 'new_fin_date' => $edit->fin , 'old_id' => $edit->id ]);
+        
+                 
+        
+                }
+
+
+         }
+
+
+
+
+       
+
+       
 
      }
+
+    
+
+
      public function update_affectation(Request $request){
 
         $update= Affectation::find($request->id); 

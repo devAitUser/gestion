@@ -19,7 +19,7 @@ class CreateAffectationsTable extends Migration
             $table->foreign('employe_id')->references('id')->on('employes')->onDelete('cascade');
             $table->string('projet');
             $table->date('debut');
-            $table->date('fin');
+            $table->date('fin')->nullable();
             $table->string('statut');
             $table->timestamps();
         });

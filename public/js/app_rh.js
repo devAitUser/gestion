@@ -21,8 +21,6 @@ new Vue({
             search: '',
             sortBy: 'id',
             sortDesc: true,
-           
-
             headers: [
 
        
@@ -128,8 +126,9 @@ new Vue({
                 {
                     text: "Id",
                     align: "left",
-                    sortable: false,
-                    value: "id"
+                    sortable: true,
+                    value: "id",
+                
                 },
                 {
                  text: "Projet",

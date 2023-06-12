@@ -326,6 +326,8 @@
                                               </v-form>
                                               <v-data-table :headers="subHeaders"
                                                  :items="affectation"
+                                                 :sort-by.sync="sortBy"
+                                                 :sort-desc.sync="sortDesc"
                                                  item-key="color"
                                                  hide-actions
                                                  class="elevation-10">

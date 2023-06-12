@@ -258,7 +258,7 @@ class RhController extends Controller
                 if($edit->projet != $request->projet ){
 
                     $edit->fin= date_create($request->debut)->modify('-1 days')->format('Y-m-d');
-                    $edit->statut = 'no actif';
+                    $edit->statut = 'non actif';
                     $edit->save();
         
                     $add = new Affectation; 

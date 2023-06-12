@@ -8,6 +8,12 @@ use App\Models\Projet;
 use App\Models\Pointage_detail;
 
 
+use App\Models\Affectation;
+
+use App\Models\pointage_detail_projet;
+ 
+
+
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -69,6 +75,23 @@ class PointageController extends Controller
             $add->anne = $request->date_year;
             $add->projet_id = $request->id_projet;
             $add->save();
+
+            $affectation = Affectation::where([ 'projet' =>  $request->id_projet , 'statut'    => 'non actif' ])->get();
+
+
+            for($i=0;$i<count($affectation);$i++)
+            {
+               
+                $add_detail_projet = new pointage_detail_projet();
+                $add_detail_projet->projet_id = $request->id_projet;
+                $add_detail_projet->nom_prenom = $affectation[$i]->nom ." ". $affectation[$i]->prenom ;
+                
+                $add_detail_projet->save();
+     
+            }
+
+
+            
         
             return redirect()->to('/pointage/'.$request->id_projet.'/detail');
          } 

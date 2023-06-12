@@ -341,7 +341,7 @@
                                                     </v-icon>
                                                     <v-icon
                                                        size="small"
-                                                       @click="deleteItem_affectation(item.id)"
+                                                       @click="deleteItem_affectation(item)"
                                                        >
                                                        mdi-delete
                                                     </v-icon>

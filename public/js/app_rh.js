@@ -280,10 +280,10 @@ new Vue({
                       
                          this.addItem.id =     response.data.id;
 
-                         this.addItem.projet = this.addItem.projet.id;
+                         this.addItem.projet = this.addItem.projet.client;
 
                          this.addItem.date_debut = response.data.debut;
-
+                         this.addItem.statut = 'actif';
                          this.affectation.unshift(this.addItem);
 
 
@@ -293,6 +293,7 @@ new Vue({
                          for (var i=0; i<this.affectation.length; i++) {
                             if (this.affectation[i].id==response.data.old_id){
                                 this.affectation[i].fin = response.data.new_fin_date;
+                                this.affectation[i].statut = 'non actif';
                             }
                          }
  
@@ -391,9 +392,7 @@ new Vue({
             this.dialog2=true
         },
        
-        deleteItem_affectation(item_id) {
-
-           
+        deleteItem_affectation(item) {
 
             Swal.fire({
                 title: 'Êtes-vous sûr?',
@@ -409,14 +408,14 @@ new Vue({
 
                    
 
-                        axios.post(window.laravel.url + '/delete_affectation/' + item_id)
+                        axios.post(window.laravel.url + '/delete_affectation/' + item.id)
                             .then(response => {
 
                          
-                                const index = this.affectation.indexOf(item_id);
+                                const index = this.affectation.indexOf(item);
 
 
-                            this.affectation.splice(index, 1);
+                                this.affectation.splice(index, 1);
                             
                            
         
@@ -428,15 +427,6 @@ new Vue({
                           
                                 
                             })
-
-                           
-
-                              
-
-
-          
-
-
 
 
                     this.btn_control = false;

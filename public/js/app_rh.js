@@ -281,7 +281,7 @@ new Vue({
                       
                          this.addItem.id =     response.data.id;
 
-                         this.addItem.projet = this.addItem.projet.id;
+                         this.addItem.projet = this.addItem.projet.client;
 
                          this.addItem.date_debut = response.data.debut;
 

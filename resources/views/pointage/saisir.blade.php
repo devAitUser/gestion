@@ -43,75 +43,40 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Product</th>
-                                            <th scope="col">Date</th>
+                                            <th scope="col">Nom et Prenom</th>
+                                            <th scope="col">Jour Travaillé</th>
 
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Action</th>
+                                            <th scope="col">Avance sur salaire</th>
+                                            
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Watch</td>
-                                            <td>
 
-                                                12-10-2019
+                                       @foreach ($pointage_detail_projets as $pointage_detail_projet)
 
-                                            </td>
+                                       <tr>
+                                          <th scope="row">{{$pointage_detail_projet->id}}</th>
+                                          <td>{{$pointage_detail_projet->nom_prenom}}
 
-                                            <td>$30</td>
-                                            <td><span class="badge badge-success">Delivered</span></td>
-                                            <td>
-                                                <button type="button" class="btn btn-success ">
-                                                <i class="nav-icon i-Pen-2 "></i>
-                                            </button>
-                                                <button type="button" class="btn btn-danger ">
-                                                <i class="nav-icon i-Close-Window "></i>
-                                            </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">2</th>
-                                            <td>Iphone</td>
-                                            <td>
+                                             <input type="text" value="{{$pointage_detail_projet->nom_prenom}}" name="nom_prenom" hidden>
+                                          
+                                          </td>
+                                           <td>
 
-                                                23-10-2019
+                                              <input type="text" class="form-control" name='jour_travaille' value="26">
 
-                                            </td>
+                                          </td>
 
-                                            <td>$300</td>
-                                            <td><span class="badge badge-info">Pending</span></td>
-                                            <td>
-                                                <button type="button" class="btn btn-success ">
-                                                <i class="nav-icon i-Pen-2 "></i>
-                                            </button>
-                                                <button type="button" class="btn btn-danger ">
-                                                <i class="nav-icon i-Close-Window "></i>
-                                            </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">3</th>
-                                            <td>Watch</td>
-                                            <td>
+                                          <td>
 
-                                                12-10-2019
+                                             <input type="text" class="form-control" name='avance_salaire' value="0" >
 
-                                            </td>
-
-                                            <td>$30</td>
-                                            <td><span class="badge badge-warning">Not Delivered</span></td>
-                                            <td>
-                                                <button type="button" class="btn btn-success ">
-                                                <i class="nav-icon i-Pen-2 "></i>
-                                            </button>
-                                                <button type="button" class="btn btn-danger ">
-                                                <i class="nav-icon i-Close-Window "></i>
-                                            </button>
-                                            </td>
-                                        </tr>
+                                         </td>
+                                      </tr>
+                                           
+                                       @endforeach
+                                       
 
                                     </tbody>
                                 </table>

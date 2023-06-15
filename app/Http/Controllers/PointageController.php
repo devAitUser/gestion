@@ -9,6 +9,7 @@ use App\Models\Pointage_detail;
 
 
 use App\Models\Affectation;
+use App\Models\Employe; 
 
 use App\Models\pointage_detail_projet;
  
@@ -82,9 +83,12 @@ class PointageController extends Controller
             for($i=0;$i<count($affectation);$i++)
             {
                
+                $employe = Employe::find( $affectation[$i]->employe_id );
+
+
                 $add_detail_projet = new pointage_detail_projet();
                 $add_detail_projet->projet_id = $request->id_projet;
-                $add_detail_projet->nom_prenom = $affectation[$i]->nom ." ". $affectation[$i]->prenom ;
+                $add_detail_projet->nom_prenom = $employe->nom ." ". $employe->prenom ;
                 
                 $add_detail_projet->save();
      
@@ -126,6 +130,7 @@ class PointageController extends Controller
             $att[] =  [ 
             'id' =>  $pointage_detail[$i]->id , 
             'client'=> $projet->client, 
+            'projet_id' => $pointage_detail[$i]->projet_id  , 
             'anne' => $pointage_detail[$i]->anne , 
             'mois' => $pointage_detail[$i]->mois , 
 
@@ -140,9 +145,15 @@ class PointageController extends Controller
 
 
     }
-    public function pointage_saisir(){
+    public function pointage_saisir($id){
 
-        return view('pointage.saisir');
+
+
+      $pointage_detail_projet = Pointage_detail_projet::where('projet_id', '=', $id )->get();
+
+      $data = array( 'pointage_detail_projets'=> $pointage_detail_projet);
+
+        return view('pointage.saisir',$data);
 
     }
 

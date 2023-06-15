@@ -104,7 +104,7 @@ new Vue({
 
         editItem(item) {
 
-            window.location.href = "pointage/" + item.id + "/detail"
+            window.location.href = "/pointage/" + item.id + "/saisir"
         },
 
         formatDate (date) {

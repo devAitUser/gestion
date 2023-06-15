@@ -76,7 +76,7 @@ class PointageController extends Controller
             $add->projet_id = $request->id_projet;
             $add->save();
 
-            $affectation = Affectation::where([ 'projet' =>  $request->id_projet , 'statut'    => 'non actif' ])->get();
+            $affectation = Affectation::where([ 'projet' =>  $request->id_projet , 'statut'    => 'actif' ])->get();
 
 
             for($i=0;$i<count($affectation);$i++)
@@ -138,6 +138,11 @@ class PointageController extends Controller
 
         return  $data ;
 
+
+    }
+    public function pointage_saisir(){
+
+        return view('pointage.saisir');
 
     }
 

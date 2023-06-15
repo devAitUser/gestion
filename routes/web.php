@@ -252,6 +252,11 @@ Route::get('/getpointage',[App\Http\Controllers\PointageController::class, 'get_
 Route::get('/pointage/{id}/detail',[App\Http\Controllers\PointageController::class, 'edit']);
 
 
+Route::get('/pointage/{id}/saisir',[App\Http\Controllers\PointageController::class, 'pointage_saisir']);
+
+
+
+
 Route::get('/get_pointage_detail/{id}',[App\Http\Controllers\PointageController::class, 'get_pointage_detail']);
 
 Route::post('/pointage_store',[App\Http\Controllers\PointageController::class, 'store'])->name('pointage_store');

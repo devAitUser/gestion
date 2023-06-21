@@ -28,7 +28,7 @@
                         <div class="card">
                            <v-card>
                               <v-card-title>
-                                 la liste des Pointages du projet : &nbsp;   <strong>  {{$projet}} </strong> 
+                                 la liste des Pointages 
                                  <v-spacer></v-spacer>
                               </v-card-title>
                               <v-card-title class="text-right">
@@ -56,24 +56,23 @@
                                     </thead>
                                     <tbody>
 
-                                       @foreach ($pointage_detail_projets as $pointage_detail_projet)
+                                       @foreach ($pointages as $pointage)
 
                                        <tr>
-                                          <th scope="row">{{$pointage_detail_projet->id}}</th>
-                                          <td>{{$pointage_detail_projet->nom_prenom}}
+                                          <th scope="row">{{$pointage->id}}</th>
+                                          <td>{{$pointage->nom_employe}}
 
-                                             <input type="text" value="{{$pointage_detail_projet->nom_prenom}}" name="nom_prenom[]" hidden>
-                                          
+                                            
                                           </td>
                                            <td>
 
-                                              <input type="text" class="form-control" name='jour_travaille[]' value="26">
+                                              <input type="text" class="form-control" name='jour_travaille[]' value="{{$pointage->jour_travaille}}" disabled >
 
                                           </td>
 
                                           <td>
 
-                                             <input type="text" class="form-control" name='avance_salaire[]' value="0" >
+                                             <input type="text" class="form-control" name='avance_salaire[]' value="{{$pointage->avance_salaire}}"  disabled>
 
 
                                          
@@ -84,12 +83,12 @@
                                        @endforeach
 
 
-                                       <input type="text" value="{{$projet_id}}" name="projet_id" hidden >
+                                       
                                        
 
                                     </tbody>
                                 </table>
-                                <button type="submit" class="btn btn-primary text-white"  >Envoyer</button>
+                              
 
                                 </form>
                             </div>

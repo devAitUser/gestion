@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePointageDetailProjetTable extends Migration
+class CreateInfoPointagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreatePointageDetailProjetTable extends Migration
      */
     public function up()
     {
-        Schema::create('pointage_detail_projets', function (Blueprint $table) {
+        Schema::create('info_pointages', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('projet_id');
-            $table->foreign('projet_id')->references('id')->on('projets')->onDelete('cascade');
             $table->unsignedBigInteger('pointage_detail_id');
             $table->foreign('pointage_detail_id')->references('id')->on('pointage_details')->onDelete('cascade');
-            $table->string('nom_prenom');
+            $table->string('nom_employe');
+            $table->string('jour_travaille');
+            $table->string('avance_salaire');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreatePointageDetailProjetTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pointage_detail_projet');
+        Schema::dropIfExists('info_pointages');
     }
 }

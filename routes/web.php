@@ -254,12 +254,20 @@ Route::get('/pointage/{id}/detail',[App\Http\Controllers\PointageController::cla
 
 Route::get('/pointage/{id}/saisir',[App\Http\Controllers\PointageController::class, 'pointage_saisir']);
 
-
+Route::get('/pointage/{id}/valider',[App\Http\Controllers\PointageController::class, 'pointage_valider']);
 
 
 Route::get('/get_pointage_detail/{id}',[App\Http\Controllers\PointageController::class, 'get_pointage_detail']);
 
 Route::post('/pointage_store',[App\Http\Controllers\PointageController::class, 'store'])->name('pointage_store');
+
+
+//post_data_info_pointage
+
+Route::post('/post_data_info_pointage',[App\Http\Controllers\PointageController::class, 'post_data_info_pointage'])->name('post_data_info_pointage');
+
+
+Route::get('/test_p',[App\Http\Controllers\PointageController::class, 'test_p']);
 
 
 

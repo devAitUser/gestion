@@ -36,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
+
+        setlocale(LC_TIME, "fr_FR");
+
+        
         $this->registerPolicies();
 
         Gate::define('view_all_page_product', function ()

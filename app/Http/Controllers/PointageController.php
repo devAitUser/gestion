@@ -155,7 +155,7 @@ class PointageController extends Controller
 
         $pointage_detail = Pointage_detail::where('projet_id', '=', $id )->get();
 
-        //$data = array( 'pointage_detail'=> $pointage_detail );
+        
 
 
         $pointage_status = 0;
@@ -169,11 +169,12 @@ class PointageController extends Controller
 
             $info_pointage = Info_pointage::where('pointage_detail_id', '=', $pointage_detail[$i]->id )->get();
 
-            if ($info_pointage  != null) {
-                $pointage_status = 0;
-             }else {
+
+             if (Info_pointage::where('pointage_detail_id', '=', $pointage_detail[$i]->id )->exists()) {
                 $pointage_status = 1;
-             }
+            } else {
+                $pointage_status = 0;
+            }
 
  
             $att[] =  [ 
@@ -250,22 +251,7 @@ class PointageController extends Controller
     
     }
 
-    public function test_p(){
- 
-        $time = "1900-02-01 00:00:00";
-
-        $maDate = Carbon::parse($time);
-    
-
-        $array_month = array(1 => 'janvier', 2 => 'février', 3 => 'mars', 4 => 'avril' , 5 => 'mai' , 6 => 'juin' , 7 => 'juillet' , 8 => 'août' , 9 => 'septembre' , 10 => 'octobre' , 11 => 'novembre' , 12 => 'décembre' );
-
-        $key = array_search('août', $array_month);
-
-        if( $key ==  $maDate->month){}
-
-
-       return $maDate->month   ;
-    }
+   
 
     
 

@@ -63,23 +63,17 @@
                 </a>
                 <div class="triangle"></div>
              </li>  
-             <li class="nav-item {{ request()->is('rh')  ? 'active' : '' }}  {{ request()->is('rh/index')  ? 'active' : '' }}"  >
+             <li  data-item="rh" class="nav-item"  >
 
                 <a class="nav-item-hold" href="{{ url('rh')}}">
                     <i class="nav-icon i-ID-3"></i>
                     <span class="nav-text"> RH </span>
                 </a>
                 <div class="triangle"></div>
-             </li>  
-
-             <li class="nav-item {{ request()->is('pointage')  ? 'active' : '' }}  {{ request()->is('rh/index')  ? 'active' : '' }}"  >
-
-                <a class="nav-item-hold" href="{{ url('pointage')}}">
-                    <i class="nav-icon i-Target"></i>
-                    <span class="nav-text"> Pointage </span>
-                </a>
-                <div class="triangle"></div>
              </li> 
+              
+
+     
      
         
           
@@ -151,6 +145,49 @@
         </ul>
 
         
+
+                <!-- Submenu rh -->
+            <ul class="childNav" data-parent="rh">
+
+                    <li class="nav-item">
+                        <a href="{{ url('rh')}}"
+                            class="{{ Route::currentRouteName()=='permission' ? 'open' : '' }}">
+                            <i class="nav-icon i-Receipt-3"></i>
+                            <span class="nav-text"> Employés
+                            </span>
+                            
+                        </a>
+                    </li> 
+
+                    <li class="nav-item">
+                        <a href="{{ url('pointage')}}"
+                            class="{{ Route::currentRouteName()=='marque' ? 'open' : '' }}">
+                            <i class="nav-icon i-Address-Book-2"></i>
+                            <span class="nav-text"> Pointages
+                            </span>
+                            
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ url('pointage')}}"
+                            class="{{ Route::currentRouteName()=='marque' ? 'open' : '' }}">
+                            <i class="nav-icon nav-icon i-Financial"></i>
+                            <span class="nav-text"> Paie
+                            </span>
+                            
+                        </a>
+                    </li>
+
+           
+
+                
+
+
+
+      
+           
+            </ul>
 
 
          <!-- Submenu achats -->

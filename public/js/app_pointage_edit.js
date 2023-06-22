@@ -40,6 +40,12 @@ new Vue({
                     text: 'année',
                     value: 'anne'
                 },
+
+                {
+                    text: "status",
+                    value: "status",
+                    sortable: false
+                },
                 
                 
                 {
@@ -104,8 +110,11 @@ new Vue({
 
         editItem(item) {
 
-            //window.location.href = "/pointage/" + item.id + "/saisir"
-            alert(item.status)
+            if(item.status){
+                window.location.href = "/pointage/" + item.id + "/valider"
+            } else {
+                window.location.href = "/pointage/" + item.id + "/saisir"
+            }
         },
 
         formatDate (date) {

@@ -135,11 +135,18 @@
                                        </v-card-text>
                                     </v-card>
                                  </v-dialog>
+                                   <template v-slot:item.status="{ item }">
+                               
+                                         <span v-if="item.status" class="badge badge-success">Valider</span>
+                                         <span v-else class="badge badge-danger" >En cours</span>
+                                 
+                                 </template>
                                  <template v-slot:item.action="{ item }">
                                     <v-btn color="purple" fab small dark  @click="editItem(item)">
                                        <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                     </v-btn>
                                  </template>
+                               
                                  <template v-slot:item.affecatation ="{ item }" >
                                     <v-btn align-center  class="mx-0"  small  fab dark color="teal" @click="shwo_affectation(item)">
                                        <v-icon dark>mdi-format-list-bulleted-square</v-icon>

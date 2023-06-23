@@ -170,7 +170,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ url('pointage')}}"
+                        <a href="{{ url('paie_index')}}"
                             class="{{ Route::currentRouteName()=='marque' ? 'open' : '' }}">
                             <i class="nav-icon nav-icon i-Financial"></i>
                             <span class="nav-text"> Paie

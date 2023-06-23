@@ -96,7 +96,7 @@ class PointageController extends Controller
 
                 $date_debut = Carbon::parse($affectation[$i]->debut);
 
-                $mois_entrer = array_search($request->mois, $array_month);
+                $mois_entrer = array_search( $request->mois , $array_month );
 
                 if( $mois_entrer >= $date_debut->month  ){
 
@@ -251,7 +251,61 @@ class PointageController extends Controller
     
     }
 
-   
+    public function paie_index(){
+
+        return view('pointage.paie');
+    }
+
+    public function api_year(){
+
+         $all_year = Pointage_detail::all();
+
+         $all_year = $all_year->pluck('anne');
+
+        return $all_year->unique('anne');;
+    }
+
+    public function fill_table(Request $request){
+
+  
+        $array_pointage = [];
+
+
+
+
+        $pointage_detail = Pointage_detail::where([ 'mois' =>  $request->mois  ,  'anne'    => $request->anne ])->get();
+
+        for($i=0;$i<count($pointage_detail);$i++)
+        {
+
+             if (Info_pointage::where('pointage_detail_id', '=', $pointage_detail[$i]->id )->exists()) {
+                
+
+
+                 $projet = Projet::find( $pointage_detail[$i]->projet_id  );
+
+
+                 $array_pointage[] =  [ 
+                    'id' =>  $pointage_detail[$i]->id , 
+                    'client'=> $projet->client, 
+                  
+                     ];
+
+
+             }
+
+
+
+             
+
+
+        }
+
+        return  $array_pointage ;
+
+
+
+    }
 
     
 

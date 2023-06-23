@@ -267,11 +267,15 @@ Route::post('/pointage_store',[App\Http\Controllers\PointageController::class, '
 Route::post('/post_data_info_pointage',[App\Http\Controllers\PointageController::class, 'post_data_info_pointage'])->name('post_data_info_pointage');
 
 
-Route::get('/test_p',[App\Http\Controllers\PointageController::class, 'test_p']);
+Route::get('/paie_index',[App\Http\Controllers\PointageController::class, 'paie_index'])->name('paie_index');
 
 
 
+Route::get('/api_year',[App\Http\Controllers\PointageController::class, 'api_year']);
 
+
+
+Route::post('/fill_table',[App\Http\Controllers\PointageController::class, 'fill_table']);
 
 
 

@@ -17,7 +17,8 @@ new Vue({
             btn_control: false,
             singleSelect: false,
             selectedRows: [],
-            
+            array_mois : ['janvier','février', 'mars', 'avril','mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre','décembre'],
+            array_anne : [ ],
             selected: [],
             search: '',
             sortBy: 'id',
@@ -33,21 +34,9 @@ new Vue({
                     value: 'client'
                 },
                 {
-                    text: 'Mois',
-                    value: 'mois'
+                    text: "Nombre d'employés ",
+                    value: 'nbr_employe'
                 },
-                
-                {
-                    text: 'année',
-                    value: 'anne'
-                },
-
-                {
-                    text: "status",
-                    value: "status",
-                    sortable: false
-                },
-                
                 
                 {
                     text: "Action",
@@ -68,6 +57,12 @@ new Vue({
                 debut : '',
                 fin  : '',
                 statut : '',
+              },
+              item :{
+
+                mois : '',
+                anne : '',
+
               },
 
               pointage: [
@@ -378,6 +373,47 @@ new Vue({
 
 
         },
+        fn_mois(){
+
+            this.fill_table()
+        },
+
+        fn_anne(){
+
+            this.fill_table()
+        },
+
+        fill_table(){
+
+
+            if(this.item.mois != '' && this.item.anne != ''  ) {
+
+                
+                let jsonData = new FormData()
+                jsonData.append('mois'        , this.item.mois  )
+                jsonData.append('anne'        , this.item.anne )
+            
+             
+
+             
+
+                axios.post(window.laravel.url + '/fill_table', jsonData)
+                .then(response => {
+                    
+
+                   
+                    this.pointage = response.data;
+
+
+                    
+
+                })
+
+               
+
+           }
+
+        },
 
         deleteItem() {
 
@@ -485,9 +521,25 @@ new Vue({
             axios.get(window.laravel.url + '/get_pointage_detail/'+window.laravel.id_projet)
                 .then(response => {
 
-                    this.pointage = response.data.pointage_detail;
+                   
                    
 
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+
+                
+
+
+                axios.get(window.laravel.url + '/api_year')
+                .then(response => {
+
+                    this.array_anne = response.data;
+                   
+
+                    console.log(this.array_anne);
 
                 })
                 .catch(error => {

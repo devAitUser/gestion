@@ -63,7 +63,7 @@
                                           <td>{{$pointage_detail_projet->nom_prenom}}
 
                                              <input type="text" value="{{$pointage_detail_projet->nom_prenom}}" name="nom_prenom[]" hidden>
-                                          
+                                             <input type="text" value="{{$pointage_detail_projet->employe_id}}" name="employe_id[]" hidden>
                                           </td>
                                            <td>
 

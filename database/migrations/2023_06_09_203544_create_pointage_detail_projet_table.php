@@ -18,6 +18,8 @@ class CreatePointageDetailProjetTable extends Migration
             $table->unsignedBigInteger('projet_id');
             $table->foreign('projet_id')->references('id')->on('projets')->onDelete('cascade');
             $table->unsignedBigInteger('pointage_detail_id');
+            $table->unsignedBigInteger('employe_id');
+            $table->foreign('employe_id')->references('id')->on('employes')->onDelete('cascade');
             $table->foreign('pointage_detail_id')->references('id')->on('pointage_details')->onDelete('cascade');
             $table->string('nom_prenom');
             $table->timestamps();

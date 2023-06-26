@@ -103,6 +103,7 @@
 <script src="{{ asset('js/plugins/sweetalert2@9.js') }}"></script>
 <script src="{{ asset('js/plugins/vuetify.js') }}"></script>
 <script>
+   var current_year = new Date().getFullYear();
    window.laravel ={!! json_encode([
      'token' => csrf_token(),
      'url'   => url('/'),

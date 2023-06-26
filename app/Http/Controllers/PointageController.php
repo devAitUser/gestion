@@ -117,6 +117,7 @@ class PointageController extends Controller
                     $add_detail_projet = new pointage_detail_projet();
                     $add_detail_projet->projet_id = $request->id_projet;
                     $add_detail_projet->pointage_detail_id = $add->id;
+                    $add_detail_projet->employe_id = $employe->id;
                     $add_detail_projet->nom_prenom = $employe->nom . " " . $employe->prenom ;
                     $add_detail_projet->save();
 
@@ -216,12 +217,15 @@ class PointageController extends Controller
          
 
          for($i=0;$i<count($request->nom_prenom);$i++){
+
+            $employe = employe::find($request->employe_id[$i]);
+
             $new  =  new info_pointage();
             $new->pointage_detail_id      = $request->projet_id;
             $new->nom_employe             = $request->nom_prenom[$i];
             $new->jour_travaille          = $request->jour_travaille[$i];
             $new->avance_salaire          = $request->avance_salaire[$i];
-
+            $new->salaire_paye            = (($employe->salaire_net/26)*$request->jour_travaille[$i]) -  $request->avance_salaire[$i];
             $new->save();  
          }
 
@@ -279,6 +283,10 @@ class PointageController extends Controller
         {
 
              if (Info_pointage::where('pointage_detail_id', '=', $pointage_detail[$i]->id )->exists()) {
+
+                 $pointage = Info_pointage::where('pointage_detail_id', '=', $pointage_detail[$i]->id )->get();
+           
+                 $pointageCount = $pointage->count();
                 
 
 
@@ -288,6 +296,7 @@ class PointageController extends Controller
                  $array_pointage[] =  [ 
                     'id' =>  $pointage_detail[$i]->id , 
                     'client'=> $projet->client, 
+                    'pointageCount'=>  $pointageCount, 
                   
                      ];
 

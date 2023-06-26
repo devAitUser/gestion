@@ -33346,3 +33346,9 @@ i.v-icon.notranslate.v-icon--left.mdi.mdi-account-circle-outline.theme--light {
   background-color: #10163a;
 }
 
+.v-menu__content {
+  position: fixed !important;
+
+
+}
+

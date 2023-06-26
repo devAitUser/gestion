@@ -50,7 +50,7 @@
                                             <th scope="col">Jour Travaillé</th>
 
                                             <th scope="col">Avance sur salaire</th>
-                                            
+                                            <th scope="col">Salaire a payé </th>
                                             
                                         </tr>
                                     </thead>
@@ -66,16 +66,24 @@
                                           </td>
                                            <td>
 
-                                              <input type="text" class="form-control" name='jour_travaille[]' value="{{$pointage->jour_travaille}}" disabled >
+                                              <input type="text" class="form-control" name='' value="{{$pointage->jour_travaille}}" disabled >
 
                                           </td>
 
                                           <td>
 
-                                             <input type="text" class="form-control" name='avance_salaire[]' value="{{$pointage->avance_salaire}}"  disabled>
+                                             <input type="text" class="form-control" name='' value="{{$pointage->avance_salaire}}"  disabled>
 
 
                                          
+
+                                         </td>
+                                         <td>
+
+                                          <input type="text" class="form-control" name='' value="{{$pointage->salaire_paye}}"  disabled>
+
+
+                                      
 
                                          </td>
                                       </tr>

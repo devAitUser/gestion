@@ -23,6 +23,7 @@ new Vue({
             search: '',
             sortBy: 'id',
             sortDesc: true,
+       
            
 
             headers: [
@@ -35,7 +36,13 @@ new Vue({
                 },
                 {
                     text: "Nombre d'employés ",
-                    value: 'nbr_employe'
+                    value: 'pointageCount'
+                },
+
+                ,
+                {
+                    text: "Salaire employe",
+                    value: 's_emplye'
                 },
                 
                 {
@@ -61,7 +68,7 @@ new Vue({
               item :{
 
                 mois : '',
-                anne : '',
+                anne : current_year.toString(),
 
               },
 
@@ -518,17 +525,7 @@ new Vue({
         },
 
         get_data: function() {
-            axios.get(window.laravel.url + '/get_pointage_detail/'+window.laravel.id_projet)
-                .then(response => {
-
-                   
-                   
-
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+           
 
                 
 

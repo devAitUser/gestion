@@ -21,12 +21,19 @@ new Vue({
             array_anne : [ ],
             selected: [],
             search: '',
-            sortBy: 'id',
+            //sortBy: 'id',
             sortDesc: true,
        
            
 
             headers: [
+
+
+                
+                {
+                    text: 'id',
+                    value: 'index'
+                },
 
        
 
@@ -41,8 +48,18 @@ new Vue({
 
                 ,
                 {
-                    text: "Salaire employe",
-                    value: 's_emplye'
+                    text: "Salaire Net",
+                    value: 'sum_avance_salaire'
+                },
+                
+                {
+                    text: "Salaire payés",
+                    value: 'salaire'
+                },
+
+                {
+                    text: "Reste a payer",
+                    value: 'salaire'
                 },
                 
                 {
@@ -110,6 +127,11 @@ new Vue({
 
 
     methods: {
+
+
+        lineNumber(index) {
+            return index + 1; // Ajoutez 1 pour commencer à partir de 1 au lieu de 0
+        },
 
         editItem(item) {
 

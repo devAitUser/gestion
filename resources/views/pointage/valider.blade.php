@@ -39,6 +39,29 @@
                               <div class="card-body">
                   
                             <div class="table-responsive">
+
+
+                            <v-row>
+                                 <v-col
+                                    cols="12"
+                                    md="4"
+                                 >
+
+                                 <v-btn @click="btn_retour()"  block class="mt-2 success"  >Retour </v-btn>
+
+
+                                 </v-col>
+                               
+                               
+
+
+
+                            </v-row>
+
+
+                              
+
+                            
                               
                                <form method="POST" action="{{ route('post_data_info_pointage') }}">
                                @csrf
@@ -50,7 +73,10 @@
                                             <th scope="col">Jour Travaillé</th>
 
                                             <th scope="col">Avance sur salaire</th>
-                                            <th scope="col">Salaire a payé </th>
+
+
+                                            <th scope="col">Status du salaire </th>
+                                     
                                             
                                         </tr>
                                     </thead>
@@ -69,23 +95,22 @@
                                               <input type="text" class="form-control" name='' value="{{$pointage->jour_travaille}}" disabled >
 
                                           </td>
-
                                           <td>
 
                                              <input type="text" class="form-control" name='' value="{{$pointage->avance_salaire}}"  disabled>
 
 
-                                         
-
                                          </td>
-                                         <td>
 
-                                          <input type="text" class="form-control" name='' value="{{$pointage->salaire_paye}}"  disabled>
+                                          <td>
 
-
-                                      
-
-                                         </td>
+                                             <select class="form-control" name="status_employer" >
+                                                <option value="">selectionner</option>
+                                                <option value="payé">payé</option>
+                                                <option value="non payé">non payé</option>
+                                             </select>
+                                          </td>
+                               
                                       </tr>
                                            
                                        @endforeach

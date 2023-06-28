@@ -71,11 +71,19 @@
                       
                               </v-card-title>
                               <v-data-table  @input="item($event)" :headers="headers" :items="pointage" :search="search" :value="selectedRows" v-model="selected" :items-per-page="5"  :sort-by.sync="sortBy"
-                                 :sort-desc.sync="sortDesc" show-select   item-key="id"
+                                 :sort-desc.sync="sortDesc" show-select   item-key="id" item-key="lineNumber"
                                  :expanded.sync="expanded" @click:row="clicked">
-                                 <template v-slot:item.img="{ item }">
-                                    <img :src="'images/' + item.photo" style="width: 55px; height: 55px" />
-                                 </template>
+                                 
+                                 
+                                    <template v-slot:item.index="{ item }">
+                                        @{{item.id_table}}
+                                    </template>
+
+
+                                  
+
+                             
+                                                            
                              
                                 
                                                       

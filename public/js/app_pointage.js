@@ -462,6 +462,12 @@ new Vue({
 
         },
 
+        btn_retour(){
+
+            window.location.href = window.laravel.url + '/pointage';
+
+        },
+
         get_data: function() {
             axios.get(window.laravel.url + '/getprojets')
                 .then(response => {

@@ -239,15 +239,9 @@ class PointageController extends Controller
 
     public function pointage_valider($id){
 
-
-        
-
-
         $pointage =  Info_pointage::where('pointage_detail_id', '=', $id )->get();
 
-
-        $data = array( 'pointages'=> $pointage   );
-
+        $data = array( 'pointages'=> $pointage  );
 
         return view('pointage.valider',$data);
 
@@ -274,7 +268,8 @@ class PointageController extends Controller
   
         $array_pointage = [];
 
-
+ 
+        $count_table = 1;
 
 
         $pointage_detail = Pointage_detail::where([ 'mois' =>  $request->mois  ,  'anne'    => $request->anne ])->get();
@@ -285,6 +280,8 @@ class PointageController extends Controller
              if (Info_pointage::where('pointage_detail_id', '=', $pointage_detail[$i]->id )->exists()) {
 
                  $pointage = Info_pointage::where('pointage_detail_id', '=', $pointage_detail[$i]->id )->get();
+
+                 $sum_avance_salaire = $pointage->sum('avance_salaire');
            
                  $pointageCount = $pointage->count();
                 
@@ -294,12 +291,15 @@ class PointageController extends Controller
 
 
                  $array_pointage[] =  [ 
+                    'id_table' =>  $count_table , 
                     'id' =>  $pointage_detail[$i]->id , 
-                    'client'=> $projet->client, 
+                    'client' => $projet->client, 
+                    'sum_avance_salaire'=> $sum_avance_salaire, 
                     'pointageCount'=>  $pointageCount, 
                   
                      ];
 
+                     $count_table++;
 
              }
 

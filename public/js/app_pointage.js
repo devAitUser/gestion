@@ -464,6 +464,8 @@ new Vue({
 
         btn_retour(){
 
+            
+
             window.location.href = window.laravel.url + '/pointage';
 
         },

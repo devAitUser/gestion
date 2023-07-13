@@ -486,6 +486,30 @@ span.spinner.spinner-primary {
                </div>
             </div>
 
+
+            <div class="card-body">
+               <div class="row">
+                  <div class="col-md-2"> <label for="name" class="product-label text-dark"> Rib  </label></div>
+                  <div class="col-md-10">
+                     <div class="form-row">
+                        <div class="form-group col-md-12">
+                           <label for="inputtext11" class="ul-form__label"> Rib  *</label>
+                           <input id="designation" type="number"  name="rib" class="form-control  "  required>
+                           <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
+                           
+      
+                        </div>
+      
+                 
+                   
+      
+                  
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+
       
    </div>
    <meta name="csrf-token" content="{{ csrf_token() }}">

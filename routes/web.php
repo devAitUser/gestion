@@ -254,6 +254,10 @@ Route::get('/pointage/{id}/detail',[App\Http\Controllers\PointageController::cla
 
 Route::get('/pointage/{id}/saisir',[App\Http\Controllers\PointageController::class, 'pointage_saisir']);
 
+
+Route::post('/pointage_api_paiement',[App\Http\Controllers\PointageController::class, 'pointage_api_paiement']);
+
+
 Route::get('/pointage/{id}/valider',[App\Http\Controllers\PointageController::class, 'pointage_valider']);
 
 
@@ -279,16 +283,29 @@ Route::post('/fill_table',[App\Http\Controllers\PointageController::class, 'fill
 
 
 
+Route::post('/api_projet_seleionner_pointage',[App\Http\Controllers\PointageController::class, 'api_projet_seleionner_pointage']);
+
+Route::get('/projet_selectionner_pointage',[App\Http\Controllers\PointageController::class, 'projet_seleionner_pointage']);
+
+
+Route::get('/projet_selectionner_pointage_par_projet/{id}',[App\Http\Controllers\PointageController::class, 'projet_selectionner_pointage_par_projet']);
 
 
 
+// cassier 
 
 
+Route::get('/caisse',[App\Http\Controllers\CaisseController::class, 'index']);
+
+Route::get('/caisse/{id}/detail',[App\Http\Controllers\CaisseController::class, 'caisse_detail']);
+
+Route::get('/caisse_get_projet',[App\Http\Controllers\CaisseController::class, 'caisse_get_projet']);
 
 
+Route::get('/projet_caisse',[App\Http\Controllers\CaisseController::class, 'projet_caisse']);
 
 
-
+Route::post('/store_caisse_detail',[App\Http\Controllers\CaisseController::class, 'store_caisse_detail'])->name('store_caisse_detail');
 
 
 

@@ -132,6 +132,7 @@ class RhController extends Controller
              $add->fin_contrat = $request->fin_contrat ;
              $add->salaire_brut = $request->salaire_brut ;
              $add->salaire_net = $request->salaire_net ;
+             $add->rib = $request->rib ;
              $add->save();
          
              return redirect()->to('/rh');

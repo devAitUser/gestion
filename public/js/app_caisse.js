@@ -17,23 +17,13 @@ new Vue({
             btn_control: false,
             singleSelect: false,
             selectedRows: [],
-            array_mois : ['janvier','février', 'mars', 'avril','mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre','décembre'],
-            array_anne : [ ],
             selected: [],
             search: '',
-            //sortBy: 'id',
+            sortBy: 'status',
             sortDesc: true,
-       
            
 
             headers: [
-
-
-                
-                {
-                    text: 'id',
-                    value: 'index'
-                },
 
        
 
@@ -41,31 +31,25 @@ new Vue({
                     text: 'Projet',
                     value: 'client'
                 },
+
+               
                 {
-                    text: "Nombre d'employés ",
-                    value: 'pointageCount'
+                    text: 'Type',
+                    value: 'status',
+                    sortable: true
                 },
 
-                ,
                 {
-                    text: "Salaire Net",
-                    value: 'sum_salaire'
+                    text: 'Solde Actuel',
+                    value: 'solde'
                 },
+              
+                
                 
                 {
-                    text: "Salaire payés",
-                    value: 'salaire_paye'
-                },
-
-                {
-                    text: "Reste a payer",
-                    value: 'salaire_reste'
-                }
-                ,
-
-                {
                     text: "Action",
-                    value: 'action'
+                    value: "action",
+                    sortable: false
                 }
 
 
@@ -81,12 +65,6 @@ new Vue({
                 debut : '',
                 fin  : '',
                 statut : '',
-              },
-              item :{
-
-                mois : '',
-                anne : current_year.toString(),
-
               },
 
               pointage: [
@@ -128,54 +106,9 @@ new Vue({
 
     methods: {
 
-
-        btn_retour(){
-            alert()
-
-        },
-
-        consulter(){
-
-
-            //  poster les information mois et année
-
-
-            let jsonData = new FormData()
-            
-
-
-
-            for (var i = 0; i < this.selected.length; i++) {
-                jsonData.append('id_project[]', this.selected[i].id_projet);
-              }
-       
-         
-              jsonData.append('mois', this.item.mois );
-         
-              jsonData.append('anne', this.item.anne );
-
-
-
-            axios.post(window.laravel.url + '/api_projet_seleionner_pointage', jsonData)
-            .then(response => {
-                
-
-                window.location.href = window.laravel.url+'/projet_selectionner_pointage';
-
-
-            })
-
-        },
-
-
-        lineNumber(index) {
-            return index + 1; // Ajoutez 1 pour commencer à partir de 1 au lieu de 0
-        },
-
         editItem(item) {
 
-            window.location.href = window.laravel.url+ "/projet_selectionner_pointage_par_projet/" + item.id_projet ;
-
+            window.location.href = "caisse/" + item.id + "/detail"
         },
 
         formatDate (date) {
@@ -210,79 +143,7 @@ new Vue({
           },
 
 
-          post_data()  {
-
-
-
-            if(this.addItem.projet != '' && this.addItem.debut != '' && this.addItem.fin != ''
-             && this.addItem.statut != ''  ) {
- 
-                 
-                 let jsonData = new FormData()
-                 jsonData.append('employe_id'        , this.current_employe )
-                 jsonData.append('projet'        , this.addItem.projet.id )
-                 jsonData.append('debut'        , this.addItem.debut )
-                 jsonData.append('fin'          , this.addItem.fin )
-                 jsonData.append('statut'        , this.addItem.statut )
-              
-
-              
- 
-                 axios.post(window.laravel.url + '/store_affectation', jsonData)
-                 .then(response => {
-                     console.log(response.data);
- 
-                     if (response.data.etat) {
- 
-                         const Toast = Swal.mixin({
-                             toast: true,
-                             position: 'top-end',
-                             showConfirmButton: false,
-                             timer: 2000,
-                             timerProgressBar: true,
-                             onOpen: (toast) => {
-                                 toast.addEventListener('mouseenter', Swal.stopTimer)
-                                 toast.addEventListener('mouseleave', Swal.resumeTimer)
-                             }
-                         })
- 
-                         Toast.fire({
-                             icon: 'success',
-                             title: 'Ajouté avec succes'
-                         })
-                      
-                         this.addItem.id =     response.data.id;
-
-                         this.addItem.projet = this.addItem.projet.id;
-
-                         this.addItem.date_debut = response.data.debut;
-
-                         this.affectation.unshift(this.addItem);
- 
-                    
-
-                         this.addItem = {
-                            id: 0,
-                            projet: '',
-                            date_debut: new Date().toISOString().substr(0, 10),
-                            date_fin : new Date().toISOString().substr(0, 10),
-                            status: '',
-                          }
-
-                         
- 
-                     }
- 
- 
-                 })
- 
-                
- 
-            }
- 
-        
-         },
-
+  
 
    
 
@@ -438,47 +299,6 @@ new Vue({
 
 
         },
-        fn_mois(){
-
-            this.fill_table()
-        },
-
-        fn_anne(){
-
-            this.fill_table()
-        },
-
-        fill_table(){
-
-
-            if(this.item.mois != '' && this.item.anne != ''  ) {
-
-                
-                let jsonData = new FormData()
-                jsonData.append('mois'        , this.item.mois  )
-                jsonData.append('anne'        , this.item.anne )
-            
-             
-
-             
-
-                axios.post(window.laravel.url + '/fill_table', jsonData)
-                .then(response => {
-                    
-
-                   
-                    this.pointage = response.data;
-
-
-                    
-
-                })
-
-               
-
-           }
-
-        },
 
         deleteItem() {
 
@@ -582,19 +402,21 @@ new Vue({
 
         },
 
+        btn_retour(){
+
+            
+
+            window.location.href = window.laravel.url + '/pointage';
+
+        },
+
         get_data: function() {
-           
-
-                
-
-
-                axios.get(window.laravel.url + '/api_year')
+            axios.get(window.laravel.url + '/caisse_get_projet')
                 .then(response => {
 
-                    this.array_anne = response.data;
+                    this.pointage = response.data.projets;
                    
 
-                    console.log(this.array_anne);
 
                 })
                 .catch(error => {

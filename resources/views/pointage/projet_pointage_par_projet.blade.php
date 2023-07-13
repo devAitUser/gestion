@@ -28,7 +28,7 @@
                         <div class="card">
                            <v-card>
                               <v-card-title>
-                                 la liste des Pointages du projet : &nbsp;   <strong>  {{$projet}} </strong> 
+                                 la liste des Pointages 
                                  <v-spacer></v-spacer>
                               </v-card-title>
                               <v-card-title class="text-right">
@@ -39,6 +39,29 @@
                               <div class="card-body">
                   
                             <div class="table-responsive">
+
+
+                            <v-row>
+                                 <v-col
+                                    cols="12"
+                                    md="4"
+                                 >
+
+                                 <v-btn @click="btn_retour()"  block class="mt-2 success"  >Retour </v-btn>
+
+
+                                 </v-col>
+                               
+                               
+
+
+
+                            </v-row>
+
+
+                              
+
+                            
                               
                                <form method="POST" action="{{ route('post_data_info_pointage') }}">
                                @csrf
@@ -47,51 +70,54 @@
                                         <tr>
                                             <th scope="col">#</th>
                                             <th scope="col">Nom et Prenom</th>
-                                            <th scope="col">Jour Travaillé</th>
+                                
+                                            <th scope="col">salaire payé</th>
 
-                                            <th scope="col">Avance sur salaire</th>
-                                            
+                                            <th scope="col">Status du salaire </th>
+                                     
                                             
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                       @foreach ($pointage_detail_projets as $pointage_detail_projet)
+                                       @foreach ($info_pointages as $info_pointage)
 
                                        <tr>
-                                          <th scope="row">{{$pointage_detail_projet->id}}</th>
-                                          <td>{{$pointage_detail_projet->nom_prenom}}
+                                          <th scope="row">{{$info_pointage->id}}</th>
+                                          <td>{{$info_pointage->nom_employe}}
 
-                                             <input type="text" value="{{$pointage_detail_projet->nom_prenom}}" name="nom_prenom[]" hidden>
-                                             <input type="text" value="{{$pointage_detail_projet->employe_id}}" name="employe_id[]" hidden>
+                                            
                                           </td>
-                                           <td>
+                                         
+                                       
 
-                                              <input type="text" class="form-control" name='jour_travaille[]' value="26">
+                                         <td>
+
+                                          <input type="text" class="form-control" name='' value="{{$info_pointage->salaire_paye}}"  disabled>
+
 
                                           </td>
 
                                           <td>
 
-                                             <input type="text" class="form-control" name='avance_salaire[]' value="0" >
-
-                                             <input type="text" value="{{$pointage_detail_projet->rib}}" name="rib[]" hidden >
-                                         
-
-                                         </td>
+                                             <select class="form-control"  name="status_employer"  @if($info_pointage->etat) disabled @else onchange="showModal({{$info_pointage->id}})"  @endif>
+                                                <option value="">selectionner</option>
+                                                <option @if($info_pointage->etat) selected  @endif value="payé" >payé</option>
+                                                <option value="non payé">non payé</option>
+                                             </select>
+                                          </td>
+                               
                                       </tr>
                                            
                                        @endforeach
 
 
-                                       <input type="text" value="{{$projet_id}}" name="projet_id" hidden >
                                        
-                                       <input type="text" value="{{$id_projet}}" name="id_projet" hidden >
-
+                                       
 
                                     </tbody>
                                 </table>
-                                <button type="submit" class="btn btn-primary text-white"  >Envoyer</button>
+                              
 
                                 </form>
                             </div>
@@ -109,6 +135,36 @@
       </div>
    </div>
 </div>
+
+
+
+
+
+<div class="modal" id="popus_etat_paiement">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- En-tête de la modale -->
+        <div class="modal-header">
+          <h4 class="modal-title">Etat de paiement</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Corps de la modale -->
+        <div class="modal-body">
+          <p>etes vous sur </p>
+          <input type="text" id="id_info_pointage" hidden>
+        </div>
+        
+        <!-- Pied de la modale -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="button" class="btn btn-primary" onclick="submit_pointage()"  >Valider</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
 @endsection
 @section('page-js')
 <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
@@ -121,19 +177,70 @@
 <script src="{{ asset('js/plugins/sweetalert2@9.js') }}"></script>
 <script src="{{ asset('js/plugins/vuetify.js') }}"></script>
 <script>
-   window.laravel ={!! json_encode([
+
+window.laravel ={!! json_encode([
      'token' => csrf_token(),
      'url'   => url('/'),
      'date'   => date('Y-m-d'),
-   
+     'id_projet'   => $id_projet,
    
    ]) !!}
+
+function showModal(id_pointage_info) {
+
+      
+      $('#popus_etat_paiement').modal('show');
+
+      $('#id_info_pointage').val(id_pointage_info)
+    }
+
+ function submit_pointage(){
+
+
+   var id_pointage_info = $('#id_info_pointage').val();
+
+   
+
+   $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({ 
+        url: window.laravel.url + "/pointage_api_paiement"  ,
+        method: "post",
+        data: {
+            id: id_pointage_info 
+        },
+        success: function(data) {
+
+         
+      
+         if(data.etat){
+
+            window.location.href =  window.laravel.url + '/projet_selectionner_pointage_par_projet/'+window.laravel.id_projet;
+
+         }
+           
+           
+
+
+        }
+    })
+
+
+ }   
+
+   
+
+
+ 
 
 
    $(document).ready(function(){
 
 
-
+  
 
          $.ajaxSetup({
                   headers: {
@@ -164,6 +271,5 @@
    });
 
 </script>
-<script src="{{ asset('js/valider_pointage.js') }}"></script>
-
+<script src="{{ asset('js/app_pointage.js') }}"></script>
 @endsection

@@ -57,6 +57,9 @@ class PointageController extends Controller
         return view('pointage.edit',$data);
 
     }
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -119,6 +122,10 @@ class PointageController extends Controller
                     $add_detail_projet->pointage_detail_id = $add->id;
                     $add_detail_projet->employe_id = $employe->id;
                     $add_detail_projet->nom_prenom = $employe->nom . " " . $employe->prenom ;
+
+                    $add_detail_projet->rib =  $employe->rib ;
+
+
                     $add_detail_projet->save();
 
 
@@ -207,7 +214,7 @@ class PointageController extends Controller
       $projet = Projet::find($pointage_detail_projet[0]->projet_id);
 
 
-      $data = array( 'pointage_detail_projets'=> $pointage_detail_projet , 'projet_id'=> $id , 'projet'=> $projet->client  );
+      $data = array( 'pointage_detail_projets'=> $pointage_detail_projet , 'projet_id'=> $id , 'id_projet'=> $pointage_detail_projet[0]->projet_id ,'projet'=> $projet->client  );
 
         return view('pointage.saisir',$data);
 
@@ -225,6 +232,8 @@ class PointageController extends Controller
             $new->nom_employe             = $request->nom_prenom[$i];
             $new->jour_travaille          = $request->jour_travaille[$i];
             $new->avance_salaire          = $request->avance_salaire[$i];
+            $new->id_projet               = $request->id_projet;
+            $new->rib                     = $request->rib[$i];
             $new->salaire_paye            = (($employe->salaire_net/26)*$request->jour_travaille[$i]) -  $request->avance_salaire[$i];
             $new->save();  
          }
@@ -250,6 +259,8 @@ class PointageController extends Controller
     }
 
     public function paie_index(){
+
+       
 
         return view('pointage.paie');
     }
@@ -281,9 +292,15 @@ class PointageController extends Controller
 
                  $pointage = Info_pointage::where('pointage_detail_id', '=', $pointage_detail[$i]->id )->get();
 
-                 $sum_avance_salaire = $pointage->sum('avance_salaire');
+                 $pointage_payer = Info_pointage::where([ 'pointage_detail_id' =>  $pointage_detail[$i]->id   ,  'etat'    =>  1 ])->get();;
+
+
+                 $sum_salaire = $pointage->sum('salaire_paye');
            
                  $pointageCount = $pointage->count();
+
+
+                 $salaire_paye =  $pointage_payer->sum('salaire_paye');
                 
 
 
@@ -294,7 +311,10 @@ class PointageController extends Controller
                     'id_table' =>  $count_table , 
                     'id' =>  $pointage_detail[$i]->id , 
                     'client' => $projet->client, 
-                    'sum_avance_salaire'=> $sum_avance_salaire, 
+                    'id_projet' => $pointage_detail[$i]->projet_id, 
+                    'salaire_paye'=> $salaire_paye, 
+                    'sum_salaire'=> $sum_salaire, 
+                    'salaire_reste'=> $sum_salaire - $salaire_paye, 
                     'pointageCount'=>  $pointageCount, 
                   
                      ];
@@ -312,6 +332,77 @@ class PointageController extends Controller
 
         return  $array_pointage ;
 
+
+
+    }
+
+    public function api_projet_seleionner_pointage(Request $resquest ){
+
+        session()->put('var_projet', $resquest->id_project );
+        session()->put('var_mois', $resquest->mois);
+        session()->put('var_anne', $resquest->anne);
+
+    }
+
+
+
+    public function projet_seleionner_pointage(){
+
+        $selected_values = session()->get('var_projet');
+
+
+        $mois = session()->get('var_mois');
+        $anne = session()->get('var_anne');
+
+
+        
+        $info_pointage = Info_pointage::whereIn('id_projet', $selected_values )->get();
+
+
+        $data =  array( "info_pointages" =>  $info_pointage , "mois" => $mois , "anne" => $anne );
+
+        return view( "pointage.projet_pointage", $data )  ;
+
+        
+
+         
+
+    }
+
+    public function projet_selectionner_pointage_par_projet($id){
+
+        
+
+
+
+
+        $info_pointage = Info_pointage::where([ 'id_projet' =>  $id  ])->get();
+        
+
+
+
+        $data =  array( "info_pointages" =>  $info_pointage , 'id_projet' =>  $id   );
+
+        return view( "pointage.projet_pointage_par_projet", $data )  ;
+
+        
+
+         
+
+    }
+
+    public function pointage_api_paiement(Request $request){
+
+
+        $pointage = Info_pointage::find($request->id);
+
+        $pointage->etat = 1;
+
+        $pointage->save();  
+
+
+        return  Response()
+        ->json(['etat' => true    ]);
 
 
     }

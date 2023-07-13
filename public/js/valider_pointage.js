@@ -17,23 +17,13 @@ new Vue({
             btn_control: false,
             singleSelect: false,
             selectedRows: [],
-            array_mois : ['janvier','février', 'mars', 'avril','mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre','décembre'],
-            array_anne : [ ],
             selected: [],
             search: '',
-            //sortBy: 'id',
+            sortBy: 'id',
             sortDesc: true,
-       
            
 
             headers: [
-
-
-                
-                {
-                    text: 'id',
-                    value: 'index'
-                },
 
        
 
@@ -41,31 +31,13 @@ new Vue({
                     text: 'Projet',
                     value: 'client'
                 },
-                {
-                    text: "Nombre d'employés ",
-                    value: 'pointageCount'
-                },
-
-                ,
-                {
-                    text: "Salaire Net",
-                    value: 'sum_salaire'
-                },
+              
+                
                 
                 {
-                    text: "Salaire payés",
-                    value: 'salaire_paye'
-                },
-
-                {
-                    text: "Reste a payer",
-                    value: 'salaire_reste'
-                }
-                ,
-
-                {
                     text: "Action",
-                    value: 'action'
+                    value: "action",
+                    sortable: false
                 }
 
 
@@ -81,12 +53,6 @@ new Vue({
                 debut : '',
                 fin  : '',
                 statut : '',
-              },
-              item :{
-
-                mois : '',
-                anne : current_year.toString(),
-
               },
 
               pointage: [
@@ -128,54 +94,9 @@ new Vue({
 
     methods: {
 
-
-        btn_retour(){
-            alert()
-
-        },
-
-        consulter(){
-
-
-            //  poster les information mois et année
-
-
-            let jsonData = new FormData()
-            
-
-
-
-            for (var i = 0; i < this.selected.length; i++) {
-                jsonData.append('id_project[]', this.selected[i].id_projet);
-              }
-       
-         
-              jsonData.append('mois', this.item.mois );
-         
-              jsonData.append('anne', this.item.anne );
-
-
-
-            axios.post(window.laravel.url + '/api_projet_seleionner_pointage', jsonData)
-            .then(response => {
-                
-
-                window.location.href = window.laravel.url+'/projet_selectionner_pointage';
-
-
-            })
-
-        },
-
-
-        lineNumber(index) {
-            return index + 1; // Ajoutez 1 pour commencer à partir de 1 au lieu de 0
-        },
-
         editItem(item) {
 
-            window.location.href = window.laravel.url+ "/projet_selectionner_pointage_par_projet/" + item.id_projet ;
-
+            window.location.href = "pointage/" + item.id + "/detail"
         },
 
         formatDate (date) {
@@ -438,47 +359,6 @@ new Vue({
 
 
         },
-        fn_mois(){
-
-            this.fill_table()
-        },
-
-        fn_anne(){
-
-            this.fill_table()
-        },
-
-        fill_table(){
-
-
-            if(this.item.mois != '' && this.item.anne != ''  ) {
-
-                
-                let jsonData = new FormData()
-                jsonData.append('mois'        , this.item.mois  )
-                jsonData.append('anne'        , this.item.anne )
-            
-             
-
-             
-
-                axios.post(window.laravel.url + '/fill_table', jsonData)
-                .then(response => {
-                    
-
-                   
-                    this.pointage = response.data;
-
-
-                    
-
-                })
-
-               
-
-           }
-
-        },
 
         deleteItem() {
 
@@ -582,19 +462,19 @@ new Vue({
 
         },
 
+        btn_retour(){
+
+            window.history.go(-1); return false;
+
+        },
+
         get_data: function() {
-           
-
-                
-
-
-                axios.get(window.laravel.url + '/api_year')
+            axios.get(window.laravel.url + '/getprojets')
                 .then(response => {
 
-                    this.array_anne = response.data;
+                    this.pointage = response.data.projets;
                    
 
-                    console.log(this.array_anne);
 
                 })
                 .catch(error => {

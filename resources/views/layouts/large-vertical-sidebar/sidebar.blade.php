@@ -71,6 +71,14 @@
                 </a>
                 <div class="triangle"></div>
              </li> 
+
+             <li class="nav-item @if (Route::current()->getName() == 'product.edit'  ) active @endif {{ request()->is('projets/create') ? 'active' : '' }} {{ request()->is('projets') ? 'active' : '' }}"  >
+                <a class="nav-item-hold" href="{{ url('caisse') }}">
+                    <i class="nav-icon i-Cash-register-2"></i>   
+                    <span class="nav-text"> Caisses</span>
+                </a>
+                <div class="triangle"></div>
+             </li>
               
 
      

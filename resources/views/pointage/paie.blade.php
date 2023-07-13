@@ -67,6 +67,26 @@
                                     
                                        </v-col>
                                     </v-row>
+
+
+                                    <v-row >
+                                       <v-col
+                                      
+                                       cols="12"
+                                       sm="6"
+                                       >
+                                      
+                                    
+                                       </v-col>
+                                       <v-col
+                                       
+                                       cols="12"
+                                       sm="6"
+                                       >
+                                       <v-btn @click="consulter()"  block class="mt-2 success"  >Consulter </v-btn>
+                                    
+                                       </v-col>
+                                    </v-row>
                                 
                       
                               </v-card-title>
@@ -77,6 +97,13 @@
                                  
                                     <template v-slot:item.index="{ item }">
                                         @{{item.id_table}}
+                                    </template>
+
+
+                                    <template v-slot:item.action="{ item }">
+                                        <v-btn color="purple" fab small dark  @click="editItem(item)">
+                                            <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                         </v-btn>
                                     </template>
 
 

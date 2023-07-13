@@ -308,6 +308,8 @@ Route::get('/projet_caisse',[App\Http\Controllers\CaisseController::class, 'proj
 Route::post('/store_caisse_detail',[App\Http\Controllers\CaisseController::class, 'store_caisse_detail'])->name('store_caisse_detail');
 
 
+Route::get('/get_caisse_detail/{id}',[App\Http\Controllers\CaisseController::class, 'get_caisse_detail']);
+
 
 
 

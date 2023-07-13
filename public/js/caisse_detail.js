@@ -29,30 +29,30 @@ new Vue({
        
 
                 {
-                    text: 'Projet',
-                    value: 'client'
+                    text: 'Operation',
+                    value: 'operation'
                 },
                 {
-                    text: 'Mois',
-                    value: 'mois'
+                    text: 'origin du compte',
+                    value: 'origin__du_compte'
                 },
                 
                 {
-                    text: 'année',
-                    value: 'anne'
+                    text: 'type',
+                    value: 'type'
                 },
 
                 {
-                    text: "status",
-                    value: "status",
-                    sortable: false
+                    text: "Banque",
+                    value: "banque",
+                  
                 },
-                
+
                 
                 {
-                    text: "Action",
-                    value: "action",
-                    sortable: false
+                    text: "Montant",
+                    value: "montant",
+                  
                 }
 
 
@@ -70,7 +70,7 @@ new Vue({
                 statut : '',
               },
 
-              pointage: [
+              caisses: [
 
             ],
             affectation: [
@@ -482,10 +482,11 @@ new Vue({
         },
 
         get_data: function() {
-            axios.get(window.laravel.url + '/get_pointage_detail/'+window.laravel.id_projet)
+            
+            axios.get(window.laravel.url + '/get_caisse_detail/'+window.laravel.id_projet)
                 .then(response => {
 
-                    //this.pointage = response.data.pointage_detail;
+                    this.caisses = response.data.caisse_detail;
                    
 
 

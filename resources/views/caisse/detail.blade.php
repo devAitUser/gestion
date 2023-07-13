@@ -4,8 +4,17 @@
 <link rel="stylesheet" type="text/css" href={{ asset('css_vuetify/vuetify.min.css') }}>
 <link rel="stylesheet" type="text/css" href={{ asset('assets/styles/css/custom_vuetify.css') }}>
 <div class="breadcrumb">
-   <h1>  La liste des operation</h1>
+
+   <style>
+      b.solde {
+         color: green;
+      }
+   </style>
+   <h1>  La liste des operations </h1>
 </div>
+@if(Session::has('var_dépense'))
+<p class="alert alert-info">{{ Session::get('var_dépense') }}</p>
+@endif
 @include('layouts.common.flash_message')
 <div class=" border-top"></div>
 <div id="app" data-app>
@@ -28,7 +37,8 @@
                         <div class="card">
                            <v-card>
                               <v-card-title>
-                                 les operations
+                                 Les mouvements de la caisse du projet :&nbsp; <b>{{$nom_projet}}</b> 
+                                 &nbsp; &nbsp; &nbsp; Solde Actuel : &nbsp; <b class="solde">{{$solde}}</b> 
                                  <v-spacer></v-spacer>
                               </v-card-title>
                               <v-card-title class="text-right">
@@ -38,28 +48,20 @@
                                  <button type="button" class="btn btn-primary btn-md m-1 text-white" data-toggle="modal" data-target="#Modal_pointage">
                                     <i class="nav-icon i-Shopping-Basket"></i>    Nouveau 
                                  </button>
-                                 @if ($user_logged->inRole('admin'))
-                                 @if ($user_logged->hasAccess(['product.delete']))
-                                 <button   @click="remove_item" type="button" data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-primary btn-md m-1 text-white"><i class="i-Close mr-2"></i>   Supprimer </button>
-                                 @endif
-                                 @endif
+                                
                               </v-card-title>
-                              <v-data-table  @input="item($event)" :headers="headers" :items="pointage" :search="search" :value="selectedRows" v-model="selected" :items-per-page="5"  :sort-by.sync="sortBy"
+                              <v-data-table  @input="item($event)" :headers="headers" :items="caisses" :search="search" :value="selectedRows" v-model="selected" :items-per-page="5"  :sort-by.sync="sortBy"
                                  :sort-desc.sync="sortDesc" show-select   item-key="id"
                                  :expanded.sync="expanded" @click:row="clicked">
                                  
                                  
-                                   <template v-slot:item.status="{ item }">
+                                   <template v-slot:item.montant="{ item }">
                                
-                                         <span v-if="item.status" class="badge badge-success">Valider</span>
-                                         <span v-else class="badge badge-danger" >En cours</span>
+                                         <span v-if="item.operation == 'Alimentation' " class="badge badge-success"> <b> + @{{item.montant}} </b></span>
+                                         <span v-else class="badge badge-danger" > <b> - @{{item.montant}}</b> </span>
                                  
                                  </template>
-                                 <template v-slot:item.action="{ item }">
-                                    <v-btn color="purple" fab small dark  @click="editItem(item)">
-                                       <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                    </v-btn>
-                                 </template>
+                            
                                
                               
                               </v-data-table>
@@ -254,8 +256,10 @@
       @if($find_projet)
       html_depense += '<option value="alimentation"> Alimenter Sous caisse </option>';
       @endif
-      html_depense += '<option value="achat"> (Achat / déplacement Frais divers) </option>';
-      html_depense += '<option value="beneficiaire"> Béneficiaire </option>';
+      html_depense += '<option value="déplacement">  déplacement  </option>';
+      html_depense += '<option value=" Frais divers">  Frais divers </option>';
+      html_depense += '<option value="Achat"> Achat  </option>';
+      html_depense += '<option value="Béneficiaire"> Béneficiaire </option>';
       html_depense += '<option value="Associé">Associé</option>';
       html_depense += '</select>';
       html_depense += '</div>';
@@ -268,7 +272,9 @@
       html_projet_depense += '<option>Selectionner</option>';
 
       @foreach($all_projets as $all_projet )   
-      html_projet_depense += '<option value="{{ $all_projet->id }}"> {{ $all_projet->client }} </option>';
+       @if(!$all_projet->administration)
+        html_projet_depense += '<option value="{{ $all_projet->id }}"> {{ $all_projet->client }} </option>';
+       @endif
       @endforeach
 
       html_projet_depense += '</select>';

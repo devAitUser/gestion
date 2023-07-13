@@ -6,6 +6,8 @@ use App\Models\Caisse_detail;
 
 use Illuminate\Http\Request;
 
+use Session;
+
 class CaisseController extends Controller
 {
     public function __construct()
@@ -25,7 +27,13 @@ class CaisseController extends Controller
 
         $find_projet = Projet::find($id); 
 
-        $data = array(  'id'=> $id , 'find_projet'=> $find_projet->administration , 'all_projets'=> $all_projet  );
+        $alimen = Caisse_detail::where([ 'id_projet' =>  $id  ,  'operation'    => 'Alimentation' ])->sum('montant');
+        $depense = Caisse_detail::where([ 'id_projet' =>  $id  ,  'operation'    => 'dépense' ])->sum('montant');
+
+        $solde  = $alimen - $depense ;
+
+        $data = array(  'id'=> $id , 'find_projet'=> $find_projet->administration , 
+        'nom_projet'=> $find_projet->client , 'all_projets'=> $all_projet , 'solde'=>   number_format($find_projet->solde,2,",",".")  );
         return view('caisse.detail',$data );
     }
 
@@ -46,7 +54,7 @@ class CaisseController extends Controller
             'id' =>  $projets[$i]->id , 
             'client'=> $projets[$i]->client,
             'status'=> $projets[$i]->administration, 
-            'solde'=> $solde, 
+            'solde'=> number_format($projets[$i]->solde,2,","," "), 
 
              ];
  
@@ -70,52 +78,130 @@ class CaisseController extends Controller
 
     }
 
+    
+
     public function store_caisse_detail(Request $request){
 
-        $new =  new Caisse_detail();
+        $check = Projet::find($request->id_projet);
 
-        $new->operation = $request->operation ; 
+        if($request->operation == 'dépense'  ){
 
-        $new->id_projet  = $request->id_projet  ;
+            if( $check->solde > $request->montant ){
+
+                $new =  new Caisse_detail();
+
+                $new->operation = $request->operation ; 
         
-        if(isset($request->origine_compte)){
+                $new->id_projet  = $request->id_projet  ;
+                
+                if(isset($request->origine_compte)){
+        
+                    $new->origin__du_compte  = $request->origine_compte  ;
+        
+                }
+        
+                if(isset($request->type)){
+        
+                    $new->type  = $request->type  ;
+        
+                    if($request->type == 'alimentation'){
+        
+                        $add_alimentation =  new Caisse_detail();
+        
+                        $add_alimentation->operation = "Alimentation" ; 
+        
+                        $add_alimentation->id_projet  = $request->projet  ;
+                        $add_alimentation->date  = $request->date  ;
+                        $add_alimentation->montant  = $request->montant  ;
+                        $add_alimentation->save();
 
-            $new->origin__du_compte  = $request->origine_compte  ;
+                        $up_solde_caisse = Projet::find($request->projet);
+                        $up_solde_caisse->solde = $up_solde_caisse->solde + $request->montant ; 
+                        $up_solde_caisse->save();
+                    }
+        
+                }
+        
+                if(isset($request->banque)){
+        
+                    $new->banque  = $request->banque  ;
+        
+                }
+        
+                $new->id_projet  = $request->current_id_projet  ;
+                $new->date  = $request->date  ;
+        
+                $new->montant  = $request->montant  ;
+        
+                
+                
+                
+        
+                $new->save();
+        
+                $up_solde = Projet::find($request->id_projet);
+                $up_solde->solde = $up_solde->solde - $request->montant ; 
+                $up_solde->save();
+
+            } else {
+                Session::flash('var_dépense', 'Votre solde insuffisant'); 
+            }
 
         }
+        
+        if($request->operation == 'Alimentation'  ){
 
-        if(isset($request->type)){
+                $new =  new Caisse_detail();
 
-            $new->type  = $request->type  ;
+                $new->operation = $request->operation ; 
+        
+                $new->id_projet  = $request->id_projet  ;
+                
+                if(isset($request->origine_compte)){
+        
+                    $new->origin__du_compte  = $request->origine_compte  ;
+        
+                }
+                if(isset($request->type)){
+        
+                    $new->type  = $request->type  ;
+        
+                }
+        
+                if(isset($request->banque)){
+        
+                    $new->banque  = $request->banque  ;
+        
+                }
+        
+                $new->id_projet  = $request->current_id_projet  ;
+                $new->date  = $request->date  ;
+        
+                $new->montant  = $request->montant  ;
+        
+                $new->save();
+        
+                $up_solde = Projet::find($request->id_projet);
+                $up_solde->solde = $up_solde->solde + $request->montant ; 
+                $up_solde->save();
+               
+
+            
 
         }
-
-        if(isset($request->type)){
-
-            $new->type  = $request->type  ;
-
-        }
-
-        if(isset($request->type)){
-
-            $new->type  = $request->type  ;
-
-        }
-
-        if(isset($request->banque)){
-
-            $new->banque  = $request->banque  ;
-
-        }
-
-        $new->id_projet  = $request->current_id_projet  ;
-        $new->date  = $request->date  ;
-
-        $new->montant  = $request->montant  ;
-
-        $new->save();
+        
 
         return redirect()->to('/caisse/'.$request->current_id_projet.'/detail'); 
+
+    }
+
+    public function get_caisse_detail($id){
+
+        $caisse = Caisse_detail::where('id_projet', '=', $id )->get();
+
+        $data = array( 'caisse_detail'=> $caisse );
+
+        return $data ;
 
     }
 

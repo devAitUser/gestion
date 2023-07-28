@@ -16,6 +16,8 @@
 <p class="alert alert-info">{{ Session::get('var_dépense') }}</p>
 @endif
 @include('layouts.common.flash_message')
+
+
 <div class=" border-top"></div>
 <div id="app" data-app>
    <div class="row">
@@ -53,6 +55,138 @@
                               <v-data-table  @input="item($event)" :headers="headers" :items="caisses" :search="search" :value="selectedRows" v-model="selected" :items-per-page="5"  :sort-by.sync="sortBy"
                                  :sort-desc.sync="sortDesc" show-select   item-key="id"
                                  :expanded.sync="expanded" @click:row="clicked">
+
+
+                                 <template v-slot:item.show_pdf="{ item }">
+                                        <v-btn v-if="item.operation == 'dépense' "  color="purple" fab small dark  @click="show_pdf(item)">
+                                            <v-icon dark>mdi-file-pdf-box</v-icon>
+                                         </v-btn>
+                                    </template>
+
+
+                                 <template v-slot:item.detail_caisse ="{ item }" >
+                                    <v-btn align-center  class="mx-0"  small  fab dark color="teal" @click="show_order_product(item)">
+                                       <v-icon dark>mdi-format-list-bulleted-square</v-icon>
+                                    </v-btn>
+                                    <v-dialog v-model="dialog" max-width="800px" :retain-focus="false">
+                                       <v-card>
+                                          <v-card-title>
+                                             <span class="headline"> Detail de transaction </span>
+                                          </v-card-title>
+                                          <v-form @submit.prevent="submitFiles" ref="form" v-model="valid" lazy-validation>
+                                             <v-container>
+                                                <v-menu
+                                                   v-model="menu2"
+                                                   :close-on-content-click="false"
+                                                   transition="scale-transition"
+                                                   offset-y
+                                                   max-width="290px"
+                                                   min-width="290px"
+                                                   >
+                                                   <template v-slot:activator="{ on, attrs }">
+                                                      <v-text-field
+                                                            v-model="show_item.date"
+                                                            label="Date"
+                                                            required
+                                                            ></v-text-field>
+                                                   </template>
+                                                   <v-date-picker v-model="show_item.operation" no-title @input="menu2 = false"></v-date-picker>
+
+                                                  
+
+                                                         
+                                                </v-menu>
+                                                <v-row>
+                                                   <v-col
+                                                      cols="12"
+                                                      sm="6"
+                                                      >
+                                                      <v-text-field
+                                                            v-model="show_item.operation"
+                                                            label="Operation"
+                                                            required
+                                                            ></v-text-field>
+                                                   </v-col>
+                                                   <v-col
+                                                      cols="12"
+                                                      sm="6"
+                                                      >
+                                                      <v-text-field
+                                                         v-model="show_item.origin__du_compte"
+                                                         label="origin du compte"
+                                                         required
+                                                         ></v-text-field>
+                                                   </v-col>
+                                                   <v-col
+                                                      cols="12"
+                                                      sm="6"
+                                                      >
+                                                      <v-text-field
+                                                         v-model="show_item.type"
+                                                         label="Type"
+                                                         required
+                                                         ></v-text-field>
+                                                   </v-col>
+                                                   <v-col
+                                                      cols="12"
+                                                      sm="6"
+                                                      >
+                                                      <v-text-field
+                                                         v-model="show_item.banque"
+                                                         label="Banque"
+                                                         required
+                                                         ></v-text-field>
+                                                   </v-col>
+
+                                                   <v-col
+                                                      cols="12"
+                                                      sm="6"
+                                                      >
+                                                      <v-text-field
+                                                         v-model="show_item.montant"
+                                                         label="Montant"
+                                                         required
+                                                         ></v-text-field>
+                                                   </v-col>
+
+                                                   <v-col
+                                                      cols="12"
+                                                      sm="6"
+                                                      >
+                                                      <v-text-field
+                                                         v-model="show_item.Bénéficiaire"
+                                                         label="Bénéficiaire"
+                                                         required
+                                                         ></v-text-field>
+                                                   </v-col>
+
+
+                                                   <v-col
+                                                      cols="12"
+                                                      sm="12"
+                                                      >
+                                                      <v-text-field
+                                                         v-model="show_item.detail"
+                                                         label="Detail"
+                                                         required
+                                                         ></v-text-field>
+                                                   </v-col>
+
+
+                                                
+                                                
+                                                </v-row>
+                                             </v-container>
+                                          </v-form>
+                                          
+                                          </v-card-title>
+                                          <v-card-actions>
+                                             <v-spacer></v-spacer>
+                                             <v-btn color="blue darken-1" text @click="close">Annuler</v-btn>
+                                          </v-card-actions>
+                                       </v-card>
+                                    </v-dialog>
+                                 </template>
                                  
                                  
                                    <template v-slot:item.montant="{ item }">
@@ -259,11 +393,26 @@
       html_depense += '<option value="déplacement">  déplacement  </option>';
       html_depense += '<option value=" Frais divers">  Frais divers </option>';
       html_depense += '<option value="Achat"> Achat  </option>';
-      html_depense += '<option value="Béneficiaire"> Béneficiaire </option>';
-      html_depense += '<option value="Associé">Associé</option>';
+  
       html_depense += '</select>';
       html_depense += '</div>';
+
+
+    
+
+
+
       html_depense += '<div id="depense_projet" > </div>';
+
+      html_depense += ' <div class="form-group"> ';
+      html_depense += ' <label for="exampleFormControlSelect1">Detail</label> ';
+      html_depense += '  <input  type="text"  name="detail" class="form-control" >  ';
+      html_depense += ' </div> ';
+
+      html_depense += ' <div class="form-group"> ';
+      html_depense += ' <label for="exampleFormControlSelect1">Bénéficiaire</label> ';
+      html_depense += '  <input  type="text"  name="Bénéficiaire" class="form-control" >  ';
+      html_depense += ' </div> ';
 
 
       html_projet_depense = '<div class="form-group">';

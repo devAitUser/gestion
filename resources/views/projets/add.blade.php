@@ -26,7 +26,7 @@ span.spinner.spinner-primary {
 </style>
 @endsection
 @section('main-content')
-<form action=" {{url('projets/store')}}" method="post">
+<form action=" {{url('projets/store')}}" enctype="multipart/form-data" method="post">
   @csrf
 <div class="breadcrumb">
    <h1>  Ajouter  </h1>
@@ -56,7 +56,7 @@ span.spinner.spinner-primary {
                   <select  id="client" class="js-client-dropdown form-control input-product" style="width: 100%" name="client" required>
                                     <option   value=""> Selectionner le client </option>
                                     @foreach ($clients as $client)
-                                   <option  value="{{$client->nom_client}}">{{$client->nom_client	}}</option>
+                                   <option  value="{{$client->nom_client}}|{{$client->id}}">{{$client->nom_client	}}</option>
                                     @endforeach
                                  </select>
                      <div class="invalid-feedback"> Veuillez choisir le type_prestation.</div>
@@ -81,8 +81,11 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                     
-                     <input id="designation" type="text"  name="type_prestation" class="form-control  " required >
-                     <div class="invalid-feedback"> Veuillez choisir le type_prestation.</div>
+                   <select  class=" form-control"  name="type_prestation" id="">
+                      <option value="">Selectionnez</option>
+                      <option value="Marché">Marché</option>
+                      <option value="B.C">B.C</option>
+                   </select>
                      
 
                   </div>
@@ -160,7 +163,7 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                   
-                     <input id="designation" type="number"  name="n_marche" class="form-control  "  required>
+                     <input id="designation" type="text"  name="n_marche" class="form-control  "  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -235,7 +238,7 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                  
-                     <input id="designation" type="tel"  name="montant_min" class="form-control  "  required>
+                     <input id="montant_min" type="text"  name="montant_min" class="form-control  " readonly="readonly"  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -259,7 +262,30 @@ span.spinner.spinner-primary {
                <div class="form-row">
                   <div class="form-group col-md-12">
                      
-                     <input id="designation" type="text"  name="montant_max" class="form-control  "  required>
+                     <input id="montant_max" type="text"  name="montant_max" class="form-control  "  required readonly="readonly">
+                     <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
+                     
+
+                  </div>
+
+           
+             
+
+            
+               </div>
+            </div>
+            
+         </div>
+      </div>
+           <!-- end::form 3-->
+           <div class="card-body">
+         <div class="row">
+            <div class="col-md-2"> <label for="name" class="product-label text-dark"> Importer termes de références  </label></div>
+            <div class="col-md-10">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+        
+                     <input id="designation" type="file"  name="file" class="form-control  "  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -307,14 +333,17 @@ span.spinner.spinner-primary {
                               <tr>
                                  <th scope="col">Numero</th>
                                  <th scope="col">Article</th>
-                                 <th scope="col">QTE maximale</th>
+                                 <th scope="col">Unité</th>
                                  <th scope="col">QTE minimale</th>
+                                 <th scope="col">QTE maximale</th>
+                            
                                  <th scope="col">Prix</th>
+                                
                                  <th scope="col">Action</th>
                               </tr>
                            </thead>
                            <tbody>
-                              <tr id='row_1'>
+                              <tr id='row_1' class="item">
                                  <td scope="row" class="row_p">
                                      <input type="text" name="numero[]" required>
                               
@@ -323,15 +352,21 @@ span.spinner.spinner-primary {
                                     <input type="text" name="product[]" required>
                               
                                  </td>
-                                 <td>
-                                    <input type="number" name="quantite_max[]" required>
+                                 <td scope="row" class="row_p">
+                                    <input type="text" name="unite[]" required>
+                              
                                  </td>
                                  <td>
-                                    <input type="number" name="quantity[]" id="" required>
+                                    <input type="text" pattern="[0-9.]+" title="Entrez des chiffres et des points uniquement (ex. 12.34)" name="quantity[]" id="" required>
                                  </td>
+                                 <td>
+                                    <input type="text" pattern="[0-9.]+" title="Entrez des chiffres et des points uniquement (ex. 12.34)" name="quantite_max[]" required>
+                                 </td>
+                               
                                  <td>
                                     <input type="number" name="prix[]" id="" required>
                                  </td>
+                                
                                  <td>
                                     <a href="" onClick="removeRow_table(event,1)" ><i class="i-Close-Window text-19 text-danger font-weight-700 prevent-default"></i></a>
                                  </td>

@@ -18,8 +18,8 @@ class CreateProductFactureTable extends Migration
             $table->unsignedBigInteger('facture_id');
             $table->foreign('facture_id')->references('id')->on('projets')->onDelete('cascade');
             $table->string('designation');
-            $table->string('quantite');
-            $table->string('quantite_max');
+            $table->float('quantite');
+            $table->float('quantite_max');
             $table->integer('prix');
             $table->timestamps();
         });

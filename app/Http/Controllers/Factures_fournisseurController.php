@@ -62,6 +62,8 @@ class Factures_fournisseurController extends Controller
 
            $historique_paiement = Historique_paiement::where('facture_fournisseur_id', '=', $fournisseur[$i]->id )->get();
 
+           $total_payment = Historique_paiement::where([ 'facture_fournisseur_id' =>  $fournisseur[$i]->id ,  'etat_paiement'    => 'payé' ])->sum('montant');
+
            $att[] =  [ 
            'id' =>  $fournisseur[$i]->id , 
            'fournisseurs_id'=> $fournisseur[$i]->fournisseurs_id, 
@@ -72,6 +74,7 @@ class Factures_fournisseurController extends Controller
            'numero_facture' => $fournisseur[$i]->numero_facture , 
            'historique_paiement' => $historique_paiement , 
            'fournisseur_nom' => $fournisseur_nom->nom , 
+           'total_paye' => $total_payment , 
             ];
 
        }

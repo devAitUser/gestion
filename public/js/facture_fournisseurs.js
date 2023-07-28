@@ -82,6 +82,14 @@ new Vue({
                     sortable: false
                 }
                 ,
+                
+                
+                {
+                    text: "Total payé",
+                    value: "total_paye",
+                    sortable: false
+                }
+                ,
                 {
                     text: "Action",
                     value: "action",
@@ -244,7 +252,7 @@ new Vue({
 
 
 
-           if(this.defaultItem.mode_paiement != '' && this.defaultItem.n_cheque != '' && this.defaultItem.date_cheque != ''
+           if(this.defaultItem.mode_paiement != ''  && this.defaultItem.date_cheque != ''
             && this.defaultItem.montant != '' && this.defaultItem.etat_paiement != '' ) {
 
                 
@@ -260,7 +268,19 @@ new Vue({
 
                 axios.post(window.laravel.url + '/paiements/store', jsonData)
                 .then(response => {
-                    console.log(response.data);
+
+
+                    if (response.data.status == 400) {
+
+                        alert('vous avez depassez le montant de la facture ')
+                   
+                    }
+                    if (response.data.status == 500) {
+
+                        alert('le solde de la Caisse est insuffisant')
+                   
+                    }
+
 
                     if (response.data.etat) {
 

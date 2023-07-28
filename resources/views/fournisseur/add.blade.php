@@ -253,11 +253,11 @@ span.spinner.spinner-primary {
                      <label for="inputtext11" class="ul-form__label">type  *</label>
    
 
-                     <select name="type" class='form-control' required>
+                     <select id='select_type' name="type" class='form-control' required>
                         <option value="">Selectionner</option>
-                        <option value="">Fournisseur</option>
-                        <option value="">Loyer</option>
-                        <option value="">Impôts</option>
+                        <option value="Fournisseur">Fournisseur</option>
+                        <option value="Loyer">Loyer</option>
+                        <option value="Impôts">Impôts</option>
                      </select> 
 
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
@@ -274,6 +274,37 @@ span.spinner.spinner-primary {
             
          </div>
       </div>
+
+             <!-- end::form 3-->
+             <div class="card-body">
+                <div class="row" id='block_etat'>
+                  
+                  
+                     
+                        
+                           
+         
+
+                        
+                           
+                           
+                              
+                           
+
+                           
+                           
+
+                     
+
+               
+                  
+
+                  
+                     
+                  
+                  
+                  </div>
+               </div>
 
      
     
@@ -310,6 +341,34 @@ span.spinner.spinner-primary {
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 <script src="<?php echo e(asset('assets/js/vendor/dropzone.min.js')); ?>"></script>
 <script src="{{asset('assets/js/dropzone.script.js')}}"></script>
+<script>
+$(document).ready(function(){
+
+   var html = '<div class="col-md-2"> <label for="name" class="product-label text-dark"> Etat </label></div>';
+   html += '<div class="col-md-10">';
+   html += ' <div class="form-row">';
+   html += ' <div class="form-group col-md-12"> ';
+   html += ' <label for="inputtext11" class="ul-form__label">type  *</label> ';
+   html += '  <select  name="type" class="form-control" required>';
+   html += '  <option value="">Selectionner</option> ';
+   html += '  <option value="Actif">Actif</option> ';
+   html += ' <option value="Non Actif   ">Non Actif</option> </select>  ';
+   html += '<div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>  ';
+   html += '</div> </div></div>  ';
+   
+
+   $("#select_type").change(function(){
+     
+       if($("#select_type").val() == 'Loyer'){
+         
+         $("#block_etat").html(html);
+       } else {
+         $("#block_etat").empty();
+       }
+   });
+
+});
+</script>
 
 
 

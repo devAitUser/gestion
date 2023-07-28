@@ -109,6 +109,9 @@ Route::get('/projets/{id}/edit',[App\Http\Controllers\ProjetsController::class, 
 Route::get('/getprojets',[App\Http\Controllers\ProjetsController::class, 'get_projets']);
 
 
+Route::get('/generate_pdf/{id}',[App\Http\Controllers\ProjetsController::class, 'generate_pdf']);
+
+
 
 
 
@@ -310,6 +313,10 @@ Route::post('/store_caisse_detail',[App\Http\Controllers\CaisseController::class
 
 Route::get('/get_caisse_detail/{id}',[App\Http\Controllers\CaisseController::class, 'get_caisse_detail']);
 
+
+
+
+Route::get('/bon_caisse_pdf/{id}',[App\Http\Controllers\CaisseController::class, 'pdf']);
 
 
 

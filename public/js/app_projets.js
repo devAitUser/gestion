@@ -48,16 +48,25 @@ new Vue({
                     text: 'Duree',
                     value: 'duree'
                 }
-                ,
-                {
-                    text: 'Montant min',
-                    value: 'montant_min'
-                }
+                
                 
                 ,
                 {
                     text: 'Montant max ',
                     value: 'montant_max'
+                }
+                ,
+
+                {
+                    text: 'Fichier CPS',
+                    value: 'file'
+                }
+                ,
+
+                
+                {
+                    text: 'PDF',
+                    value: 'pdf'
                 }
                 ,
                
@@ -97,6 +106,11 @@ new Vue({
             window.location.href = "projets/" + item.id + "/edit"
         },
 
+        PDF_file(item) {
+
+            window.location.href = "generate_pdf/" + item.id 
+        },
+
         clicked(value) {
             const index = this.expanded.indexOf(value)
 
@@ -127,6 +141,13 @@ new Vue({
             }
 
             this.close()
+
+        },
+        show_file(item){
+    
+            var link = item.file;
+                link = link.replace("public", "");
+                window.location.href = window.laravel.url + "/storage" + link 
 
         },
 

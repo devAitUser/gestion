@@ -18,8 +18,8 @@ class CreateProjetsTable extends Migration
             $table->string('client');
             $table->string('type_prestation');
             $table->string('objet');
-            $table->unsignedBigInteger('n_marche');
-            $table->dateTime('date_debut');
+            $table->string('n_marche');
+            $table->date('date_debut');
             $table->string('duree');
             $table->string('status');
             $table->unsignedBigInteger('montant_min');

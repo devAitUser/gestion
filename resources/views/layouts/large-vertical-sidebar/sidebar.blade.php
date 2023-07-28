@@ -159,7 +159,7 @@
 
                     <li class="nav-item">
                         <a href="{{ url('rh')}}"
-                            class="{{ Route::currentRouteName()=='permission' ? 'open' : '' }}">
+                            class="{{ Route::currentRouteName()=='rh' ? 'open' : '' }}">
                             <i class="nav-icon i-Receipt-3"></i>
                             <span class="nav-text"> Employés
                             </span>
@@ -169,7 +169,7 @@
 
                     <li class="nav-item">
                         <a href="{{ url('pointage')}}"
-                            class="{{ Route::currentRouteName()=='marque' ? 'open' : '' }}">
+                            class="{{ Route::currentRouteName()=='pointage' ? 'open' : '' }}">
                             <i class="nav-icon i-Address-Book-2"></i>
                             <span class="nav-text"> Pointages
                             </span>
@@ -179,7 +179,7 @@
 
                     <li class="nav-item">
                         <a href="{{ url('paie_index')}}"
-                            class="{{ Route::currentRouteName()=='marque' ? 'open' : '' }}">
+                            class="{{ Route::currentRouteName()=='paie_index' ? 'open' : '' }}">
                             <i class="nav-icon nav-icon i-Financial"></i>
                             <span class="nav-text"> Paie
                             </span>

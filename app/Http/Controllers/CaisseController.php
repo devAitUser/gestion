@@ -6,6 +6,8 @@ use App\Models\Caisse_detail;
 
 use Illuminate\Http\Request;
 
+use PDF;
+
 use Session;
 
 class CaisseController extends Controller
@@ -94,11 +96,11 @@ class CaisseController extends Controller
         
                 $new->id_projet  = $request->id_projet  ;
                 
-                if(isset($request->origine_compte)){
         
-                    $new->origin__du_compte  = $request->origine_compte  ;
         
-                }
+                    $new->origin__du_compte  = 'Caisse' ;
+        
+            
         
                 if(isset($request->type)){
         
@@ -127,6 +129,10 @@ class CaisseController extends Controller
                     $new->banque  = $request->banque  ;
         
                 }
+
+                $new->detail  = $request->detail  ;
+
+                $new->Bénéficiaire  = $request->Bénéficiaire  ;
         
                 $new->id_projet  = $request->current_id_projet  ;
                 $new->date  = $request->date  ;
@@ -202,6 +208,21 @@ class CaisseController extends Controller
         $data = array( 'caisse_detail'=> $caisse );
 
         return $data ;
+
+    }
+
+
+    function pdf($id)
+    {
+
+       $caisse_detail= Caisse_detail::find($id);
+
+        view()->share('caisse_detail', $caisse_detail);
+        $pdf = PDF::loadView('caisse.pdf');
+     
+         //return view('caisse.pdf');
+       return $pdf->stream();
+
 
     }
 

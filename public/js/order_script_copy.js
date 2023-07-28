@@ -56,25 +56,7 @@ function validateForm() {
 }
 
 
-function calcul_total(row) {
 
-   var new_price =  $("#price" + row).html();
-   var new_quantite =  $("#quantite" + row).val();
-    
-    var total = Number(new_price) * Number(new_quantite);
-
-     total= total.toFixed(2);
-             
-
-                    
-
-    $("#total_product" + row).html(total);
-    $("#total_productValue" + row).val(total);
-
-
-
-
-}
 
 
 var tableLength = 1;
@@ -142,39 +124,40 @@ $(document).ready(function() {
   
 
     function calculateTotals() {
-    const subtotals = $('.item').map((idx, val) => calculateSubtotal(val)).get();
-    const total = subtotals.reduce((a, v) => a + Number(v), 0);
-    const tva = total * 0.20 ;
-    const total_ttc = total + tva
-    $('.total_ht td:last').text(formatAsCurrency(total));
-    $('.t_tva td:last').text(formatAsCurrency(tva));
-    $('.total_ttc td:last').text(formatAsCurrency(total_ttc));
+        const subtotals = $('.item').map((idx, val) => calculateSubtotal(val)).get();
+        const total = subtotals.reduce((a, v) => a + Number(v), 0);
+        const tva = total * 0.20 ;
+        const total_ttc = total + tva ; 
+        $('.total_ht td:last').text(formatAsCurrency(total));
+        $('.t_tva td:last').text(formatAsCurrency(tva));
+        $('.total_ttc td:last').text(formatAsCurrency(total_ttc));
 
-    $('#total_ttc').val(total_ttc);
+        $('#total_ttc').val(total_ttc);
+
+
+       
     
     }
 
     function calculateSubtotal(row) {
-    const $row = $(row);
-    const inputs = $row.find('input');
-    const subtotal = inputs[2].value * inputs[3].value;
+        const $row = $(row);
+        const inputs = $row.find('input');
+        const subtotal = inputs[2].value * inputs[3].value;
 
-    $row.find('td:last').prev().text(subtotal);
+        $row.find('td:last').prev().text(subtotal);
 
-    return subtotal;
+        return subtotal;
     }
 
     function formatAsCurrency(amount) {
-    return `$${Number(amount).toFixed(2)}`;
+       return `$${Number(amount).toFixed(2)}`;
     }
 
       const d = new Date();
       let year = d.getFullYear();
     
-        $("#date_system").val(year);
+      $("#date_system").val(year);
 
-
-    
 
 
     

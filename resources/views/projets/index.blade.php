@@ -64,9 +64,18 @@
                                                 <v-data-table  @input="item($event)" :headers="headers" :items="clients" :search="search" :value="selectedRows" v-model="selected" :items-per-page="5"  :sort-by.sync="sortBy"
                                              :sort-desc.sync="sortDesc" show-select   item-key="id"
                                       :expanded.sync="expanded" @click:row="clicked">
-                                    <template v-slot:item.img="{ item }">
-                                       <img :src="'images/' + item.photo" style="width: 55px; height: 55px" />
-                                    </template>
+                                      <template v-slot:item.file="{ item }">
+                                        <v-btn color="purple" fab small dark  @click="show_file(item)">
+                                             <v-icon dark>mdi-file-pdf-box</v-icon>
+                                         </v-btn>
+                                      </template>
+
+
+                                      <template v-slot:item.pdf="{ item }">
+                                        <v-btn color="purple" fab small dark  @click="PDF_file(item)">
+                                             <v-icon dark>mdi-file-pdf-box</v-icon>
+                                         </v-btn>
+                                      </template>
                                     
                                     <template v-slot:item.action="{ item }">
                                         <v-btn color="purple" fab small dark  @click="editItem(item)">

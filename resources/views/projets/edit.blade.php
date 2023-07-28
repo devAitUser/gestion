@@ -29,7 +29,7 @@ span.spinner.spinner-primary {
 <form action="{{url('updateclients/'.$clients['id'])}}" method="post">
   @csrf
 <div class="breadcrumb">
-   <h1>  Ajouter un client </h1>
+   <h1>  Modifier le projet </h1>
 </div>
 <div id="msg"></div>
 <div class=" border-top"></div>
@@ -37,21 +37,52 @@ span.spinner.spinner-primary {
  
 
 
-   <div class="card mt-3">
+<div class="card mt-3">
       <!--begin::form-->
       <div class="card-header bg-transparent">
          <p class="submit_mandatory ">* champ  obligatoire </p>
       </div>
+
+
+ 
+
+       <div class="card-body">
+         <div class="row">
+            <div class="col-md-2"> <label for="name" class="product-label text-dark">Client *</label></div>
+            <div class="col-md-10">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                    
+                  <select  id="client" class="js-client-dropdown form-control input-product" style="width: 100%" name="client" required>
+                                    <option   value=""> {{$clients['client']}} </option>
+                                   
+                                 </select>
+                     <div class="invalid-feedback"> Veuillez choisir le type_prestation.</div>
+                     
+
+                  </div>
+
+           
+             
+
+            
+               </div>
+            </div>
+            
+         </div>
+      </div>
      
       <div class="card-body">
          <div class="row">
-            <div class="col-md-2"> <label for="name" class="product-label text-dark">Nom de client</label></div>
+            <div class="col-md-2"> <label for="name" class="product-label text-dark">Type de prestation *</label></div>
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label">Nom de client*</label>
-                     <input id="designation" type="text"  name="nom_client" class="form-control  " value="{{ $clients['nom_client'] }}" required >
-                     <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
+                    
+                   <select  class=" form-control"  name="type_prestation" id="">
+                      <option value="">{{$clients['type_prestation']}} </option>
+                   
+                   </select>
                      
 
                   </div>
@@ -65,204 +96,263 @@ span.spinner.spinner-primary {
             
          </div>
       </div>
+
+
+      <div class="card-body">
+         <div class="row">
+            <div class="col-md-2"> <label for="name" class="product-label text-dark">status *</label></div>
+            <div class="col-md-10">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                    
+
+                  <select name="status" class="form-control">
+
+                   <option>{{$clients['status']}}</option>
+                   <option>non actif</option>
+                   
+
+                  </select>
+
+
+                     
+
+                  </div>
+
+           
+             
+
+            
+               </div>
+            </div>
+            
+         </div>
+      </div>
+     
       <!-- end::form 3-->
       <div class="card-body">
          <div class="row">
-            <div class="col-md-2"> <label for="name" class="product-label text-dark">Personne contactée </label></div>
+            <div class="col-md-2"> <label for="name" class="product-label text-dark">Objet *</label></div>
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label">Personne contactée *</label>
-                     <input id="designation" type="text"  name="personne_contact" class="form-control  " value="{{ $clients['personne_contact'] }}" required>
-                     <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
-                     
-
-                  </div>
-
-           
-             
-
-            
-               </div>
-            </div>
-            
-         </div>
-      </div>
-      <!-- end::form 3-->
-      <div class="card-body">
-         <div class="row">
-            <div class="col-md-2"> <label for="name" class="product-label text-dark">ICE </label></div>
-            <div class="col-md-10">
-               <div class="form-row">
-                  <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label">ICE  *</label>
-                     <input id="designation" type="number"  name="ice" class="form-control  " value="{{ $clients['ice'] }}" required>
-                     <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
-                     
-
-                  </div>
-
-           
-             
-
-            
-               </div>
-            </div>
-            
-         </div>
-      </div>
-      <!-- end::form 3-->
-      <div class="card-body">
-         <div class="row">
-            <div class="col-md-2"> <label for="name" class="product-label text-dark"> telephone 1  </label></div>
-            <div class="col-md-10">
-               <div class="form-row">
-                  <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label"> telephone 1   *</label>
-                     <input id="designation" type="text"  name="telephone1" class="form-control  " value="{{ $clients['telephone1'] }}" required>
-                     <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
-                     
-
-                  </div>
-
-           
-             
-
-            
-               </div>
-            </div>
-            
-         </div>
-      </div>
-      <!-- end::form 3-->
-
-         <!-- end::form 3-->
-         <div class="card-body">
-            <div class="row">
-               <div class="col-md-2"> <label for="name" class="product-label text-dark"> telephone 2  </label></div>
-               <div class="col-md-10">
-                  <div class="form-row">
-                     <div class="form-group col-md-12">
-                        <label for="inputtext11" class="ul-form__label"> telephone 2      *</label>
-                        <input id="designation" type="text"  name="telephone2" class="form-control  " value="{{ $clients['telephone2'] }}" required>
-                        <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
-                        
-   
-                     </div>
-   
               
-                
-   
-               
+                     <input id="designation" type="text"  name="objet" class="form-control " value="{{$clients['objet']}}"  required>
+                     
+                     
+
+                  </div>
+
+           
+             
+
+            
+               </div>
+            </div>
+            
+         </div>
+      </div>
+      <!-- end::form 3-->
+      <div class="card-body">
+         <div class="row">
+            <div class="col-md-2"> <label for="name" class="product-label text-dark">n° de marche / Bon de commande *</label></div>
+            <div class="col-md-10">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                  
+                     <input id="designation" type="number"  name="n_marche" value="{{$clients['n_marche']}}" class="form-control  "  required>
+                     <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
+                     
+
+                  </div>
+
+           
+             
+
+            
+               </div>
+            </div>
+            
+         </div>
+      </div>
+            <!-- end::form 3-->
+            <div class="card-body">
+               <div class="row">
+                  <div class="col-md-2"> <label for="name" class="product-label text-dark"> Date de debut *</label></div>
+                  <div class="col-md-10">
+                     <div class="form-row">
+                        <div class="form-group col-md-12">
+                         
+                           <input id="designation" type="date"  name="date_debut" class="form-control  " value="{{$clients['date_debut']}}"  required>
+                           <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
+                           
+      
+                        </div>
+      
+                 
+                   
+      
+                  
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+      
+            <!-- end::form 3-->
+                 <!-- end::form 3-->
+                 <div class="card-body">
+                  <div class="row">
+                     <div class="col-md-2"> <label for="name" class="product-label text-dark"> Durée *</label></div>
+                     <div class="col-md-10">
+                        <div class="form-row">
+                           <div class="form-group col-md-12">
+              
+                              <input id="designation" type="tel"  name="duree" class="form-control  " value="{{$clients['duree']}}"  required>
+                              <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
+                              
+         
+                           </div>
+         
+                    
+                      
+         
+                     
+                        </div>
+                     </div>
+                     
                   </div>
                </div>
-               
-            </div>
-         </div>
-         <!-- end::form 3-->
+         
+               <!-- end::form 3-->
+      <!-- end::form 3-->
 
+      
+      <div class="card-body">
+         <div class="row">
+            <div class="col-md-2"> <label for="name" class="product-label text-dark"> Montant minimum HT  *</label></div>
+            <div class="col-md-10">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                 
+                     <input id="designation" type="tel"  name="montant_min" class="form-control  " value="{{$clients['montant_min']}}"  required>
+                     <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
+                     
+
+                  </div>
+
+           
+             
+
+            
+               </div>
+            </div>
+            
+         </div>
+      </div>
+
+      <!-- end::form 3-->
+      <div class="card-body">
+         <div class="row">
+            <div class="col-md-2"> <label for="name" class="product-label text-dark"> Montant maximum HT * </label></div>
+            <div class="col-md-10">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                     
+                     <input id="designation" type="text"  name="montant_max" class="form-control  " value="{{$clients['montant_max']}}"  required>
+                     <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
+                     
+
+                  </div>
+
+           
+             
+
+            
+               </div>
+            </div>
+            
+         </div>
+      </div>
            <!-- end::form 3-->
-         <div class="card-body">
-            <div class="row">
-               <div class="col-md-2"> <label for="name" class="product-label text-dark"> Numero de fax  </label></div>
-               <div class="col-md-10">
-                  <div class="form-row">
-                     <div class="form-group col-md-12">
-                        <label for="inputtext11" class="ul-form__label"> Numero de fax     *</label>
-                        <input id="designation" type="text"  name="numero_fax" class="form-control  " value="{{ $clients['numero_fax'] }}" required>
-                        <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
-                        
-   
+           <div class="card-body">
+    
+      </div>
+
+
+      <div class="row">
+
+            <div class="col-lg-12">
+               <div class="card">
+                     <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                           <div class="card-title">Les Articles    </div>
+                           <div class="headder-elements tt">
+                              <div class="list-icons">
+                                 <a href="" class="ul-task-manager__list-icon " id="arrow-down"><i class="i-Arrow-Down"></i></a>
+                                 <a href="" class="ul-task-manager__list-icon btn-add-n"><i class="i-Add"></i></a>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="table-responsive table-product ">
+                           <table id="table_product-n" class="table">
+                              <thead>
+                                 <tr>
+                                    <th scope="col">Numero</th>
+                                    <th scope="col">Article</th>
+                                    <th scope="col">Unité</th>
+                                    <th scope="col">QTE minimale</th>
+                                    <th scope="col">QTE maximale</th>
+                              
+                                    <th scope="col">Prix</th>
+                                 
+                                    <th scope="col">Action</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 @foreach($product_factures as $product_facture)   
+                                 <tr id='row_1' class="item">
+                                    <td scope="row" class="row_p">
+                                       <input type="text" name="numero[]" value="{{$product_facture->numero}}" required>
+                                 
+                                    </td>
+                                    <td scope="row" class="row_p">
+                                       <input type="text" name="product[]" value="{{$product_facture->designation}}" required>
+                                 
+                                    </td>
+                                    <td scope="row" class="row_p">
+                                       <input type="text" name="unite[]" value="{{$product_facture->unite}}" required>
+                                 
+                                    </td>
+                                    <td>
+                                       <input type="text" value="{{$product_facture->quantite}}" pattern="[0-9.]+" title="Entrez des chiffres et des points uniquement (ex. 12.34)" name="quantity[]" id="" required>
+                                    </td>
+                                    <td>
+                                       <input type="text" value="{{$product_facture->quantite_max}}" pattern="[0-9.]+" title="Entrez des chiffres et des points uniquement (ex. 12.34)" name="quantite_max[]" required>
+                                    </td>
+                                 
+                                    <td>
+                                       <input type="number" value="{{$product_facture->prix}}" name="prix[]" id="" required>
+                                    </td>
+                                 
+                                    <td>
+                                       <a href="" onClick="removeRow_table(event,1)" ><i class="i-Close-Window text-19 text-danger font-weight-700 prevent-default"></i></a>
+                                    </td>
+                                 </tr>
+                                 @endforeach 
+                              </tbody>
+                           </table>
+                        </div>
                      </div>
-   
-              
-                
-   
-               
-                  </div>
+
                </div>
-               
             </div>
+
+
+
          </div>
-         <!-- end::form 3-->
 
-
-               <!-- end::form 3-->
-               <div class="card-body">
-                  <div class="row">
-                     <div class="col-md-2"> <label for="name" class="product-label text-dark"> Adresse compléte </label></div>
-                     <div class="col-md-10">
-                        <div class="form-row">
-                           <div class="form-group col-md-12">
-                              <label for="inputtext11" class="ul-form__label"> Adresse compléte     *</label>
-                              <input id="designation" type="text"  name="adresse_complete" class="form-control  " value="{{ $clients['adresse_complete'] }}" required>
-                              <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
-                              
-         
-                           </div>
-         
-                    
-                      
-         
-                     
-                        </div>
-                     </div>
-                     
-                  </div>
-               </div>
-               <!-- end::form 3-->
-
-              <!-- end::form 3-->
-               <div class="card-body">
-                  <div class="row">
-                     <div class="col-md-2"> <label for="name" class="product-label text-dark"> Adresse email  </label></div>
-                     <div class="col-md-10">
-                        <div class="form-row">
-                           <div class="form-group col-md-12">
-                              <label for="inputtext11" class="ul-form__label"> Adresse email    *</label>
-                              <input id="designation" type="text"  name="adresse_mail" class="form-control  " value="{{ $clients['adresse_mail'] }}" required>
-                              <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
-                              
-         
-                           </div>
-         
-                    
-                      
-         
-                     
-                        </div>
-                     </div>
-                     
-                  </div>
-               </div>
-               <!-- end::form 3-->
-
-
-               <!-- end::form 3-->
-               <div class="card-body">
-                  <div class="row">
-                     <div class="col-md-2"> <label for="name" class="product-label text-dark"> ville  </label></div>
-                     <div class="col-md-10">
-                        <div class="form-row">
-                           <div class="form-group col-md-12">
-                              <label for="inputtext11" class="ul-form__label"> ville   *</label>
-                              <input id="designation" type="text"  name="ville" class="form-control  " value="{{ $clients['ville'] }}" required>
-                              <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
-                              
-         
-                           </div>
-         
-                    
-                      
-         
-                     
-                        </div>
-                     </div>
-                     
-                  </div>
-               </div>
-               <!-- end::form 3-->
-
+      
 
     
    </div>
@@ -280,11 +370,9 @@ span.spinner.spinner-primary {
             <div class="row">
                <div class="col-lg-12 text-center">
                  
-                  <button type="submit" class="btn d-inline  btn-primary m-1" type="button">
-                  enregistré
-                   </button>
+              
                  
-                  <button type="button" class="btn btn-outline-secondary m-1">Annuler</button>
+                  <button type="button" onclick="myFunction()" class="btn btn-outline-secondary m-1">revenir</button>
                </div>
             </div>
          </div>
@@ -298,6 +386,23 @@ span.spinner.spinner-primary {
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 <script src="<?php echo e(asset('assets/js/vendor/dropzone.min.js')); ?>"></script>
 <script src="{{asset('assets/js/dropzone.script.js')}}"></script>
+
+
+<script>
+
+window.laravel ={!! json_encode([
+                 'token' => csrf_token(),
+                 'url'   => url('/'),
+                 'date'   => date('Y-m-d'),
+               
+               
+               ]) !!}
+
+function myFunction(){
+   window.location.href = window.laravel.url + "/projets"
+}
+
+</script>
 
 
 

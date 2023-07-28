@@ -33,7 +33,7 @@ new Vue({
                     value: 'operation'
                 },
                 {
-                    text: 'origin du compte',
+                    text: 'Source',
                     value: 'origin__du_compte'
                 },
                 
@@ -49,9 +49,31 @@ new Vue({
                 },
 
                 
+
+                
+
+                {
+                    text: "Date",
+                    value: "date",
+                  
+                },
+
+                
                 {
                     text: "Montant",
                     value: "montant",
+                  
+                }
+                ,
+                {
+                    text: "Detail",
+                    value: "detail_caisse",
+                  
+                }
+                ,
+                {
+                    text: "PDF",
+                    value: "show_pdf",
                   
                 }
 
@@ -65,9 +87,12 @@ new Vue({
               addItem: {
                 id: 0,
                 projet : '',
+                projet : '',
                 debut : '',
                 fin  : '',
                 statut : '',
+                banque : '',
+
               },
 
               caisses: [
@@ -77,12 +102,18 @@ new Vue({
 
             ],
             editedIndex: -1,
-            editedItem: {
+            show_item: {
                 id: 0,
-                projet : '',
-                debut : '',
-                fin  : '',
-                statut : '',
+                operation : '',
+                origin__du_compte : '',
+                type  : '',
+                banque : '',
+                detail_caisse : '',
+                date : '',
+                montant : '',
+                banque : '',
+                detail : '',
+                Bénéficiaire : '',
             },
             defaultItem: {
                 id: 0,
@@ -108,6 +139,23 @@ new Vue({
 
 
     methods: {
+
+
+
+        show_pdf(item) {
+            
+
+
+              window.location.href = "/bon_caisse_pdf/" + item.id 
+         },
+
+
+        show_order_product(item) {
+            
+             this.show_item =  item;
+             this.payment_current = item.id;
+             this.dialog = true
+          },
 
         editItem(item) {
 

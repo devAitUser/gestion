@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Projet;
 use App\Models\Product_facture;
 use App\Models\Client;
+use PDF;
 
 
 use Illuminate\Http\Request;
@@ -56,8 +57,12 @@ class ProjetsController extends Controller
     public function store(Request $request)
     {
         if($request->isMethod('post')){
+
+            $client_explode = explode('|', $request->client); 
+
             $projet = new Projet; 
-            $projet->client = $request->client;
+            $projet->client = $client_explode[0];
+            $projet->id_client = $client_explode[1];
             $projet->type_prestation = $request->type_prestation;
             $projet->objet = $request->objet;
             $projet->status = $request->status;
@@ -66,21 +71,22 @@ class ProjetsController extends Controller
             $projet->duree = $request->duree;
             $projet->montant_min = $request->montant_min ;
             $projet->montant_max = $request->montant_max ;
+            $projet->file      =  $request->file('file')->store('public/projet_files') ;
           
             $projet->save();
 
 
-            // for($i=0;$i<count($request->product);$i++){
-            //     $product_devis = new Product_facture();
-            //     $product_devis->facture_id  = $projet->id;
-            //     $product_devis->numero = $request->numero[$i];
-            //     $product_devis->designation = $request->product[$i];
-            //     $product_devis->quantite = $request->quantity[$i];
-            //     $product_devis->quantite_max = $request->quantite_max[$i];
-             
-            //     $product_devis->prix = $request->prix[$i];
-            //     $product_devis->save();
-            // }
+            for($i=0;$i<count($request->product);$i++){
+                $product = new Product_facture();
+                $product->facture_id  = $projet->id;
+                $product->numero = $request->numero[$i];
+                $product->designation = $request->product[$i];
+                $product->unite = $request->unite[$i];
+                $product->quantite = $request->quantity[$i];
+                $product->quantite_max = $request->quantite_max[$i];
+                $product->prix = $request->prix[$i];
+                $product->save();
+            }
         
             return redirect()->to('/projets');
          } 
@@ -110,10 +116,11 @@ class ProjetsController extends Controller
 
         $clients   = Projet::find($id);   
 
-
+        $product_facture   = Product_facture::where('facture_id', '=', $id )->get();; 
+        
     
      
-        $data = array( "clients" => $clients );
+        $data = array( "clients" => $clients , "product_factures" => $product_facture  );
         return view('projets.edit',$data)  ; 
     }
 
@@ -153,5 +160,19 @@ class ProjetsController extends Controller
         $client_client= Projet::find($id);  
 
         $client_client->delete();
+    }
+    public function generate_pdf($id){
+        $projet = Projet::find($id);
+        $client = Client::find($projet->id_client);
+
+        $product_factures =   Product_facture::where('facture_id', '=', $id )->get();
+
+        view()->share('projet',  $projet);
+        view()->share('client',  $client);
+        view()->share('product_factures',  $product_factures);
+        $pdf = PDF::loadView('projets.pdf');
+     
+         //return view('projets.pdf');
+         return $pdf->stream();
     }
 }

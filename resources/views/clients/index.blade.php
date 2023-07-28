@@ -73,6 +73,15 @@
                                             <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                          </v-btn>
                                     </template>
+                                    <template v-slot:item.telephone1="{ item }">
+                                      0@{{item.telephone1}}
+                                    </template>
+                                    <template v-slot:item.telephone2="{ item }">
+                                      0@{{item.telephone2}}
+                                    </template>
+                                    <template v-slot:item.numero_fax="{ item }">
+                                      0@{{item.numero_fax}}
+                                    </template>
                    
                      </v-data-table>
                                               

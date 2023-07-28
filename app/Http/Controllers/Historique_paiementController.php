@@ -5,6 +5,15 @@ use App\Models\Historique_paiement;
 
 use Illuminate\Http\Request;
 
+use App\Models\Facture_fournisseur;
+
+
+use App\Models\Projet;
+
+use App\Models\Caisse_detail;
+
+
+
 class Historique_paiementController extends Controller
 {
     public function __construct()
@@ -46,15 +55,96 @@ class Historique_paiementController extends Controller
     public function store(Request $request)
     {
         if($request->isMethod('post')){
-            $historique_paiement = new Historique_paiement; 
-            $historique_paiement->facture_fournisseur_id  = $request->facture_fournisseur_id;
-            $historique_paiement->mode_paiement = $request->mode_paiement;
-            $historique_paiement->n_cheque  = $request->numero_cheque;
-            $historique_paiement->date_cheque = $request->date_cheque;
-            $historique_paiement->montant = $request->montant;
-            $historique_paiement->etat_paiement = $request->etat_paiement;
-            $historique_paiement->save();
-            return Response()->json(['etat' => true  , 'id_historique_paiement' => $historique_paiement->id ]);
+
+
+
+            $condition = false ; 
+
+          
+
+            $check_payment = Historique_paiement::where([ 'facture_fournisseur_id' =>  $request->facture_fournisseur_id  ,  'etat_paiement'    => 'payé' ])->sum('montant');
+
+            $check_payment =  $check_payment + $request->montant  ; 
+
+
+
+            $facture_fournisseur =  Facture_fournisseur::find($request->facture_fournisseur_id);
+
+            $projet = Projet::find($facture_fournisseur->projet_id);
+
+
+            if( $check_payment <=  $facture_fournisseur->total_ttc  ){
+                $condition = true ; 
+
+
+                if( $check_payment ==  $facture_fournisseur->total_ttc  ){
+                    $facture_fournisseur->etat_paiement = 'payé' ;
+
+                    $facture_fournisseur->save() ;
+                }
+
+            }
+
+
+           
+      
+
+
+            if($condition){
+
+
+                if($request->mode_paiement == 'espèce'  ){
+
+                    if( $projet->solde > $request->montant ){
+    
+                        $historique_paiement = new Historique_paiement; 
+                        $historique_paiement->facture_fournisseur_id  = $request->facture_fournisseur_id;
+                        $historique_paiement->mode_paiement = $request->mode_paiement;
+                        $historique_paiement->n_cheque  = $request->numero_cheque;
+                        $historique_paiement->date_cheque = $request->date_cheque;
+                        $historique_paiement->montant = $request->montant;
+                        $historique_paiement->etat_paiement = $request->etat_paiement;
+                        $historique_paiement->save();
+                        $new =  new Caisse_detail();
+                        $new->operation = 'depense' ; 
+                        $new->origin__du_compte  = 'Caisse' ;
+                        $new->type  = 'Achat par facture' ;    
+                        $new->detail  = 'facture numero' . $facture_fournisseur->numero_facture ;
+                        $new->id_projet  = $facture_fournisseur->projet_id  ;
+                        $new->date  = date(" Y-m-d")  ;
+                        $new->montant  = $request->montant  ;
+                        $new->save();
+                        $up_solde = Projet::find($facture_fournisseur->projet_id);
+                        $up_solde->solde = $up_solde->solde - $request->montant ; 
+                        $up_solde->save();
+        
+                    } else {
+                        
+                        return Response()->json([ 'status' => 500 ]);
+                    }
+        
+                } else {
+    
+                    
+                    $historique_paiement = new Historique_paiement; 
+                    $historique_paiement->facture_fournisseur_id  = $request->facture_fournisseur_id;
+                    $historique_paiement->mode_paiement = $request->mode_paiement;
+                    $historique_paiement->n_cheque  = $request->numero_cheque;
+                    $historique_paiement->date_cheque = $request->date_cheque;
+                    $historique_paiement->montant = $request->montant;
+                    $historique_paiement->etat_paiement = $request->etat_paiement;
+                    $historique_paiement->save();
+    
+                }
+    
+                return Response()->json(['etat' => true  , 'id_historique_paiement' => $historique_paiement->id ]);
+
+            } else {
+                return Response()->json([ 'status' => 400 ]);
+            }
+
+          
+
          } 
        
     }

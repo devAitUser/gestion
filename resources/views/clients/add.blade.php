@@ -49,7 +49,7 @@ span.spinner.spinner-primary {
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label">Nom du client *</label>
+                   
                      <input id="designation" type="text"  name="nom_client" class="form-control  " required >
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
@@ -73,7 +73,7 @@ span.spinner.spinner-primary {
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label">Personne contactée *</label>
+            
                      <input id="designation" type="text"  name="personne" class="form-control  "  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
@@ -96,7 +96,7 @@ span.spinner.spinner-primary {
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label">ICE  *</label>
+
                      <input id="designation" type="number"  name="ice" class="form-control  "  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
@@ -119,7 +119,7 @@ span.spinner.spinner-primary {
                   <div class="col-md-10">
                      <div class="form-row">
                         <div class="form-group col-md-12">
-                           <label for="inputtext11" class="ul-form__label">Numéro telephone 1  *</label>
+                        
                            <input id="designation" type="tel"  name="telephone1" class="form-control  "  required>
                            <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                            
@@ -144,7 +144,7 @@ span.spinner.spinner-primary {
                      <div class="col-md-10">
                         <div class="form-row">
                            <div class="form-group col-md-12">
-                              <label for="inputtext11" class="ul-form__label">Numéro telephone 2  *</label>
+                    
                               <input id="designation" type="tel"  name="telephone2" class="form-control  "  required>
                               <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                               
@@ -171,7 +171,7 @@ span.spinner.spinner-primary {
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label">Numéro telephone 2  *</label>
+                  
                      <input id="designation" type="tel"  name="fax" class="form-control  "  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
@@ -195,7 +195,7 @@ span.spinner.spinner-primary {
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label">Adresse email  *</label>
+     
                      <input id="designation" type="text"  name="email" class="form-control  "  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
@@ -217,11 +217,11 @@ span.spinner.spinner-primary {
        <!-- end::form 3-->
        <div class="card-body">
          <div class="row">
-            <div class="col-md-2"> <label for="name" class="product-label text-dark"> Adresse completé </label></div>
+            <div class="col-md-2"> <label for="name" class="product-label text-dark"> Adresse complete </label></div>
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label">Adresse completé  *</label>
+                   
                      <input id="designation" type="text"  name="adresse_complete" class="form-control  "  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
@@ -245,7 +245,7 @@ span.spinner.spinner-primary {
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
-                     <label for="inputtext11" class="ul-form__label">Ville  *</label>
+        
                      <input id="designation" type="text"  name="ville" class="form-control  "  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
@@ -261,7 +261,7 @@ span.spinner.spinner-primary {
             
          </div>
       </div>
-      <!-- end::form 3-->
+ 
     
    </div>
    <meta name="csrf-token" content="{{ csrf_token() }}">

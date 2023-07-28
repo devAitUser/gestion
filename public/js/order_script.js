@@ -138,7 +138,50 @@ $(document).ready(function() {
         $("#date_system").val(year);
 
 
-    
+        $('table').on('mouseup keyup', 'input[type=number]', () => calculateTotals_min());
+
+        $('table').on('mouseup keyup', 'input[type=number]', () => calculateTotals_max());
+
+        function calculateTotals_min() {
+            const subtotals = $('.item').map((idx, val) => calculateSubtotal_min(val)).get();
+            const total = subtotals.reduce((a, v) => a + Number(v), 0);
+            const tva = total * 0.20 ;
+            const total_ttc = total + tva ; 
+            $('#montant_min').val(subtotals.reduce((a, b) => a + b, 0));
+
+
+   
+        
+        }
+
+        function calculateSubtotal_min(row) {
+            const $row = $(row);
+            const inputs = $row.find('input');
+            const subtotal = inputs[3].value * inputs[5].value;
+            
+            return subtotal;
+        }
+
+
+        function calculateTotals_max() {
+            const subtotals = $('.item').map((idx, val) => calculateSubtotal_max(val)).get();
+            const total = subtotals.reduce((a, v) => a + Number(v), 0);
+            const tva = total * 0.20 ;
+            const total_ttc = total + tva ; 
+            $('#montant_max').val(subtotals.reduce((a, b) => a + b, 0));
+
+
+   
+        
+        }
+
+        function calculateSubtotal_max(row) {
+            const $row = $(row);
+            const inputs = $row.find('input');
+            const subtotal = inputs[4].value * inputs[5].value;
+            
+            return subtotal;
+        }
 
     
 
@@ -167,7 +210,7 @@ $(document).ready(function() {
 
     $(".btn-add-n").click(function(e) {
 
-
+       
 
         e.preventDefault();
 
@@ -181,10 +224,10 @@ $(document).ready(function() {
 
         
 
-        var add_row = '<tr id=row_' + count_2 + '  >';
+        var add_row = '<tr id=row_' + count_2 + '  class="item" >';
 
   
-
+        add_row += '<td><input type="text" name="numero[]"  required>';
 
         add_row += '<td><input type="text" name="product[]"  required>';
 
@@ -198,6 +241,11 @@ $(document).ready(function() {
         add_row += '<td>  ';
         add_row += '<input type="number" name="quantity[]" required>';
         add_row += ' </td>';
+        
+        add_row += '<td>  ';
+        add_row += '<input type="number" name="quantite_max[]" required>';
+        add_row += ' </td>';
+        
         add_row += '<td> <input type="number" name="prix[]" required> </td>';
 
         add_row += ' <td><a href="" class="prevent-default" onClick="removeRow_table(event,' + count_2 + ')" ><i class="i-Close-Window text-19 text-danger font-weight-700""></i></a></td></tr>';
@@ -249,6 +297,8 @@ $(document).ready(function() {
             type: 'get',
             dataType: 'json',
             success: function(data) {
+
+                
 
                 len = data['products'].length;
                 count++;

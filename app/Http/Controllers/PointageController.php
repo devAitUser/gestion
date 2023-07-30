@@ -260,8 +260,6 @@ class PointageController extends Controller
 
     public function paie_index(){
 
-       
-
         return view('pointage.paie');
     }
 

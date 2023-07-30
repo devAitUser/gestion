@@ -79,6 +79,15 @@
                 </a>
                 <div class="triangle"></div>
              </li>
+
+
+             <li class="nav-item @if (Route::current()->getName() == 'product.edit'  ) active @endif {{ request()->is('projets/create') ? 'active' : '' }} {{ request()->is('projets') ? 'active' : '' }}"  >
+                <a class="nav-item-hold" href="{{ url('facture_client') }}">
+                    <i class="nav-icon nav-icon i-Receipt"></i>   
+                    <span class="nav-text"> Facture clients </span>
+                </a>
+                <div class="triangle"></div>
+             </li>
               
 
      

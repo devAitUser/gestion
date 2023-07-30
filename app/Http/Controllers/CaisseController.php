@@ -5,7 +5,7 @@ use App\Models\Projet;
 use App\Models\Caisse_detail;
 
 use Illuminate\Http\Request;
-
+use App\Models\Facture;
 use PDF;
 
 use Session;
@@ -225,6 +225,8 @@ class CaisseController extends Controller
 
 
     }
+
+ 
 
 
 }

@@ -221,5 +221,19 @@ class FactureController extends Controller
 
     }
 
+    public function facture_client()
+    {
+
+        return view('facture_client.index');
+
+    }
+
+    public function new_facture_client()
+    {
+
+        return view('facture_client.add');
+
+    }
+
 
 }

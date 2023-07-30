@@ -300,6 +300,7 @@ Route::get('/projet_selectionner_pointage_par_projet/{id}',[App\Http\Controllers
 
 Route::get('/caisse',[App\Http\Controllers\CaisseController::class, 'index']);
 
+
 Route::get('/caisse/{id}/detail',[App\Http\Controllers\CaisseController::class, 'caisse_detail']);
 
 Route::get('/caisse_get_projet',[App\Http\Controllers\CaisseController::class, 'caisse_get_projet']);
@@ -322,6 +323,9 @@ Route::get('/bon_caisse_pdf/{id}',[App\Http\Controllers\CaisseController::class,
 
 
 
+Route::get('/facture_client/',[App\Http\Controllers\FactureController::class, 'facture_client']);
+
+Route::get('/new_facture_client/',[App\Http\Controllers\FactureController::class, 'new_facture_client']);
 
 
 Auth::routes();

@@ -85,6 +85,7 @@
     input#article_input {
     text-transform: uppercase;
     }
+  
 </style>
 @endsection
 @section('main-content')

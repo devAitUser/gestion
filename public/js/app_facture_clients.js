@@ -32,22 +32,28 @@ new Vue({
                 
                 {
                     text: 'id',
-                    value: 'index'
+                    value: 'id'
                 },
 
        
 
-            
                 {
-                    text: "Nom Projet",
-                    value: 'salaire_paye'
+                    text: 'Nom projet',
+                    value: 'nom_projet'
+                },
+                {
+                    text: 'Client',
+                    value: 'client'
+                },
+                {
+                    text: 'Objet',
+                    value: 'objet'
                 },
 
                 {
-                    text: "Anné",
-                    value: 'salaire_reste'
-                }
-                ,
+                    text: 'Date',
+                    value: 'date'
+                },
 
                 {
                     text: "Action",
@@ -70,7 +76,7 @@ new Vue({
               },
               item :{
 
-                mois : '',
+                id_projet : '',
                 anne : current_year.toString(),
 
               },
@@ -127,13 +133,47 @@ new Vue({
         },
 
 
+        consulter(){
+
+
+            //  poster les information mois et année
+
+
+            let jsonData = new FormData()
+            
+
+
+
+            for (var i = 0; i < this.selected.length; i++) {
+                jsonData.append('id_project[]', this.selected[i].id_projet);
+              }
+       
+         
+              jsonData.append('mois', this.item.mois );
+         
+              jsonData.append('anne', this.item.anne );
+
+
+
+            axios.post(window.laravel.url + '/api_projet_seleionner_pointage', jsonData)
+            .then(response => {
+                
+
+                window.location.href = window.laravel.url+'/projet_selectionner_pointage';
+
+
+            })
+
+        },
+
+
         lineNumber(index) {
             return index + 1; // Ajoutez 1 pour commencer à partir de 1 au lieu de 0
         },
 
         editItem(item) {
 
-            window.location.href = window.laravel.url+ "/projet_selectionner_pointage_par_projet/" + item.id_projet ;
+            window.location.href = window.laravel.url+ "/parametres_facture_client_pdf/" + item.id ;
 
         },
 
@@ -178,7 +218,6 @@ new Vue({
  
                  
                  let jsonData = new FormData()
-
                  jsonData.append('employe_id'        , this.current_employe )
                  jsonData.append('projet'        , this.addItem.projet.id )
                  jsonData.append('debut'        , this.addItem.debut )
@@ -411,21 +450,23 @@ new Vue({
         fill_table(){
 
 
-            if(this.item.mois != '' && this.item.anne != ''  ) {
+            if(this.item.id_projet != '' && this.item.anne != ''  ) {
 
                 
                 let jsonData = new FormData()
-                jsonData.append('mois'        , this.item.mois  )
+                jsonData.append('id_projet'        , this.item.id_projet  )
                 jsonData.append('anne'        , this.item.anne )
             
              
 
              
 
-                axios.post(window.laravel.url + '/fill_table', jsonData)
+                axios.post(window.laravel.url + '/fill_table_facture_client', jsonData)
                 .then(response => {
                     
 
+
+                    console.log(response)
                    
                     this.pointage = response.data;
 
@@ -546,38 +587,38 @@ new Vue({
            
 
                 
-                axios.get(window.laravel.url + '/api_year')
-                .then(response => {
+            axios.get(window.laravel.url + '/api_year')
+            .then(response => {
 
-                    this.array_anne = response.data;
-                
+                this.array_anne = response.data;
+            
 
-                    console.log(this.array_anne);
+                console.log(this.array_anne);
 
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-
- 
-                axios.get(window.laravel.url + '/getprojets')
-                .then(response => {
-
-                    this.array_projet = response.data.projets;
+            })
+            .catch(error => {
+                console.log(error);
+            })
 
 
-                    console.log(this.array_projet)
-                    ;
-                   
+            axios.get(window.laravel.url + '/getprojets')
+            .then(response => {
+
+                this.array_projet = response.data.projets;
 
 
-                })
-                .catch(error => {
-                    console.log(error);
-                })
+                console.log(this.array_projet)
+                ;
+               
 
-                
-        }
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+            
+    }
     },
     mounted: function() {
 

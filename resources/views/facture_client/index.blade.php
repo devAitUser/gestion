@@ -44,9 +44,10 @@
                                        sm="6"
                                        >
                                           <v-select
-                                          v-model="item.mois"
-                                          :items="array_mois"
+                                          v-model="item.id_projet"
+                                          :items="array_projet"
                                           label="Projet"
+                                          item-value="id" item-text="client"
                                           outlined
                                           @change="fn_mois" 
                                           ></v-select>
@@ -182,5 +183,5 @@
    });
 
 </script>
-<script src="{{ asset('js/app_facture_client.js') }}"></script>
+<script src="{{ asset('js/app_facture_clients.js') }}"></script>
 @endsection

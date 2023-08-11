@@ -237,6 +237,9 @@ return [
         'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Artisan' => Illuminate\Support\Facades\Artisan::class,
+
+        
 
     ],
 

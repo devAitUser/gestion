@@ -145,13 +145,6 @@ class Factures_fournisseurController extends Controller
 
             for($i=0;$i<count($request->product);$i++){
 
-
-               
-
-
-
-
-
                 if($request->type[$i]  != 'Service' ){
                     $check_exist_stock = Stock::where([ 'article' => $request->product[$i] , 'prix'    =>    $request->prix[$i] ])->first();
                     if ($check_exist_stock === null) {
@@ -173,13 +166,6 @@ class Factures_fournisseurController extends Controller
         
             return redirect()->to('/factures_fournisseur/'.$request->id_facture_fournisseur); 
          } 
-
-
-
-        
-       
-
-          
 
 
          //return $request->all();

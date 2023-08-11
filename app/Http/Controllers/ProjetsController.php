@@ -116,10 +116,8 @@ class ProjetsController extends Controller
 
         $clients   = Projet::find($id);   
 
-        $product_facture   = Product_facture::where('facture_id', '=', $id )->get();; 
-        
-    
-     
+        $product_facture   = Product_facture::where('facture_id', '=', $id )->get(); 
+
         $data = array( "clients" => $clients , "product_factures" => $product_facture  );
         return view('projets.edit',$data)  ; 
     }

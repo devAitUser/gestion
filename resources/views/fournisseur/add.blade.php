@@ -275,9 +275,18 @@ span.spinner.spinner-primary {
          </div>
       </div>
 
+              
+
+
+               
+
+
+
+          
+
              <!-- end::form 3-->
-             <div class="card-body">
-                <div class="row" id='block_etat'>
+             <div class="">
+                <div class="" id='block_etat'>
                   
                   
                      
@@ -344,18 +353,66 @@ span.spinner.spinner-primary {
 <script>
 $(document).ready(function(){
 
-   var html = '<div class="col-md-2"> <label for="name" class="product-label text-dark"> Etat </label></div>';
+   var html = '<div class="card-body"><div class="row"><div class="col-md-2"> <label for="name" class="product-label text-dark"> Etat </label></div>';
    html += '<div class="col-md-10">';
    html += ' <div class="form-row">';
    html += ' <div class="form-group col-md-12"> ';
    html += ' <label for="inputtext11" class="ul-form__label">type  *</label> ';
-   html += '  <select  name="type" class="form-control" required>';
+   html += '  <select  name="etat" class="form-control" required>';
    html += '  <option value="">Selectionner</option> ';
    html += '  <option value="Actif">Actif</option> ';
    html += ' <option value="Non Actif   ">Non Actif</option> </select>  ';
    html += '<div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>  ';
-   html += '</div> </div></div>  ';
-   
+   html += '</div> </div></div> </div></div>  ';
+
+
+
+
+         
+
+
+   html += '<div class="card-body"><div class="row"><div class="col-md-2"> <label for="name" class="product-label text-dark"> Date * </label></div> ';
+   html += ' <div class="col-md-10"> ';
+   html += ' <div class="form-row"> ';
+   html += ' <div class="form-group col-md-12">  ';
+   html += '  <input id="" type="date"  name="date" class="form-control  "  required >  ';
+   html += ' </div> ';
+   html += ' </div> ';
+   html += ' </div>  </div></div>  ';
+
+
+
+
+   html += '<div class="card-body"><div class="row"><div class="card-body">';
+   html += '<div class="row">';
+   html += ' <div class="col-md-2"> <label for="name" class="product-label text-dark"> Montant * </label></div> ';
+   html += '  <div class="col-md-10"> ';
+   html += '  <div class="form-row"> ';
+   html += '  <div class="form-group col-md-12"> ';
+   html += '  <input type="number"  name="montant" class="form-control  "  required > ';
+   html += ' </div> ';
+   html += ' </div> ';
+   html += ' </div> ';
+   html += ' </div> </div> </div></div>  ';
+
+
+
+
+
+   html += ' <div class="card-body"><div class="row"> <div class="col-md-2"> <label for="name" class="product-label text-dark"> Montant * </label></div> ';
+   html += '  <div class="col-md-10"> ';
+   html += '  <div class="form-row"> ';
+   html += '  <div class="form-group col-md-12"> ';
+   html += '  <select id="" name="projet" class="form-control" required> ';
+   html += ' <option value="">Selectionner</option>';
+   @foreach($projets as $projet)
+   html += ' <option value="{{$projet->id}}">{{$projet->client}}</option> ';
+   @endforeach 
+   html += ' </select>  ';
+   html += ' </div> ';
+   html += ' </div> ';
+   html += ' </div>  </div></div>';
+ 
 
    $("#select_type").change(function(){
      

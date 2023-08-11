@@ -11,8 +11,14 @@ use App\Models\Facture;
 use App\Models\Product_facture;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use App\Models\Projet;
 use \NumberFormatter;
-
+use Artisan;
+use DateTime;
+use Carbon\Carbon;
+ 
+use App\Models\Facture_client;
+use App\Models\Article_facture_client;
 class FactureController extends Controller
 {
         /**
@@ -231,9 +237,175 @@ class FactureController extends Controller
     public function new_facture_client()
     {
 
-        return view('facture_client.add');
+        $projets = Projet::all();
+
+        $data = array( "projets" =>  $projets );
+
+        return view( 'facture_client.ajouter' , $data );
 
     }
+
+
+    public function fill_projet_article($id){
+
+
+        $product_facture   = Product_facture::where('facture_id', '=', $id )->get(); 
+
+        return  $product_facture;
+
+    }
+
+
+    
+    public function store_facture_client(Request $request){
+
+
+        $projet = Projet::find($request->projet);
+
+        $add_facture   = new Facture_client();
+        $add_facture->id_projet = $request->projet;
+        $add_facture->nom_projet = $projet->client;
+        $add_facture->date = $request->date;
+        $add_facture->date_debut = $request->date_debut;
+        $add_facture->date_fin = $request->date_fin;
+        $add_facture->montant = $request->total_ttc;
+        $add_facture->year = Carbon::now()->format('Y');
+        $add_facture->save();
+
+        
+        for($i=0;$i<count($request->numero);$i++){
+
+            $add   = new Article_facture_client();
+            $add->numero = $request->numero[$i];
+            $add->id_facture_clients  = $add_facture->id;
+            $add->article  =  $request->product[$i];
+            $add->quantite  =  $request->quantity[$i];
+            $add->prix  =  $request->prix[$i];
+            $add->save();
+
+        }
+
+        return redirect()->to('/facture_client/'); 
+
+
+        
+    }
+
+
+    public function fill_table_facture_client(Request $request){
+
+
+        $facture_client = Facture_client::where([ 'id_projet' =>  $request->id_projet  ,  'year'    => $request->anne ])->get();
+
+
+        $projet = Projet::find($request->id_projet);
+
+        for($i=0;$i<count($facture_client);$i++)
+        {
+            $table_facture_client[] = (object) [ 
+            'id'=> $facture_client[$i]->id ,
+            'nom_projet'=> $facture_client[$i]->nom_projet,
+            'montant'=> $facture_client[$i]->montant,
+            'date'=> $facture_client[$i]->date,
+            'client'=> $projet->client ,
+            'objet'=> $projet->objet , 
+           
+            ];
+         
+    
+        }
+
+
+        return  $table_facture_client ;
+
+
+       
+        
+    }
+
+    public function facture_client_pdf($id){
+
+        $facture_client = Facture_client::find($id);
+
+
+        $article_facture = Article_facture_client::where('id_facture_clients', '=', $id  )->get(); 
+
+
+        $projet = Projet::find($facture_client->id_projet);
+   
+        
+        for($i=0;$i<count($article_facture);$i++)
+        {
+            $table_product[] = (object) [ 
+            'id'=> $article_facture[$i]->id ,
+             'numero'=> $article_facture[$i]->numero,
+             'article'=> $article_facture[$i]->article ,
+             'quantite'=> $article_facture[$i]->quantite ,
+             'prix'=> $article_facture[$i]->prix , 
+             'prix_total'=> $article_facture[$i]->prix * $article_facture[$i]->quantite , 
+            ];
+            $sum[] =  $article_facture[$i]->prix * $article_facture[$i]->quantite ;
+    
+        }
+   
+       function sumArray($array) {
+           $total = 0;
+           foreach ($array as $value) {
+               $total += $value;
+           }
+      
+           return $total;
+        }
+   
+        function calcul_tva($value) {
+           $value = $value * 0.20;
+           return $value;
+        }
+   
+        $calcul_total_htva = sumArray($sum);
+        $calcul_tva= calcul_tva($calcul_total_htva);
+        $calcul_ttc= $calcul_tva +  $calcul_total_htva;
+        $date = date('d/m/Y ', time());
+    
+        $letter_to_number = new \NumberFormatter('fr', \NumberFormatter::SPELLOUT);
+        $facture['objet']= $projet->objet ;
+        $facture['info_facture']=$facture_client ;
+        $facture['products']=$table_product;
+        $facture['current_date']= $date;
+        $facture['total_htva']= number_format($calcul_total_htva,2,",",".");
+        $facture['tva']= number_format($calcul_tva,2,",",".");
+        $facture['ttc']= number_format($calcul_ttc,2,",",".") ;
+        $facture['amount_letter']= $letter_to_number->format($calcul_ttc);
+    
+            
+    
+            
+        view()->share('facture', $facture);
+        $pdf = PDF::loadView('facture_client.pdf');
+            
+        return $pdf->stream();
+
+
+        
+
+
+
+
+    }
+
+
+    public function parametres_facture_client_pdf($id){
+
+         $data = array( "id" =>  $id );
+        return view('facture_client.parametre',$data);
+
+    }
+
+    
+
+
+
+   
 
 
 }

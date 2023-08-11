@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Fournisseur;
-
+use App\Models\Projet;
 use Illuminate\Http\Request;
+
+use App\Models\Facture_fournisseur;
+
+use DateTime;
 
 class FournisseurController extends Controller
 {
@@ -33,7 +37,10 @@ class FournisseurController extends Controller
      */
     public function create()
     {
-        return view('fournisseur.add'); 
+        $projets = Projet::all(); 
+        $data = array( 'projets'=> $projets );
+
+        return view('fournisseur.add', $data  ); 
     }
 
     /**
@@ -55,10 +62,15 @@ class FournisseurController extends Controller
             $client->specialite = $request->specialite ;
             $client->telephone = $request->telephone ;
             $client->type = $request->type ;
+            $client->etat = $request->etat ;
+            $client->date = $request->date ;
+            $client->projet_id = $request->projet ;
+            $client->montant = $request->montant ;
             $client->save();
-        
             return redirect()->to('/fournisseur');
          } 
+
+        
        
     }
 
@@ -129,5 +141,6 @@ class FournisseurController extends Controller
 
         $delete->delete();
     }
+    
 
 }

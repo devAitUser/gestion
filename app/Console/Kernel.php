@@ -4,6 +4,8 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use App\Models\Facture;
+use App\Models\Fournisseur;
+
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
@@ -28,34 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('command:name')->everyMinute();
 
 
-        $schedule->call(function () {
-            // $today = Carbon::now()->toDateString();
-            // $dateEntries = DateEntry::all();
-    
-            // $date =  '26/07/2023'; 
         
-            // $today = Carbon::now()->toDateString();
-    
-            // $userDate = Carbon::createFromFormat('d/m/Y', $date);   
-        
-    
-            // // Vérifier si un mois complet s'est écoulé
-            // if ($userDate->addMonth()->toDateString() == $today) {
-            //      echo  'Un mois complet sest écoulé depuis la date saisie.';
-            // } else {
-            //      echo $userDate->toDateString();
-            // }
-
-            $facture = new Facture();
-
-            $facture->objet = "tret";
-            $facture->client = "tret";
-            $facture->date = "20-10-2023";
-            $facture->save();
-
-
-
-        })->everyMinute(); 
    
     }
 

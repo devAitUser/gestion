@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddEtatDateToUsersTable extends Migration
+class AddProjetIdToFactureFournisseursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddEtatDateToUsersTable extends Migration
     public function up()
     {
         Schema::table('fournisseurs', function (Blueprint $table) {
-            $table->string('etat')->nullable()->after('file');
-            $table->date('date')->nullable()->after('etat');
+            $table->integer('projet_id')->nullable()->after('date');
         });
     }
 

@@ -325,7 +325,21 @@ Route::get('/bon_caisse_pdf/{id}',[App\Http\Controllers\CaisseController::class,
 
 Route::get('/facture_client/',[App\Http\Controllers\FactureController::class, 'facture_client']);
 
-Route::get('/new_facture_client/',[App\Http\Controllers\FactureController::class, 'new_facture_client']);
+Route::get('/new_facture_client',[App\Http\Controllers\FactureController::class, 'new_facture_client']);
 
+
+Route::post('/fill_projet_article/{id}',[App\Http\Controllers\FactureController::class, 'fill_projet_article']);
+
+
+Route::post('/store_facture_client/',[App\Http\Controllers\FactureController::class, 'store_facture_client']);
+
+
+Route::post('/fill_table_facture_client',[App\Http\Controllers\FactureController::class, 'fill_table_facture_client']);
+
+
+
+Route::get('/facture_client_pdf/{id}',[App\Http\Controllers\FactureController::class, 'facture_client_pdf']);
+
+Route::get('/parametres_facture_client_pdf/{id}',[App\Http\Controllers\FactureController::class, 'parametres_facture_client_pdf']);
 
 Auth::routes();

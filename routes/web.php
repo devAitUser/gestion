@@ -108,6 +108,7 @@ Route::get('/projets/{id}/edit',[App\Http\Controllers\ProjetsController::class, 
 
 Route::get('/getprojets',[App\Http\Controllers\ProjetsController::class, 'get_projets']);
 
+Route::get('/get_input_projets',[App\Http\Controllers\ProjetsController::class, 'get_input_projets']);
 
 Route::get('/generate_pdf/{id}',[App\Http\Controllers\ProjetsController::class, 'generate_pdf']);
 
@@ -158,9 +159,13 @@ Route::get('/getstocks',[App\Http\Controllers\StockController::class, 'get_gateg
 
 Route::put('/updatestocks',[App\Http\Controllers\StockController::class, 'update']);
 
+Route::get('/gestion_demande_stock',[App\Http\Controllers\StockController::class, 'gestion_demande_stock']);
+
+Route::get('/create_demande_stock',[App\Http\Controllers\StockController::class, 'create_demande_stock']);
 
 Route::get('/all_stocks',[App\Http\Controllers\StockController::class, 'all_stocks']);
 
+Route::post('/fill_item_stock/{id}',[App\Http\Controllers\StockController::class, 'fill_item_stock']);
 
 Route::get('/all_views_stock/{id}',[App\Http\Controllers\StockController::class, 'view_stock']);
 
@@ -324,6 +329,10 @@ Route::get('/bon_caisse_pdf/{id}',[App\Http\Controllers\CaisseController::class,
 
 
 Route::get('/facture_client/',[App\Http\Controllers\FactureController::class, 'facture_client']);
+
+Route::get('/edit_facture_client/{id}',[App\Http\Controllers\FactureController::class, 'edit_facture_client']);
+
+Route::post('/update_facture_client',[App\Http\Controllers\FactureController::class, 'update_facture_client']);
 
 Route::get('/new_facture_client',[App\Http\Controllers\FactureController::class, 'new_facture_client']);
 

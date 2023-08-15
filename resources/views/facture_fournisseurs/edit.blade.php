@@ -212,9 +212,10 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr id='row_1' class="item">
+                              @foreach($articles as $article)
+                              <tr id='row_{{$article->id}}' class="item">
                                  
-                                 @foreach($articles as $article)
+                                
                                     
                           
 
@@ -243,9 +244,10 @@
                                     </td>
 
 
-                                 @endforeach   
+                                   
                        
                               </tr>
+                              @endforeach 
                             </tbody>
                         </table>
                       </div>

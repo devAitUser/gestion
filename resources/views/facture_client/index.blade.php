@@ -102,8 +102,11 @@
 
 
                                     <template v-slot:item.action="{ item }">
-                                        <v-btn color="purple" fab small dark  @click="editItem(item)">
-                                            <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                        <v-btn color="purple" fab small dark  @click="pdf(item)">
+                                             <v-icon dark>mdi-file-pdf-box</v-icon> 
+                                         </v-btn>
+                                         <v-btn color="purple" fab small dark  @click="editItem(item)">
+                                          <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                          </v-btn>
                                     </template>
 

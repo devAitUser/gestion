@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href={{ asset('css_vuetify/vuetify.min.css') }}>
 <link rel="stylesheet" type="text/css" href={{ asset('assets/styles/css/custom_vuetify.css') }}>
 <div class="breadcrumb">
-   <h1>  paramètres de Factures client</h1>
+   <h1>  Paramètre de Factures client</h1>
 </div>
 @include('layouts.common.flash_message')
 
@@ -21,6 +21,9 @@
   tr.fds {
     text-align: center;
   }
+  b.solde {
+    color: green;
+  }
 </style>
 <div class=" border-top"></div>
 <div id="app" data-app>
@@ -30,7 +33,7 @@
             <div class="card-header  gradient-purple-indigo  0-hidden pb-80">
                <div class="pt-4">
                   <div class="row">
-                     <h4 class="col-md-4 text-white">Paramètres de Factures client</h4>
+                     <h4 class="col-md-4 text-white">Paramètre de Factures client</h4>
                      <input v-model="search" type="text" class="form-control form-control-rounded col-md-4 ml-3 mr-3"  append-icon="mdi-magnify" placeholder="Rechercher produits ...">
                      <i aria-hidden="true" class="v-icon notranslate btn_search mdi mdi-magnify theme--light"></i>
                   </div>
@@ -43,9 +46,10 @@
                         <div class="card">
                            <v-card>
                               <v-card-title>
-                            Les paramètres 
-                                 <v-spacer></v-spacer>
-                              </v-card-title>
+                            Les paramètres  du projet :&nbsp; <b>  {{$projet->client}}_{{$projet->n_marche}}  </b> &nbsp; Montant : &nbsp;<b class="solde"> {{$facture_client->montant}} </b>
+                                 
+                                 
+                              </v-card-title> 
 
 
                               <input type="text" hidden id='id_facture' value='{{$id}}'>
@@ -53,7 +57,7 @@
                               
                               <table class='table_parametre'>
                                  <tr>
-                                     <td width="100%">Nom elements</td>
+                                     <td width="100%">Nom element</td>
                                      <td width="100%">Apparence</td>
                                  </tr>
                                  <tr>

@@ -38,10 +38,6 @@ new Vue({
        
 
                 {
-                    text: 'Nom projet',
-                    value: 'nom_projet'
-                },
-                {
                     text: 'Client',
                     value: 'client'
                 },
@@ -54,6 +50,12 @@ new Vue({
                     text: 'Date',
                     value: 'date'
                 },
+                
+                {
+                    text: "Montant",
+                    value: 'montant'
+                }
+                ,
 
                 {
                     text: "Action",
@@ -173,10 +175,15 @@ new Vue({
 
         editItem(item) {
 
-            window.location.href = window.laravel.url+ "/parametres_facture_client_pdf/" + item.id ;
+            window.location.href = window.laravel.url+ "/edit_facture_client/" + item.id ;
 
         },
 
+        pdf(item) {
+
+            window.location.href = window.laravel.url+ "/parametres_facture_client_pdf/" + item.id ;
+
+        },
         formatDate (date) {
             if (!date) return null
     
@@ -601,7 +608,7 @@ new Vue({
             })
 
 
-            axios.get(window.laravel.url + '/getprojets')
+            axios.get(window.laravel.url + '/get_input_projets')
             .then(response => {
 
                 this.array_projet = response.data.projets;

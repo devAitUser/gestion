@@ -234,6 +234,20 @@ class FactureController extends Controller
 
     }
 
+    
+    public function edit_facture_client($id)
+    {
+        $facture_client = Facture_client::find($id);
+        $article_facture_clients=  Article_facture_client::where('id_facture_clients', '=', $id )->get(); 
+        $projets = Projet::all();
+        
+
+        $data = array( "projets" =>  $projets ,  "facture_client" =>  $facture_client ,  "article_facture_clients" =>  $article_facture_clients );
+
+        return view('facture_client.edit', $data);
+
+    }
+
     public function new_facture_client()
     {
 
@@ -255,6 +269,7 @@ class FactureController extends Controller
 
     }
 
+   
 
     
     public function store_facture_client(Request $request){
@@ -294,6 +309,7 @@ class FactureController extends Controller
 
     public function fill_table_facture_client(Request $request){
 
+        $table_facture_client= array();
 
         $facture_client = Facture_client::where([ 'id_projet' =>  $request->id_projet  ,  'year'    => $request->anne ])->get();
 
@@ -369,6 +385,7 @@ class FactureController extends Controller
     
         $letter_to_number = new \NumberFormatter('fr', \NumberFormatter::SPELLOUT);
         $facture['objet']= $projet->objet ;
+        $facture['facture_client']= $facture_client ;
         $facture['info_facture']=$facture_client ;
         $facture['products']=$table_product;
         $facture['current_date']= $date;
@@ -396,8 +413,27 @@ class FactureController extends Controller
 
     public function parametres_facture_client_pdf($id){
 
-         $data = array( "id" =>  $id );
+        $facture_client = Facture_client::find($id);
+        $projet = Projet::find($facture_client->id_projet);
+
+         $data = array( "id" =>  $id , "projet" =>  $projet  , "facture_client" =>  $facture_client  );
         return view('facture_client.parametre',$data);
+
+    }
+
+    public function update_facture_client(Request $request){
+
+        $facture_client = Facture_client::find( $request->id_facture_client );
+        $facture_client->date = $request->date;
+        $facture_client->date_debut = $request->date_debut;
+        $facture_client->date_fin  = $request->date_fin;
+        $facture_client->save(); 
+
+        /*$article_facture = Article_facture_client::where('id_facture_clients', '=', $request->id_facture_client  )->get();*/
+        
+        return redirect()->to('/edit_facture_client/'.$request->id_facture_client); 
+         
+
 
     }
 

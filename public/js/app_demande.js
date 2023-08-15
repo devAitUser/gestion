@@ -1,5 +1,5 @@
-        new Vue({
-    el: '#app_devis',
+new Vue({
+    el: '#app_client',
     vuetify: new Vuetify(),
 
     data() {
@@ -12,7 +12,6 @@
                 rowsPerPage: 5,
 
             },
-            show_button_validation : true,
             btn_control: false,
             singleSelect: false,
             selectedRows: [],
@@ -20,65 +19,78 @@
             search: '',
             sortBy: 'id',
             sortDesc: true,
+
             headers: [
 
-                {
-                    text: "Numero",
-                    align: "left",
-                    sortable: false,
-                    value: "id"
-                 },
+       
 
                 {
-                    text: "Article",
-                    value: "article"
-                },
-
-                {
-                    text: "Type",
-                    value: "type"
-                },
-
-                {
-                    text: "Qte",
-                    align: "left",
-                    sortable: false,
-                    value: "qte"
+                    text: 'Nom client',
+                    value: 'nom_client'
                 },
                 {
-                    text: 'Prix',
-                    value: 'prix'
+                    text: 'Personne contactée',
+                    value: 'personne_contact'
+                },
+                {
+                    text: 'ICE',
+                    value: 'ice'
+                },
+                {
+                    text: 'telephone 1',
+                 
+                    value: 'telephone1'
+                },
+                {
+                    text: 'telephone 2',
+                    value: 'telephone2'
                 }
-
+                ,
+                {
+                    text: 'Numero de fax',
+                    value: 'numero_fax'
+                }
                 
+                ,
+                {
+                    text: 'Adresse complete',
+                    value: 'adresse_complete'
+                }
+                ,
+                {
+                    text: 'adresse email',
+                    value: 'adresse_mail'
+                }
+                ,
+                {
+                    text: 'ville',
+                    value: 'ville'
+                }
+                ,
+                {
+                    text: "Action",
+                    value: "action",
+                    sortable: false
+                }
 
 
 
             ],
 
-            stocks: [
+            clients: [
 
             ],
             editedIndex: -1,
             editedItem: {
                 id: 0,
-                client_id: 0,
-                subtotal: 0,
-                tva: 0,
-                total: 0,
-                typepaiement: '',
-                statutpaiement: '',
+                nom: '',
+                date_create: '',
             },
             defaultItem: {
                 id: 0,
-                client_id: 0,
-                subtotal: 0,
-                tva: 0,
-                total: 0,
-                typepaiement: '',
-                statutpaiement: '',
+                nom: '',
+                date_create: '',
             },
-            product_order :[]
 
         }
     },
@@ -86,48 +98,9 @@
 
     methods: {
 
-        show_order_product(item) {
-           
-             this.product_order =  item.product_order
-            
-            this.dialog = true
-        },
+        editItem(item) {
 
-
-        view_pdf(item) {
-            
-        
-           window.open("facture_pdf/" + item.id, '_blank');
-      
-        },
-
-
-        check_validation(item) {
-            
-           if(item.status == 2 ){
-               return true
-           } else {
-               return false
-           }
-        },
-
-
-        livre(item) {
-          
-            axios.post(window.laravel.url + '/livre/'+item.id)
-                .then(response => {
-                    if(response.data.etat){
-
-                        location.reload();
-
-                    }
-
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-
-
+            window.location.href = "client/" + item.id + "/edit"
         },
 
         clicked(value) {
@@ -144,58 +117,24 @@
 
         },
 
-        get_status(id) {
 
-            var status = "";
+   
 
-            var color = '';
 
-            if(id == 1){
-                status = "En cours"
-                color = '#ff9800'; 
+
+        save() {
+
+            if (this.editedIndex > -1) {
+                Object.assign(this.gategorie[this.editedIndex], this.editedItem)
+                this.update_gategorie(this.editedItem)
+
+            } else {
+                this.gategorie.push(this.editedItem)
             }
 
-            if(id == 2){
-                status = "Validé par chef de projet"
-                color = '#4caf50';
-            }
+            this.close()
 
-
-            if(id == 3){
-                status = "Refuser"
-                color = '#f44336';
-            }
-
-
-            if(id == 4){
-                status = "livré"
-                color = '#286dd6';
-            }
-
-
-            var role_print = '<a style="background-color: ' + color + ';" class="badge badge-primary  p-2">' + status + '</a>';
-
-            return role_print;
         },
-
-        
-        remove_item() {
-
-            if(this.btn_control){
-                this.deleteItem();
-            }
-            else{
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Au moins un élément doit être sélectionné!',
-                  })
-
-            }
-
-        }
-        ,
 
         close() {
 
@@ -239,21 +178,34 @@
 
                     for (var i = 0; i < this.selected.length; i++) {
 
-                        axios.delete(window.laravel.url + '/deletefacture/' + this.selected[i].id)
+                        axios.delete(window.laravel.url + '/deleteclients/' + this.selected[i].id)
                             .then(response => {
-                                console.log(response);
+
+                   
+                                const index = this.clients.indexOf(this.selected[i]);
+
+
+                            this.clients.splice(index, 1);
+                            
+                            this.selected = [];
+        
+
+                                
 
                             })
                             .catch(error => {
-                                console.log(error);
+                          
+                                
                             })
 
-                        const index = this.devis.indexOf(this.selected[i]);
+                           
+
+                              
 
 
-                        this.devis.splice(index, 1);
+                        
                     }
-                    this.selected = [];
+                  
 
 
 
@@ -295,17 +247,29 @@
 
 
         },
+        remove_item() {
+
+            if(this.btn_control){
+                this.deleteItem();
+            }
+            else{
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Au moins un élément doit être sélectionné!',
+                  })
+
+            }
+
+        },
 
         get_data: function() {
-
-            axios.get(window.laravel.url + '/get_data_stock/'+window.laravel.id)
+            axios.get(window.laravel.url + '/getclients')
                 .then(response => {
 
-                  
-
-                    this.stocks = response.data;
-
-              
+                    this.clients = response.data.clients;
+                    console.log(this.products );
 
 
                 })
@@ -317,6 +281,7 @@
     mounted: function() {
 
         this.get_data();
+
 
 
     }

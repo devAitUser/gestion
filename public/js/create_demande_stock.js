@@ -151,15 +151,16 @@ $(document).ready(function() {
         });
         $.ajax({
             'async': false,
-            url: window.laravel.url + "/fill_projet_article/"+$(this).val(),
+            url: window.laravel.url + "/fill_item_stock/"+$(this).val(),
             method: "post",
        
             dataType: "json",
             success: function(data) {
     
     
+                console.log(data)
                 $("#table_product-n tbody ").empty();
-                jQuery.each(data, function(index, item) {
+                jQuery.each(data.products, function(index, item) {
                   
 
                     count_2++;
@@ -167,22 +168,30 @@ $(document).ready(function() {
                     var add_row = '<tr class="item" id=row_' + count_2 + '  >';
                    
             
-                    add_row += '<td>  ';
-                    add_row += '<input type="number" name="numero[]" value="'+item.numero+'" required>';
-                    add_row += ' </td>';
+                   
             
             
-                    add_row += '<td><input type="text" name="product[]"  value="'+item.designation+'"  required   readonly="readonly" >';
+                    add_row += '<td><input type="text" name="product[]"  value="'+item.article+'"  required   readonly="readonly" >';
             
               
                     add_row += '</td>';
                    
-            
+                    add_row += '<td>'+item.type+' </td> ';
                     add_row += '<td>  ';
-                    add_row += '<input type="number" name="quantity[]" class="quantity"  required>';
+                    add_row += '<input type="number" name="quantity[]" class="quantity"  value="'+item.qte+'" required>';
                     add_row += ' </td>';
-                    add_row += '<td> <input type="number" name="prix[]" value="'+item.prix+'" required readonly="readonly" > </td>';
-                    add_row += '<td>0 <input type="total" name="total[]" hidden readonly="readonly"> </td>';
+                    add_row += '<td> <input type="number" name="prix[]" value="" required  > </td>';
+                    add_row += '<td>';
+                    add_row += '<select>';
+
+                        add_row += '<option> Selectionner </option>';
+               
+                        jQuery.each(data.projets, function(index, item) {
+                          add_row += '<option value="'+item.id+'" > '+item.n_marche+'_'+item.client+' </option>';
+                        });
+
+                    add_row += '</select>';
+                    add_row += '</td>';
             
                     add_row += ' <td><a href="" class="prevent-default" onClick="removeRow_table(event,' + count_2 + ')" ><i class="i-Close-Window text-19 text-danger font-weight-700""></i></a></td></tr>';
 

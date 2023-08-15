@@ -174,7 +174,7 @@
                                   <select name="projet" id="" >
                                     <option value=""></option>
                                     @foreach($projets as $projet)
-                                    <option value="{{ $projet->id }}">  {{$projet->client }} / {{$projet->n_marche }}   </option>
+                                    <option value="{{ $projet->id }}">  {{$projet->n_marche }}_{{$projet->client }}    </option>
                                     @endforeach
                                   </select>
                                   

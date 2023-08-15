@@ -30,8 +30,30 @@ class ProjetsController extends Controller
 
     public function get_projets(Request $request)
     {
-        $projets = Projet::all(); 
+        $projets = Projet::all();        
+
         $data = array( 'projets'=> $projets);
+       return  $data ;
+
+    }
+
+    public function get_input_projets(Request $request)
+    {
+        $projets = Projet::all(); 
+
+        for($i=0;$i<count($projets);$i++)
+        {
+            $table_projets[] = (object) [ 
+                'id'=> $projets[$i]->id ,
+                'client'=> $projets[$i]->n_marche.'_'.$projets[$i]->client,
+              
+                ];
+                
+        }
+
+       
+
+        $data = array( 'projets'=> $table_projets);
        return  $data ;
 
     }

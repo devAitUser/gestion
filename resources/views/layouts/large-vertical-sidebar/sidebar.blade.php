@@ -55,13 +55,15 @@
              </li>
 
              
-             <li class="nav-item {{ request()->is('stocks')  ? 'active' : '' }}  {{ request()->is('stocks/index')  ? 'active' : '' }}"  >
+             <li class="nav-item {{ request()->is('stocks')  ? 'active' : '' }}  {{ request()->is('stocks/index')  ? 'active' : '' }}" data-item="stocks" >
 
-                <a class="nav-item-hold" href="{{ url('stocks')}}">
+                <a class="nav-item-hold" href="">
                     <i class="nav-icon i-Shop-3"></i>
                     <span class="nav-text"> Stocks </span>
                 </a>
+
                 <div class="triangle"></div>
+
              </li>  
              <li  data-item="rh" class="nav-item"  >
 
@@ -234,6 +236,37 @@
                     class="{{ Route::currentRouteName()=='permission' ? 'open' : '' }}">
                     <i class="nav-icon i-Receipt-3"></i>
                     <span class="nav-text"> Tous les Factures des fournisseurs
+                    </span>
+                    
+                </a>
+            </li> 
+
+
+
+      
+           
+        </ul>
+
+
+         <!-- Submenu stocks -->
+         <ul class="childNav" data-parent="stocks">
+            <li class="nav-item">
+                <a href="{{ url('stocks')}}"
+                    class="{{ Route::currentRouteName()=='marque' ? 'open' : '' }}">
+                    <i class="nav-icon i-Shop-3"></i>
+                    <span class="nav-text"> Etat du Stock
+                    </span>
+                    
+                </a>
+            </li>
+
+         
+
+            <li class="nav-item">
+                <a href="{{ url('gestion_demande_stock')}}"
+                    class="{{ Route::currentRouteName()=='permission' ? 'open' : '' }}">
+                    <i class="nav-icon i-Receipt-3"></i>
+                    <span class="nav-text"> Gestion des demandes
                     </span>
                     
                 </a>

@@ -36,7 +36,7 @@ table.calcul {
 </style>
 @endsection
 @section('main-content')
-<form action=" {{url('store_facture_client')}}" enctype="multipart/form-data" method="post">
+<form action=" {{url('update_facture_client')}}" enctype="multipart/form-data" method="post">
   @csrf
 <div class="breadcrumb">
    <h1>  creer facture client  </h1>
@@ -64,11 +64,20 @@ table.calcul {
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
+
+                     <input type="text" name="id_facture_client" value="{{$facture_client['id']}}" hidden>
                     
-                   <select  class=" form-control"  name="projet" id="projet">
+                   <select  class=" form-control"  name="projet" id="projet" disabled>
                       <option value="">Selectionnez</option>
                       @foreach($projets as $projet)
-                      <option value="{{$projet->id}}"> {{$projet->n_marche}}_{{$projet->client}} </option>
+                      @if ($projet->id == $facture_client['id_projet'] )
+                          
+                      <option value="{{$projet->id}}" selected> {{$projet->client}} </option>
+                          
+                      @else 
+                      <option value="{{$projet->id}}"> {{$projet->client}} </option>
+                      @endif
+                      
                
                       @endforeach
                    </select>
@@ -103,8 +112,8 @@ table.calcul {
                         <div class="form-row">
                            <div class="form-group col-md-12">
               
-                              <input type="date"  name="date" class="form-control  "  required>
-                              <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
+                              <input type="date"  name="date" class="form-control" value="{{$facture_client['date'] }}"  required>
+                           
                               
          
                            </div>
@@ -130,7 +139,7 @@ table.calcul {
                <div class="form-row">
                   <div class="form-group col-md-12">
                  
-                     <input type="date"  name="date_debut" class="form-control  "  required>
+                     <input type="date"  name="date_debut" class="form-control  " value="{{$facture_client['date_debut'] }}"  required>
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -154,7 +163,7 @@ table.calcul {
                   <div class="form-row">
                      <div class="form-group col-md-12">
                         
-                        <input  type="date"  name="date_fin" class="form-control  "  required .>
+                        <input  type="date"  name="date_fin" class="form-control  " value="{{$facture_client['date_fin'] }}" required .>
             
 
                      </div>
@@ -210,6 +219,16 @@ table.calcul {
                               </tr>
                            </thead>
                            <tbody>
+                              @foreach ($article_facture_clients as $article_facture_client)
+                              <tr class="item" id="row_{{$article_facture_client->numero}}">
+                                 <td>  <input type="number" name="numero[]" value="{{$article_facture_client->numero}}" required=""> </td>
+                                 <td><input type="text" name="product[]" value="{{$article_facture_client->article}}" required="" readonly="readonly"></td>
+                                 <td>  <input type="number" name="quantity[]" class="quantity" value="{{$article_facture_client->quantite}}" required=""> </td>
+                                 <td> <input type="number" name="prix[]" value="{{$article_facture_client->prix}}" required="" readonly="readonly"> </td>
+                                 <td>0</td> 
+                                 <td><a href="" class="prevent-default" onclick="removeRow_table(event,{{$article_facture_client->numero}})"><i class="i-Close-Window text-19 text-danger font-weight-700" "=""></i></a></td>
+                              </tr>
+                              @endforeach
                             
                            </tbody>
                         </table>
@@ -239,7 +258,7 @@ table.calcul {
                   </tr>
                   <tr class='col_footer total_ttc'>
                         <td class='col_none' colspan="4"></td>
-                        <td class='footer_border' align="center"><strong>Total TTC11</strong> </td>
+                        <td class='footer_border' align="center"><strong>Total TTC</strong> </td>
                         <input type="text" value='' name='total_ttc' id="total_ttc" hidden>
                   
                         <td align="right"><div class='c_f' width="50%" align="right"> <strong>0</strong></div> </td>

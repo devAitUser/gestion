@@ -153,6 +153,7 @@ class Factures_fournisseurController extends Controller
                         $item_stock->article    =  $request->product[$i];
                         $item_stock->qte        =  $request->quantity[$i];
                         $item_stock->prix       =  $request->prix[$i];
+                        $item_stock->type       =  $request->type[$i];
                         $item_stock->save();
                      }else{
                         $check_exist_stock->qte = $check_exist_stock->qte +  $request->quantity[$i];
@@ -168,7 +169,7 @@ class Factures_fournisseurController extends Controller
          } 
 
 
-         //return $request->all();
+       
        
     }
 
@@ -291,6 +292,7 @@ class Factures_fournisseurController extends Controller
 
         $letter_to_number = new \NumberFormatter('fr', \NumberFormatter::SPELLOUT);
         $devis['id']=$facture_fournisseur->id;
+       
         $devis['client']=$fournisseur->nom;
         $devis['objet']=$facture_fournisseur->etat_paiement;
         $devis['date']=$date;

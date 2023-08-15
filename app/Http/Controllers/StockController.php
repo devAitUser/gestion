@@ -241,15 +241,37 @@ class StockController extends Controller
         $projets = Projet::all(); 
         $array_projets = array();
         for($i=0;$i<count($projets);$i++)
-       {
-         $array_projets[]=  array ('id' => $projets[$i]->id  , 'name' => $projets[$i]->client ." / ".$projets[$i]->n_marche ) ;
-         
-       }
+        {
+            $array_projets[]=  array ('id' => $projets[$i]->id  , 'name' => $projets[$i]->client ." / ".$projets[$i]->n_marche ) ;
+            
+        }
+        return  $array_projets ;
 
-
-       return  $array_projets ;
-
+     }
+     
+     public function gestion_demande_stock()
+     {
+        return view('stock.demande');
 
      }
     
+     public function create_demande_stock()
+     {
+        $projets = Projet::all();
+
+        $data = array( "projets" =>  $projets );
+        return view('stock.create_demande', $data);
+
+     }
+     public function fill_item_stock($id){
+
+        $projets = Projet::all();
+        $product   = Stock::where('projets_id', '=', $id )->get(); 
+
+        $data = array( "projets" =>  $projets , "products" =>  $product );
+
+
+        return  $data;
+
+    }
 }

@@ -116,25 +116,31 @@
     </tr>
 
 
-    <?php
+    <?php  if($_GET['ice'] == "true" ){  ?>
 
-   if($_GET['ice'] == "true" ){
+      <tr style='padding-top: 10px;'>
 
-   ?>
-
-
-    <tr style='padding-top: 10px;'>
-
-     <td><strong class='under_line'>ice :</strong> 00</td>
-    </tr>
+        <td><strong class='under_line'>ice :</strong> 00</td>
+      </tr>
 
 
-    <?php
+    <?php  }  ?>
+
+
+    <?php  if($_GET['periode'] == "true" ){  ?>
+
+      <tr style='text-align: center;'>
+
+        <td><strong class='under_line'>periode  : de  {{ $facture['facture_client']->date_debut }} a {{ $facture['facture_client']->date_fin }} </strong> </td>
+      </tr>
+
+
+    <?php  }  ?>
                   
-      }
+      
          
          
-      ?>
+     
 
   </table>
 
@@ -144,7 +150,7 @@
     <thead style="background-color: #e9df85;">
       <tr>
         <th>Numero</th>
-        <th>DESIGNATION  </th>
+        <th width="30%">DESIGNATION  </th>
         <th>QTE</th>
         <th>PRIX UNITAIRE DH HTVA EN CHIFFRES</th>
         <th>PRIX TOTAL EN CHIFFRES</th>
@@ -157,8 +163,8 @@
       <td  class="product" align="CENTER" scope="row">{{ $item->numero }}</td>
       <td  class="product" align="left">{{ $item->article }}</td>
       <td  class="product" align="CENTER"> {{ $item->quantite }}</td>
-      <td class='col_price' align="CENTER" ><div class='c_f' width="50%" align="right">{{ number_format($item->prix,2,",",".")  }}</div></td>
-      <td class='col_price' align="right" ><div class='c_f' width="50%" align="right" style='font-weight: bold;'>{{ number_format($item->prix_total,2,",",".")  }}</div></td>
+      <td class='col_price' align="CENTER" ><div class='c_f' width="30%" align="right">{{ number_format($item->prix,2,",",".")  }}</div></td>
+      <td class='col_price' align="right" ><div class='c_f' width="30%" align="right" style='font-weight: bold;'>{{ number_format($item->prix_total,2,",",".")  }}</div></td>
       </tr>
       @endforeach
 
@@ -185,7 +191,7 @@
 
   <table width="100%" style='padding-top: 25px; margin-left: 13px;'>
     <tr>
-      <td width="30%"> Arrêté le présent devis à la somme de : </td>   <td width="45%" align="LEFT">{{ $facture['amount_letter'] }}</td>   <td width="15%">DH TTC</td>
+      <td width="30%"> Arrêté le présent facture à la somme de : </td>   <td width="45%" align="LEFT">{{ $facture['amount_letter'] }}</td>   <td width="15%">DH TTC</td>
     </tr>
   </table>
 

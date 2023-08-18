@@ -173,7 +173,9 @@ Route::delete('/deletestocks/{id}',[App\Http\Controllers\StockController::class,
 
 Route::get('/get_data_stock/{id}',[App\Http\Controllers\StockController::class, 'get_data_stock']);
 
+Route::get('/api_stock_article',[App\Http\Controllers\StockController::class, 'api_stock_article']);
 
+Route::get('/api_qte_article/{id}',[App\Http\Controllers\StockController::class, 'api_qte_article']);
 
 
 

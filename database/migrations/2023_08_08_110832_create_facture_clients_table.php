@@ -18,8 +18,8 @@ class CreateFactureClientsTable extends Migration
             $table->unsignedBigInteger('id_projet');
             $table->foreign('id_projet')->references('id')->on('projets')->onDelete('cascade');
             $table->date('date');
-            $table->date('date_debut');
-            $table->date('date_fin');
+            $table->date('date_debut')->nullable();
+            $table->date('date_fin')->nullable();
             $table->timestamps();
         });
     }

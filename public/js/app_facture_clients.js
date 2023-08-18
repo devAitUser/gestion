@@ -42,6 +42,10 @@ new Vue({
                     value: 'client'
                 },
                 {
+                    text: 'n marche',
+                    value: 'n_marche'
+                },
+                {
                     text: 'Objet',
                     value: 'objet'
                 },
@@ -461,8 +465,8 @@ new Vue({
 
                 
                 let jsonData = new FormData()
-                jsonData.append('id_projet'        , this.item.id_projet  )
-                jsonData.append('anne'        , this.item.anne )
+                jsonData.append('id_projet'     , this.item.id_projet  )
+                jsonData.append('anne'     , this.item.anne )
             
              
 

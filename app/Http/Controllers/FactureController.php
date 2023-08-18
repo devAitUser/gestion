@@ -321,6 +321,7 @@ class FactureController extends Controller
             $table_facture_client[] = (object) [ 
             'id'=> $facture_client[$i]->id ,
             'nom_projet'=> $facture_client[$i]->nom_projet,
+            'n_marche'=> $projet->n_marche,
             'montant'=> $facture_client[$i]->montant,
             'date'=> $facture_client[$i]->date,
             'client'=> $projet->client ,

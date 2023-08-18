@@ -93,14 +93,19 @@ class Factures_fournisseurController extends Controller
 
         $fournisseur = Fournisseur::find($id); 
 
-        $article_facture_fournisseurs =  Article_facture_fournisseur::all(); 
+        $article_facture_fournisseurs =  Stock::all(); 
 
         $article = array();
 
         for($i=0;$i<count($article_facture_fournisseurs);$i++)
         {
 
-            $article[] = $article_facture_fournisseurs[$i]->article;
+         
+        
+              $article[] = $article_facture_fournisseurs[$i]->article;
+            
+
+            
 
         }
 

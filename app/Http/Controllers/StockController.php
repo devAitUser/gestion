@@ -259,10 +259,54 @@ class StockController extends Controller
      {
         $projets = Projet::all();
 
-        $data = array( "projets" =>  $projets );
+        $articles= Stock::all();
+
+
+       // Étape 2: Traiter les données en doublon
+       $articleQuantities = [];
+       foreach ($articles as $article) {
+           $articleName = $article->article; // Remplacez "nom" par le nom de la colonne contenant le nom de l'article
+           $quantity = $article->qte; // Remplacez "quantite" par le nom de la colonne contenant la quantité
+       
+           if (array_key_exists($articleName, $articleQuantities)) {
+               // L'article existe déjà dans le tableau, augmenter la quantité
+               $articleQuantities[$articleName] += $quantity  ;
+           } else {
+               // Ajouter l'article au tableau
+               $articleQuantities[$articleName] = $quantity;
+           }
+        }
+
+        $data = array( "projets" =>  $projets , "all_article" =>  $projets , 'article_list' => $articleQuantities  );
         return view('stock.create_demande', $data);
 
      }
+
+     public function api_stock_article(){
+
+        
+        $articles= Stock::all();
+
+
+       // Étape 2: Traiter les données en doublon
+       $articleQuantities = [];
+       foreach ($articles as $article) {
+           $articleName = $article->article; // Remplacez "nom" par le nom de la colonne contenant le nom de l'article
+           $quantity = $article->qte; // Remplacez "quantite" par le nom de la colonne contenant la quantité
+       
+           if (array_key_exists($articleName, $articleQuantities)) {
+               // L'article existe déjà dans le tableau, augmenter la quantité
+               $articleQuantities[$articleName] += $quantity  ;
+           } else {
+               // Ajouter l'article au tableau
+               $articleQuantities[$articleName] = $quantity;
+           }
+        }
+
+        return  $articleQuantities;
+        
+     }
+
      public function fill_item_stock($id){
 
         $projets = Projet::all();
@@ -274,4 +318,28 @@ class StockController extends Controller
         return  $data;
 
     }
+    public function api_qte_article($id){
+
+        
+        $articles= Stock::all();
+
+
+       // Étape 2: Traiter les données en doublon
+       $articleQuantities = [];
+       foreach ($articles as $article) {
+           $articleName = $article->article; // Remplacez "nom" par le nom de la colonne contenant le nom de l'article
+           $quantity = $article->qte; // Remplacez "quantite" par le nom de la colonne contenant la quantité
+       
+           if (array_key_exists($articleName, $articleQuantities)) {
+               // L'article existe déjà dans le tableau, augmenter la quantité
+               $articleQuantities[$articleName] += $quantity  ;
+           } else {
+               // Ajouter l'article au tableau
+               $articleQuantities[$articleName] = $quantity;
+           }
+        }
+
+        return  $articleQuantities[$id];
+        
+     }
 }

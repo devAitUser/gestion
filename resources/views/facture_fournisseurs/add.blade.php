@@ -248,6 +248,7 @@
                                   <td>
                                     <a href="" onClick="removeRow_table(event,1)" ><i class="i-Close-Window text-19 text-danger font-weight-700 prevent-default"></i></a>
                                   </td>
+                                  
                               </tr>
                             </tbody>
                         </table>

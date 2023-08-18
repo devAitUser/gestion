@@ -87,6 +87,35 @@ table.calcul {
       </div>
 
 
+
+      <div class="card-body">
+         <div class="row">
+            <div class="col-md-2"> <label for="name" class="product-label text-dark"> Type </label></div>
+            <div class="col-md-10">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                    
+                   <select  class=" form-control"  name="projet" id="projet">
+                      <option value="">Selectionnez</option>
+                      <option value="">Material</option>
+                      <option value="">Fourniture</option>
+                   </select>
+                     
+
+                  </div>
+
+           
+             
+
+            
+               </div>
+            </div>
+            
+         </div>
+      </div>
+
+
+
     
      
    
@@ -108,15 +137,16 @@ table.calcul {
          <div class="col-lg-12">
             <div class="card">
                   <div class="card-body">
+                    
                      <div class="d-flex justify-content-between">
-                        <div class="card-title">insertion </div>
+                        <div class="card-title">insertion des nouveaux articles</div>
                         <div class="headder-elements tt">
-                           <div class="list-icons">
+                            <div class="list-icons">
                               <a href="" class="ul-task-manager__list-icon " id="arrow-down"><i class="i-Arrow-Down"></i></a>
-                             
-                           </div>
+                              <a href="" class="ul-task-manager__list-icon btn-add-n"><i class="i-Add"></i></a>
+                            </div>
                         </div>
-                     </div>
+                      </div>
                      <div class="table-responsive table-product ">
                         <table id="table_product-n" class="table">
                            <thead>
@@ -133,6 +163,38 @@ table.calcul {
                               </tr>
                            </thead>
                            <tbody>
+
+                             <tr>
+                              <td>
+
+                              <select name="type[]" id="select_id_1" onchange="fill_quantity(1)"> 
+                                  <option value="0">Selectionner</option>
+                                  <?php 
+                                    foreach ($article_list as $key => $value) { 
+                                   
+                                    ?>
+                                  <option value="{{$key}}">  {{$key}} </option>
+
+                                  <?php 
+                              
+                                   }
+                                    ?>
+
+                                  
+                                
+                               
+                              </select>
+
+                              </td>
+                              <td>2</td>
+                              <td> <div id="item_qte_1">2</div> </td>
+                              <td>3</td>
+                              <td>4</td>
+                              <td>
+                                 <a href="" class="prevent-default" onclick="removeRow_table(event,2)"><i class="i-Close-Window text-19 text-danger font-weight-700" "=""></i></a>
+                              </td>
+
+                             </tr>
                             
                            </tbody>
                         </table>

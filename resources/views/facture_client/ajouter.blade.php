@@ -87,18 +87,13 @@ table.calcul {
       </div>
 
 
-    
-     
-   
-     
-   
-       
+
       
             <!-- end::form 3-->
                  <!-- end::form 3-->
                  <div class="card-body">
                   <div class="row">
-                     <div class="col-md-2"> <label for="name" class="product-label text-dark"> Date </label></div>
+                     <div class="col-md-2"> <label for="name" class="product-label text-dark"> Date Facture </label></div>
                      <div class="col-md-10">
                         <div class="form-row">
                            <div class="form-group col-md-12">
@@ -130,7 +125,7 @@ table.calcul {
                <div class="form-row">
                   <div class="form-group col-md-12">
                  
-                     <input type="date"  name="date_debut" class="form-control  "  required>
+                     <input type="date"  name="date_debut" class="form-control  "  >
                      <div class="invalid-feedback"> Veuillez choisir le Titre de designation.</div>
                      
 
@@ -154,7 +149,7 @@ table.calcul {
                   <div class="form-row">
                      <div class="form-group col-md-12">
                         
-                        <input  type="date"  name="date_fin" class="form-control  "  required .>
+                        <input  type="date"  name="date_fin" class="form-control  "   >
             
 
                      </div>
@@ -239,7 +234,7 @@ table.calcul {
                   </tr>
                   <tr class='col_footer total_ttc'>
                         <td class='col_none' colspan="4"></td>
-                        <td class='footer_border' align="center"><strong>Total TTC11</strong> </td>
+                        <td class='footer_border' align="center"><strong>Total TTC</strong> </td>
                         <input type="text" value='' name='total_ttc' id="total_ttc" hidden>
                   
                         <td align="right"><div class='c_f' width="50%" align="right"> <strong>0</strong></div> </td>

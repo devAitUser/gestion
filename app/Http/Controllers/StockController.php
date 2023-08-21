@@ -10,6 +10,15 @@ use App\Models\Projet;
 
 use App\Models\Stock;
 
+use App\Models\Demande_fourniture;
+
+use Illuminate\Support\Facades\Auth;
+
+
+use App\Models\Article_demande_fourniture;
+
+use App\Models\User;
+
 class StockController extends Controller
 {
     
@@ -117,7 +126,7 @@ class StockController extends Controller
             
  
          }
-         $request->all();
+       
  
  
         
@@ -158,7 +167,6 @@ class StockController extends Controller
          $client->nom = $request->nom;
          $client->telephone = $request->telephone;
          $client->adresse = $request->adresse;
-        
          $client->save();
      }
  
@@ -282,10 +290,12 @@ class StockController extends Controller
 
      }
 
-     public function api_stock_article(){
+     public function api_stock_article(Request $request){
 
         
-        $articles= Stock::all();
+      
+
+       $articles = Stock::where('type', '=', $request->type )->get();
 
 
        // Étape 2: Traiter les données en doublon
@@ -341,5 +351,59 @@ class StockController extends Controller
 
         return  $articleQuantities[$id];
         
+     }
+     public function store_demande_stock(Request $request){
+     
+        $id_user = Auth::id();
+
+        $new = new Demande_fourniture();
+        $new->id_user  =  $id_user;
+        $new->id_projet_concerne   = $request->projet;
+       
+        $new->save();
+
+        for($i=0;$i<count($request->article);$i++){
+
+            $create = new Article_demande_fourniture();
+          
+            $create->id_demande_fourniture   = $new->id;
+            $create->nom_article  = $request->article[$i];
+            $create->qte_demander  = $request->quantity[$i];
+            $create->save();
+
+        }
+
+        return redirect()->to('/gestion_demande_stock');
+
+
+
+     }
+     public function api_all_demandes_fourniture(){
+
+       $demande_fourniture =  Demande_fourniture::all();
+
+       
+
+
+       for($i=0;$i<count($demande_fourniture);$i++)
+         {
+            $projet = Projet::find( $demande_fourniture[$i]->id_projet_concerne );
+
+            $user = User::find( $demande_fourniture[$i]->id_user  );
+
+             $all_demande_fourniture[] = (object) [ 
+             'id'=> $demande_fourniture[$i]->id ,
+             'user'=> $user->name ,
+             'projet_concerne'=> $projet->n_marche.'_'.$projet->client ,
+             'etat'=> $demande_fourniture[$i]->etat ,
+                
+             ];
+             
+     
+         }
+
+         return $all_demande_fourniture;
+
+
      }
 }

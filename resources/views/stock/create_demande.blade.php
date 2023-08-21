@@ -36,7 +36,7 @@ table.calcul {
 </style>
 @endsection
 @section('main-content')
-<form action=" {{url('store_facture_client')}}" enctype="multipart/form-data" method="post">
+<form action=" {{url('store_demande_stock')}}" enctype="multipart/form-data" method="post">
   @csrf
 <div class="breadcrumb">
    <h1>  Demande material / fourniture  </h1>
@@ -60,7 +60,7 @@ table.calcul {
      
       <div class="card-body">
          <div class="row">
-            <div class="col-md-2"> <label for="name" class="product-label text-dark">Projet Source </label></div>
+            <div class="col-md-2"> <label for="name" class="product-label text-dark">Projet Concerné </label></div>
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
@@ -95,10 +95,10 @@ table.calcul {
                <div class="form-row">
                   <div class="form-group col-md-12">
                     
-                   <select  class=" form-control"  name="projet" id="projet">
+                   <select  class=" form-control"  name="type" id="projet">
                       <option value="">Selectionnez</option>
-                      <option value="">Material</option>
-                      <option value="">Fourniture</option>
+                      <option value="Material">Material</option>
+                      <option value="Fourniture">Fourniture</option>
                    </select>
                      
 
@@ -154,47 +154,17 @@ table.calcul {
             
                                
                                  <th scope="col">Article</th>
-                                 <th scope="col">type</th>
+                                
                                  <th scope="col">QTE Disponible </th>
                               
                                  <th scope="col">QTE Demander</th>
-                                 <th scope="col">projet concerné</th>
+                             
                                  <th scope="col">Action</th>
                               </tr>
                            </thead>
                            <tbody>
 
-                             <tr>
-                              <td>
-
-                              <select name="type[]" id="select_id_1" onchange="fill_quantity(1)"> 
-                                  <option value="0">Selectionner</option>
-                                  <?php 
-                                    foreach ($article_list as $key => $value) { 
-                                   
-                                    ?>
-                                  <option value="{{$key}}">  {{$key}} </option>
-
-                                  <?php 
-                              
-                                   }
-                                    ?>
-
-                                  
-                                
-                               
-                              </select>
-
-                              </td>
-                              <td>2</td>
-                              <td> <div id="item_qte_1">2</div> </td>
-                              <td>3</td>
-                              <td>4</td>
-                              <td>
-                                 <a href="" class="prevent-default" onclick="removeRow_table(event,2)"><i class="i-Close-Window text-19 text-danger font-weight-700" "=""></i></a>
-                              </td>
-
-                             </tr>
+                            
                             
                            </tbody>
                         </table>

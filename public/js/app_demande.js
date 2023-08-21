@@ -25,48 +25,18 @@ new Vue({
        
 
                 {
-                    text: 'Nom client',
-                    value: 'nom_client'
+                    text: 'Utilisateur',
+                    value: 'user'
                 },
                 {
-                    text: 'Personne contactée',
-                    value: 'personne_contact'
+                    text: 'Projet concerné',
+                    value: 'projet_concerne'
                 },
                 {
-                    text: 'ICE',
-                    value: 'ice'
+                    text: 'Etat',
+                    value: 'etat'
                 },
-                {
-                    text: 'telephone 1',
-                 
-                    value: 'telephone1'
-                },
-                {
-                    text: 'telephone 2',
-                    value: 'telephone2'
-                }
-                ,
-                {
-                    text: 'Numero de fax',
-                    value: 'numero_fax'
-                }
-                
-                ,
-                {
-                    text: 'Adresse complete',
-                    value: 'adresse_complete'
-                }
-                ,
-                {
-                    text: 'adresse email',
-                    value: 'adresse_mail'
-                }
-                ,
-                {
-                    text: 'ville',
-                    value: 'ville'
-                }
-                ,
+               
                 {
                     text: "Action",
                     value: "action",
@@ -265,11 +235,11 @@ new Vue({
         },
 
         get_data: function() {
-            axios.get(window.laravel.url + '/getclients')
+            axios.get(window.laravel.url + '/api_all_demandes_fourniture')
                 .then(response => {
 
-                    this.clients = response.data.clients;
-                    console.log(this.products );
+                    this.clients = response.data;
+                    //console.log(this.products );
 
 
                 })

@@ -178,6 +178,9 @@ Route::get('/api_stock_article',[App\Http\Controllers\StockController::class, 'a
 Route::get('/api_qte_article/{id}',[App\Http\Controllers\StockController::class, 'api_qte_article']);
 
 
+Route::post('/store_demande_stock',[App\Http\Controllers\StockController::class, 'store_demande_stock']);
+
+Route::get('/api_all_demandes_fourniture',[App\Http\Controllers\StockController::class, 'api_all_demandes_fourniture']);
 
 
 /*** Model order   * */

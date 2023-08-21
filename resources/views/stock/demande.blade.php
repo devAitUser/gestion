@@ -62,28 +62,31 @@
                                                     </v-card-title>
                                               
                                                 <v-data-table  @input="item($event)" :headers="headers" :items="clients" :search="search" :value="selectedRows" v-model="selected" :items-per-page="5"  :sort-by.sync="sortBy"
-                                             :sort-desc.sync="sortDesc" show-select   item-key="id"
-                                      :expanded.sync="expanded" @click:row="clicked">
-                                    <template v-slot:item.img="{ item }">
-                                       <img :src="'images/' + item.photo" style="width: 55px; height: 55px" />
-                                    </template>
-                                    
-                                    <template v-slot:item.action="{ item }">
-                                        <v-btn color="purple" fab small dark  @click="editItem(item)">
-                                            <i class="nav-icon i-Pen-2 font-weight-bold"></i>
-                                         </v-btn>
-                                    </template>
-                                    <template v-slot:item.telephone1="{ item }">
-                                      0@{{item.telephone1}}
-                                    </template>
-                                    <template v-slot:item.telephone2="{ item }">
-                                      0@{{item.telephone2}}
-                                    </template>
-                                    <template v-slot:item.numero_fax="{ item }">
-                                      0@{{item.numero_fax}}
-                                    </template>
-                   
-                     </v-data-table>
+                                                                        :sort-desc.sync="sortDesc" show-select   item-key="id"
+                                                                  :expanded.sync="expanded" @click:row="clicked">
+                                                                <template v-slot:item.img="{ item }">
+                                                                  <img :src="'images/' + item.photo" style="width: 55px; height: 55px" />
+                                                                </template>
+                                                                
+                                                                <template v-slot:item.action="{ item }">
+                                                                    <v-btn color="purple" fab small dark  @click="editItem(item)">
+                                                                        <i class="nav-icon i-Pen-2 font-weight-bold"></i>
+                                                                    </v-btn>
+                                                                </template>
+                                                                <template v-slot:item.etat="{ item }">
+                                                                   @{{item.etat}}
+                                                                </template>
+
+                                                                <template v-slot:item.etat="{ item }">
+                               
+                                                                  <span v-if="item.etat == 1" class="badge badge-success">Validé</span>
+                                                                  <span v-else v-if="item.etat == 0" class="badge badge-danger" >En cours </span>
+                                                                  <span v-else v-if="item.etat == 2" class="badge badge-danger" > Refusé </span>
+                                                         
+                                                                </template>
+                                                              
+                                              
+                                                </v-data-table>
                                               
                                              </v-card>
                                              

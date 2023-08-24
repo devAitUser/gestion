@@ -406,4 +406,55 @@ class StockController extends Controller
 
 
      }
+     public function edit_demande_fourniture($id){
+        $projets = Projet::all();
+        $demande = Demande_fourniture::find($id);
+        $article_demande_fournitures =  Article_demande_fourniture::where('id_demande_fourniture', '=', $demande->id)->get(); 
+        
+        $data = array(  "projets" =>  $projets ,  "demande" =>  $demande ,   "article_demande_fournitures" =>  $article_demande_fournitures   );
+        return view('stock.edit_demande',$data);
+     }
+     public function update_demande_fourniture(Request $request){
+
+        $cp= 0;
+
+        for ($i=0; $i < count($request->nom_article) ; $i++) { 
+
+            $stock = Stock::where([ 'projets_id' =>  $request->projet[$i] ,  'article'    => $request->nom_article[$i] ])->first();
+
+
+            // if ($stock === null) {
+            //       $create = new Stock();
+            //       $create->projets_id =  $request->projet ;
+            //       $create->article =  $request->nom_article;
+            //       $create->qte =  1 ;
+            //       $create->prix = 000;
+            //       $create->save();
+            //  } else 
+            //  {
+            //     $stock->qte = $stock->qte + 1 ;
+            //     $stock->save();
+            //  }
+
+            if ( $stock == null ) {
+                $cp++;
+                
+            }
+
+            $array[] =  $stock;
+
+            
+            
+
+        }
+
+        for ($i=0; $i < count($array) ; $i++) { 
+            if ( $stock == null ) {
+
+
+            }
+        }
+        return $array ;
+
+     }
 }

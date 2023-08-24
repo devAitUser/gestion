@@ -70,7 +70,7 @@ new Vue({
 
         editItem(item) {
 
-            window.location.href = "client/" + item.id + "/edit"
+            window.location.href = "edit_demande_fourniture/" + item.id 
         },
 
         clicked(value) {

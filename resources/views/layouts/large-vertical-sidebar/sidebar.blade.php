@@ -252,7 +252,7 @@
          <ul class="childNav" data-parent="stocks">
             <li class="nav-item">
                 <a href="{{ url('stocks')}}"
-                    class="{{ Route::currentRouteName()=='marque' ? 'open' : '' }}">
+                    class="{{ Route::currentRouteName()=='stocks' ? 'open' : '' }}">
                     <i class="nav-icon i-Shop-3"></i>
                     <span class="nav-text"> Etat du Stock
                     </span>
@@ -264,9 +264,19 @@
 
             <li class="nav-item">
                 <a href="{{ url('gestion_demande_stock')}}"
-                    class="{{ Route::currentRouteName()=='permission' ? 'open' : '' }}">
+                    class="{{ Route::currentRouteName()=='gestion_demande_stock' ? 'open' : '' }}">
                     <i class="nav-icon i-Receipt-3"></i>
                     <span class="nav-text"> Gestion des demandes
+                    </span>
+                    
+                </a>
+            </li> 
+
+            <li class="nav-item">
+                <a href="{{ url('historique_stock')}}"
+                    class="{{ Route::currentRouteName()=='historique_stock' ? 'open' : '' }}">
+                    <i class="nav-icon i-Shop-3"></i>
+                    <span class="nav-text"> Historique du Stock
                     </span>
                     
                 </a>

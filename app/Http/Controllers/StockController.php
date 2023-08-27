@@ -411,7 +411,7 @@ class StockController extends Controller
         $demande = Demande_fourniture::find($id);
         $article_demande_fournitures =  Article_demande_fourniture::where('id_demande_fourniture', '=', $demande->id)->get(); 
         
-        $data = array(  "projets" =>  $projets ,  "demande" =>  $demande ,   "article_demande_fournitures" =>  $article_demande_fournitures   );
+        $data = array(  "projets" =>  $projets ,  "demande" =>  $demande ,   "article_demande_fournitures" =>  $article_demande_fournitures  , "id_demande" =>  $id   );
         return view('stock.edit_demande',$data);
      }
      public function update_demande_fourniture(Request $request){
@@ -422,39 +422,61 @@ class StockController extends Controller
 
             $stock = Stock::where([ 'projets_id' =>  $request->projet[$i] ,  'article'    => $request->nom_article[$i] ])->first();
 
-
-            // if ($stock === null) {
-            //       $create = new Stock();
-            //       $create->projets_id =  $request->projet ;
-            //       $create->article =  $request->nom_article;
-            //       $create->qte =  1 ;
-            //       $create->prix = 000;
-            //       $create->save();
-            //  } else 
-            //  {
-            //     $stock->qte = $stock->qte + 1 ;
-            //     $stock->save();
-            //  }
-
             if ( $stock == null ) {
-                $cp++;
-                
+                $cp++;   
             }
 
             $array[] =  $stock;
-
-            
-            
-
         }
 
-        for ($i=0; $i < count($array) ; $i++) { 
-            if ( $stock == null ) {
+        if ( $cp == 0 ) {
+
+            for ($i=0; $i < count($array) ; $i++) { 
+                $up = Stock::find($array[$i]->id);
+                $up->qte = $up->qte - 1;
+                $up->save();
+
+                $affectation_article = Stock::where([ 'projets_id' =>  $request->id_projet_concerne ,  'article'    => $array[$i]->article ])->first();
+ 
+
+                if ($affectation_article === null) {
+                    $create = new Stock();
+                    $create->projets_id =  $request->id_projet_concerne  ;
+                    $create->article =  $array[$i]->article ;
+                    $create->qte =  1 ;
+                    $create->prix = $array[$i]->prix;
+                    $create->type = 'material';
+                    $create->save();
+                } else 
+                {
+                    $affectation_article->qte = $affectation_article->qte + 1 ;
+                    $affectation_article->save();
+                }
 
 
             }
+            $demande = Demande_fourniture::find($request->id_demande);
+            $demande->etat = 1;
+            $demande->save();
+            return redirect()->to('/gestion_demande_stock');
         }
-        return $array ;
+         return redirect()->to('/edit_demande_fourniture/'.$request->id_demande );  ;
 
+     }
+     public function refuser_demande_fourniture($id){
+
+
+        $demande = Demande_fourniture::find($id);
+        $demande->etat = 2;
+        $demande->save();
+        return redirect()->to('/gestion_demande_stock');
+        
+     }
+     public function historique_stock(){
+        return view('stock.historique_stock');
+     }
+     public function all_views_historique_stock($id){
+        $data = array( 'id'=> $id );
+        return view('stock.historique_view',$data);
      }
 }

@@ -68,6 +68,8 @@ Route::get('/paiements/{id}/edit',[App\Http\Controllers\Historique_paiementContr
 /*** Model factures fournisseur  ***/
 
 
+Route::get('/test_test',[App\Http\Controllers\Factures_fournisseurController::class, 'test_test']);
+
 Route::get('/factures_fournisseur/{id}',[App\Http\Controllers\Factures_fournisseurController::class, 'index']);
 Route::get('/factures_fournisseur/create/{id}',[App\Http\Controllers\Factures_fournisseurController::class, 'create']);
 Route::get('/factures_fournisseur/store',[App\Http\Controllers\Factures_fournisseurController::class, 'store']);
@@ -179,6 +181,12 @@ Route::get('/api_qte_article/{id}',[App\Http\Controllers\StockController::class,
 
 
 Route::get('/edit_demande_fourniture/{id}',[App\Http\Controllers\StockController::class, 'edit_demande_fourniture']);
+
+Route::get('/historique_stock',[App\Http\Controllers\StockController::class, 'historique_stock']);
+
+Route::get('/all_views_historique_stock/{id}',[App\Http\Controllers\StockController::class, 'all_views_historique_stock']);
+
+Route::get('/refuser_demande_fourniture/{id}',[App\Http\Controllers\StockController::class, 'refuser_demande_fourniture']);
 
 Route::post('/update_demande_fourniture',[App\Http\Controllers\StockController::class, 'update_demande_fourniture']);
 

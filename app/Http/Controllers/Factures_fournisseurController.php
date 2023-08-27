@@ -9,6 +9,7 @@ use App\Models\Article_facture_fournisseur;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use PDF;
+use App\Models\Historique_stock; 
 
 class Factures_fournisseurController extends Controller
 {
@@ -160,9 +161,22 @@ class Factures_fournisseurController extends Controller
                         $item_stock->prix       =  $request->prix[$i];
                         $item_stock->type       =  $request->type[$i];
                         $item_stock->save();
+
+                        $historique =  new Historique_stock();
+
+                        $historique->projets_id =  $request->projet;
+                        $historique->nom_article    =  $request->product[$i];
+                        $historique->qte        =  $request->quantity[$i];
+                        $historique->prix       =  $request->prix[$i];
+                        $historique->type       =  'Entrer';
+                       // $historique->date       =   ;
+                        $historique->save();
+
                      }else{
+
                         $check_exist_stock->qte = $check_exist_stock->qte +  $request->quantity[$i];
                         $check_exist_stock->save();
+
                      }
 
                  
@@ -323,5 +337,14 @@ class Factures_fournisseurController extends Controller
         return view('facture_fournisseurs.view_all');
     }
   
+    public function test_test(){
+
+        
+        $total = 5;
+        $autre = 5;
+        $total = $total + $autre;
+        echo "$total";
+
+    }
 
 }

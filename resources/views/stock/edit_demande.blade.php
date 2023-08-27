@@ -64,6 +64,8 @@ table.calcul {
             <div class="col-md-10">
                <div class="form-row">
                   <div class="form-group col-md-12">
+
+                     <input type="text" value="{{$demande['id_projet_concerne']}}" name="id_projet_concerne" hidden>
                     
                    <select  class=" form-control"  name="projet" id="projet" disabled>
                      
@@ -150,6 +152,7 @@ table.calcul {
                         </div>
                       </div>
                      <div class="table-responsive table-product ">
+                        <input type="text" value="{{$id_demande}}" name='id_demande'   hidden>
                      <table id="table_product-n" class="table">
                            <thead>
                               <tr>
@@ -311,7 +314,7 @@ table.calcul {
                            Valider 
                            </button>
                         
-                           <button type="button" class="btn btn-outline-secondary m-1">Refuser</button>
+                           <button type="button" onclick="location.href='/refuser_demande_fourniture/{{$id_demande}}';" class="btn btn-outline-secondary m-1">Refuser</button>
                         </div>
                      </div>
                   </div>

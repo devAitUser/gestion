@@ -69,9 +69,13 @@
                                                                 </template>
                                                                 
                                                                 <template v-slot:item.action="{ item }">
+                                                                  <div v-if="item.etat == 0">                                               
                                                                     <v-btn color="purple" fab small dark  @click="editItem(item)">
                                                                         <i class="nav-icon i-Pen-2 font-weight-bold"></i>
                                                                     </v-btn>
+                                                                  </div>
+                                                                  
+
                                                                 </template>
                                                                 <template v-slot:item.etat="{ item }">
                                                                    @{{item.etat}}

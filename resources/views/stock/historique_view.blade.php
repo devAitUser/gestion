@@ -47,6 +47,52 @@
                                                    <v-spacer></v-spacer>
                                                    
                                                 </v-card-title>
+                                                <v-card-title class="text-right">
+                                                    <v-spacer></v-spacer>
+                   
+                                                   
+                   
+                   
+                                                       <v-row >
+                                                          <v-col
+                                                         
+                                                          cols="12"
+                                                          sm="6"
+                                                          >
+                                                             <v-select
+                                                             v-model="item.mois"
+                                                             :items="array_mois"
+                                                             label="Mois"
+                                                             outlined
+                                                             @change="fn_mois" 
+                                                             ></v-select>
+                                                       
+                                                          </v-col>
+                                                          <v-col
+                                                          
+                                                          cols="12"
+                                                          sm="6"
+                                                          >
+                                                            
+                                                       
+                                                          </v-col>
+                                                       </v-row>
+                   
+                   
+                                                       <v-row >
+                                                          <v-col
+                                                         
+                                                          cols="12"
+                                                          sm="6"
+                                                          >
+                                                         
+                                                       
+                                                          </v-col>
+                                                        
+                                                       </v-row>
+                                                   
+                                         
+                                                 </v-card-title>
 
 
                                               
@@ -106,7 +152,7 @@
                
                ]) !!}
             </script>
-            <script src="{{ asset('js/app_view_stocks.js') }}"></script>
+            <script src="{{ asset('js/app_view_stocks_historique.js') }}"></script>
 
 @endsection
 

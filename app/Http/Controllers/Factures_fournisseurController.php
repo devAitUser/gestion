@@ -337,14 +337,6 @@ class Factures_fournisseurController extends Controller
         return view('facture_fournisseurs.view_all');
     }
   
-    public function test_test(){
-
-        
-        $total = 5;
-        $autre = 5;
-        $total = $total + $autre;
-        echo "$total";
-
-    }
+   
 
 }

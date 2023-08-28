@@ -68,8 +68,6 @@ Route::get('/paiements/{id}/edit',[App\Http\Controllers\Historique_paiementContr
 /*** Model factures fournisseur  ***/
 
 
-Route::get('/test_test',[App\Http\Controllers\Factures_fournisseurController::class, 'test_test']);
-
 Route::get('/factures_fournisseur/{id}',[App\Http\Controllers\Factures_fournisseurController::class, 'index']);
 Route::get('/factures_fournisseur/create/{id}',[App\Http\Controllers\Factures_fournisseurController::class, 'create']);
 Route::get('/factures_fournisseur/store',[App\Http\Controllers\Factures_fournisseurController::class, 'store']);
